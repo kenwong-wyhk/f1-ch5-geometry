@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.3 Basic Constructions · Ch.5 Introduction to Geometry</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  #con-step{text-align:center}
+  #con-step svg{display:block;margin:0 auto;width:100%;max-width:560px;height:auto}
+  #con-cap{text-align:center}
+</style>
+</head>
+<body data-page="08">
+
+<div id="site-header"></div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.3 Basic Constructions</div>
+    <span class="chip">SECTION 5.3 · Worksheet 5.3</span>
+    <h1>Basic Constructions</h1>
+    <p class="zh">基本作圖 — 直尺、三角尺、量角器與圓規</p>
+    <div class="objectives">
+      <h2>Learning objectives</h2>
+      <ol>
+        <li>Recognise the tools used in geometric construction.</li>
+        <li>Construct <strong>parallel</strong> and <strong>perpendicular</strong> lines with a ruler and a set square.</li>
+        <li>Construct a <strong>circle</strong> and copy a <strong>line segment</strong> with a pair of compasses.</li>
+        <li>Construct a <strong>triangle</strong> from given information (five cases).</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 -->
+  <section class="sec">
+    <h2><span class="n">1</span>The four tools <span class="zh">四種工具</span></h2>
+    <p class="lead">A construction is a drawing made with <strong>instruments only</strong> — no guessing, no freehand. Each tool does one job well.</p>
+
+    <div class="grid g4">
+      <div class="card">
+        <h3 style="font-size:16px">Ruler 直尺</h3>
+        <p style="margin-bottom:0;font-size:14.5px">Draws straight lines and measures lengths. Must have a clear, undamaged edge.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">Set square 三角尺</h3>
+        <p style="margin-bottom:0;font-size:14.5px">A triangle with a right angle (45°–45°–90° or 30°–60°–90°). Used with a ruler to draw <strong>parallel</strong> and <strong>perpendicular</strong> lines.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">Protractor 量角器</h3>
+        <p style="margin-bottom:0;font-size:14.5px">Measures and draws angles in degrees. Needed when a triangle is given by its angles.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">Compasses 圓規</h3>
+        <p style="margin-bottom:0;font-size:14.5px">Draws circles and arcs, and copies a length exactly. The two points must be tight, not wobbly.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">Before you start</div>
+      <p style="margin-bottom:0">Sharpen your pencil (a blunt pencil makes a 0.5 mm line into a 2 mm smear, and your construction will not be accurate). Check that the compasses hinge is tight and that the needle point is sharp.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec">
+    <h2><span class="n">2</span>Parallel and perpendicular lines <span class="zh">作平行線與垂直線</span></h2>
+
+    <div class="def">
+      <div class="t">Key point</div>
+      <p style="margin-bottom:0">Parallel lines and perpendicular lines can always be constructed using a <strong>ruler and a set square</strong>.</p>
+    </div>
+
+    <h3>Constructing a perpendicular through a point</h3>
+    <div class="card">
+      <div id="con-step">
+        <div data-step-img="0">
+          <svg viewBox="0 0 400 230" width="400" role="img" aria-label="Step 1: a line AB and a point P above it">
+            <line x1="40" y1="180" x2="360" y2="180" stroke="#33475b" stroke-width="2.6"/>
+            <circle cx="200" cy="80" r="5" fill="#dc2626"/>
+            <text x="210" y="74" class="lbl" fill="#b91c1c">P</text>
+            <text x="28" y="198" class="lbl">A</text>
+            <text x="366" y="198" class="lbl">B</text>
+          </svg>
+        </div>
+        <div data-step-img="1" class="hidden">
+          <svg viewBox="0 0 400 230" width="400" role="img" aria-label="Step 2: the set square is slid until its edge passes through P">
+            <line x1="40" y1="180" x2="360" y2="180" stroke="#33475b" stroke-width="2.6"/>
+            <polygon points="200,180 320,180 200,60" fill="#eaf1ff" fill-opacity=".85" stroke="#2563eb" stroke-width="2"/>
+            <circle cx="200" cy="80" r="5" fill="#dc2626"/>
+            <text x="210" y="74" class="lbl" fill="#b91c1c">P</text>
+            <text x="28" y="198" class="lbl">A</text>
+            <text x="366" y="198" class="lbl">B</text>
+            <text x="262" y="150" class="lbl-sm" fill="#1d4ed8">set square</text>
+          </svg>
+        </div>
+        <div data-step-img="2" class="hidden">
+          <svg viewBox="0 0 400 230" width="400" role="img" aria-label="Step 3: draw the line and mark the right angle">
+            <line x1="40" y1="180" x2="360" y2="180" stroke="#33475b" stroke-width="2.6"/>
+            <line x1="200" y1="180" x2="200" y2="50" stroke="#2563eb" stroke-width="2.8"/>
+            <path d="M 200 162 L 218 162 L 218 180" fill="none" stroke="#14212e" stroke-width="2"/>
+            <circle cx="200" cy="80" r="5" fill="#dc2626"/>
+            <text x="210" y="74" class="lbl" fill="#b91c1c">P</text>
+            <text x="28" y="198" class="lbl">A</text>
+            <text x="366" y="198" class="lbl">B</text>
+          </svg>
+        </div>
+      </div>
+      <p id="con-cap" style="margin:12px 0;font-weight:600;color:var(--ink-2)"></p>
+      <div class="seg-ctl">
+        <button type="button" data-goto-step="0" class="on">Step 1</button>
+        <button type="button" data-goto-step="1">Step 2</button>
+        <button type="button" data-goto-step="2">Step 3</button>
+      </div>
+    </div>
+
+    <h3>Constructing a parallel through a point</h3>
+    <ol class="steps">
+      <li>Place one edge of the set square along the given line <span class="m">AB</span>.</li>
+      <li>Place the ruler against the <strong>other</strong> edge of the set square (the hypotenuse) and hold the ruler still.</li>
+      <li><strong>Slide</strong> the set square along the ruler until its first edge passes through the point <span class="m">P</span>.</li>
+      <li>Draw the line along that edge. It is parallel to <span class="m">AB</span>.</li>
+    </ol>
+
+    <div class="callout note">
+      <div class="h">Why it works</div>
+      <p style="margin-bottom:0">Sliding a rigid set square along a fixed ruler is a <strong>translation</strong> — every point moves by the same amount in the same direction. A translated line keeps its direction, so the new line is parallel to the old one. The set square’s right angle is what guarantees perpendicularity.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec">
+    <h2><span class="n">3</span>Circles and copying lengths <span class="zh">作圓與複製線段</span></h2>
+
+    <div class="def">
+      <div class="t">Key point</div>
+      <p style="margin-bottom:0">Circles, arcs of given radii and line segments of given lengths can be constructed using a <strong>pair of compasses and a ruler</strong>.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>A circle with centre O and radius 3 cm</h3>
+        <ol class="steps" style="margin-bottom:0">
+          <li>Open the compasses so that the gap between the point and the pencil is exactly <strong>3 cm</strong> (measure it against the ruler).</li>
+          <li>Press the <strong>needle point</strong> firmly into the paper at <span class="m">O</span>.</li>
+          <li>Hold the compasses by the <strong>top knob</strong> only — do not squeeze the legs.</li>
+          <li>Turn the compasses all the way round in one smooth movement.</li>
+          <li>Mark the radius on the diagram: a line from <span class="m">O</span> to the circle, labelled <span class="m">3 cm</span>.</li>
+        </ol>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 300 240" width="300" role="img" aria-label="A circle of radius 3 cm with centre O">
+          <circle cx="150" cy="120" r="88" fill="#f7faff" stroke="#2563eb" stroke-width="2.6"/>
+          <line x1="150" y1="120" x2="238" y2="120" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 5"/>
+          <circle cx="150" cy="120" r="4.4" fill="#14212e"/>
+          <text x="158" y="136" class="lbl">O</text>
+          <text x="190" y="112" class="lbl-sm" fill="#b91c1c">3 cm</text>
+          <path d="M 150 120 m -70 0 a 70 70 0 1 0 140 0 a 70 70 0 1 0 -140 0" fill="none" stroke="#0d9488" stroke-width="1.2" opacity=".45"/>
+        </svg>
+        <figcaption>Every point on the circle is exactly 3 cm from <span class="m">O</span> — that is the definition in action.</figcaption>
+      </div>
+    </div>
+
+    <h3>Copying a line segment</h3>
+    <div class="grid g2">
+      <div class="card">
+        <ol class="steps" style="margin-bottom:0">
+          <li>Open the compasses so the gap equals the length of <span class="seg m">AB</span> (needle on <span class="m">A</span>, pencil on <span class="m">B</span>).</li>
+          <li>Without changing the opening, put the needle on the new point <span class="m">P</span>.</li>
+          <li>Draw an arc across the ray from <span class="m">P</span>; call the crossing point <span class="m">Q</span>.</li>
+          <li>Then <span class="m">PQ = AB</span> exactly — no measuring needed.</li>
+        </ol>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 330 205" width="100%" style="max-width:340px" role="img" aria-label="Copying segment AB onto a ray from P: one arc centred at P, radius AB, cuts the ray at Q">
+          <!-- the segment to copy -->
+          <line x1="40" y1="36" x2="130" y2="36" stroke="#2563eb" stroke-width="3"/>
+          <circle cx="40" cy="36" r="4" fill="#14212e"/><circle cx="130" cy="36" r="4" fill="#14212e"/>
+          <text x="33" y="27" class="lbl">A</text><text x="133" y="27" class="lbl">B</text>
+
+          <!-- the ray the length is copied onto -->
+          <line x1="40" y1="142" x2="296" y2="142" stroke="#8fa3b8" stroke-width="1.8"/>
+          <polyline points="286,136 298,142 286,148" fill="none" stroke="#8fa3b8" stroke-width="1.8" stroke-linejoin="round"/>
+
+          <!-- one arc, centred at P, radius = AB; it crosses the ray exactly at Q -->
+          <path d="M 117.9 97.0 A 90 90 0 0 1 117.9 187.0" fill="none" stroke="#dc2626" stroke-width="2"/>
+
+          <circle cx="40" cy="142" r="4" fill="#14212e"/>
+          <circle cx="130" cy="142" r="4" fill="#14212e"/>
+          <text x="26" y="160" class="lbl">P</text>
+          <text x="134" y="160" class="lbl">Q</text>
+          <text x="126" y="88" class="lbl-sm" fill="#b91c1c">same opening as AB</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec">
+    <h2><span class="n">4</span>Constructing a triangle <span class="zh">作三角形</span></h2>
+    <p class="lead">Which tools you need depends on <em>what you are given</em>. There are five cases.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Case</th><th>What is given</th><th>Tools</th><th>Method</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td>Three sides (SSS)</td>
+            <td>ruler + compasses</td>
+            <td>Draw one side; draw arcs of the other two lengths from its ends; join the crossing point.</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>Two sides and the included angle (SAS)</td>
+            <td>ruler + protractor</td>
+            <td>Draw one side, measure the angle at its end, mark the second side, join up.</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>Two angles and the included side (ASA)</td>
+            <td>ruler + protractor</td>
+            <td>Draw the side; measure one angle at each end; extend the two arms to meet.</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>Two angles and a <em>non-included</em> side (AAS)</td>
+            <td>ruler + protractor</td>
+            <td><strong>Find the third angle first</strong> (∠ sum of △ = 180°), then follow Case 3.</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>A right angle, the hypotenuse and one side (RHS)</td>
+            <td>ruler + protractor + compasses<br>(or set square)</td>
+            <td>Draw the right angle, mark the given side, then strike the hypotenuse length from its end.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout mem">
+      <div class="h">Which case am I in?</div>
+      <p style="margin-bottom:0">Count what you are told. <strong>3 sides → Case 1.</strong> <strong>2 sides + 1 angle between them → Case 2.</strong> <strong>2 angles + the side between them → Case 3.</strong> If the side is <em>not</em> between the two angles → Case 4 (find the third angle first). If there is a right angle plus the longest side → Case 5.</p>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Worked example</span>Construct △ABC with AB = 6 cm, BC = 4.5 cm and CA = 7.5 cm</div>
+      <div class="eg-body">
+        <p>This is Case 1 (three sides).</p>
+        <ol class="steps">
+          <li>Draw <span class="seg m">AB</span> = 6 cm with the ruler.</li>
+          <li>Open the compasses to 7.5 cm; put the needle on <span class="m">A</span> and draw an arc above <span class="m">AB</span>.</li>
+          <li>Open the compasses to 4.5 cm; put the needle on <span class="m">B</span> and draw an arc crossing the first one.</li>
+          <li>Label the crossing point <span class="m">C</span>. Join <span class="m">AC</span> and <span class="m">BC</span>.</li>
+          <li>Check with a protractor: <span class="m">7.5² = 56.25</span> and <span class="m">6² + 4.5² = 56.25</span>, so <span class="m">∠A = 90°</span> — this triangle is <strong>right-angled</strong>.</li>
+        </ol>
+        <button class="reveal-btn" data-reveal="#cw">Show the finished figure</button>
+        <div id="cw" class="sol hidden">
+          <figure style="margin:0">
+            <svg viewBox="0 0 320 210" width="320" role="img" aria-label="Triangle ABC with AB 6 cm, BC 4.5 cm and CA 7.5 cm">
+              <polygon points="60,170 220,170 60,50" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M 60 152 L 78 152 L 78 170" fill="none" stroke="#14212e" stroke-width="2"/>
+              <g class="lbl"><text x="48" y="188">A</text><text x="226" y="188">B</text><text x="46" y="42">C</text></g>
+              <text x="140" y="188" class="lbl-sm" fill="#61748a">6 cm</text>
+              <text x="16" y="130" class="lbl-sm" fill="#61748a">4.5 cm</text>
+              <text x="156" y="96" class="lbl-sm" fill="#61748a">7.5 cm</text>
+            </svg>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec">
+    <h2><span class="n">5</span>Let's check <span class="zh">課堂練習</span></h2>
+    <div class="check">
+      <div class="t">Check yourself</div>
+      <ol>
+        <li>Which two tools do you need to construct a pair of parallel lines?</li>
+        <li>Which tool do you use to copy a length exactly?</li>
+        <li>You are told to construct <span class="m">△DEF</span> with <span class="m">DE = 5 cm</span>, <span class="m">DF = 2 cm</span> and <span class="m">∠FDE = 60°</span>. Which case is this, and which tools do you need?</li>
+        <li>You are told <span class="m">NP = 3.5 cm</span>, <span class="m">∠MNP = 80°</span> and <span class="m">∠NMP = 55°</span> in <span class="m">△MNP</span>. Which case is this? What must you calculate first?</li>
+        <li>Why must you not erase your construction arcs?</li>
+      </ol>
+      <button class="reveal-btn" data-reveal="#cc">Show answers</button>
+      <div id="cc" class="sol hidden">
+        <ol>
+          <li>A <strong>ruler and a set square</strong>.</li>
+          <li>A <strong>pair of compasses</strong>.</li>
+          <li><strong>Case 2</strong> (two sides and the included angle) — ruler and protractor.</li>
+          <li><strong>Case 4</strong> — the side <span class="m">NP</span> is <em>not</em> between the two given angles (the angle at <span class="m">M</span> does not touch <span class="m">NP</span>). First find the third angle: <span class="m">∠MPN = 180° − 80° − 55° = 45°</span>, then construct with side <span class="m">NP</span> and the angles at <span class="m">N</span> (80°) and <span class="m">P</span> (45°) — that is Case 3.</li>
+          <li>They are the <strong>evidence</strong> that your construction is accurate. Marks are given for the arcs being visible.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec">
+    <h2><span class="n">!</span>Common mistakes <span class="zh">常見錯誤</span></h2>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Erasing the arcs after constructing</div>
+      <div class="r"><span class="tag">✓ Right</span>Leave every arc and construction line visible</div>
+      <div class="why">The arcs prove the method. Without them the marker cannot tell a construction from a guess.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Sliding the set square without holding the ruler</div>
+      <div class="r"><span class="tag">✓ Right</span>Hold the ruler firmly; slide only the set square</div>
+      <div class="why">If the ruler moves, the “parallel” line is no longer parallel.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Changing the compass opening between the two arcs</div>
+      <div class="r"><span class="tag">✓ Right</span>Set each length once and keep it</div>
+      <div class="why">If the opening changes, the side lengths are wrong and the triangle will not match the data.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Using the protractor’s outer scale on an acute angle and getting 140°</div>
+      <div class="r"><span class="tag">✓ Right</span>Check the reading against your estimate</div>
+      <div class="why">Read from the 0 that sits on the arm you lined up.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Drawing a “perpendicular” freehand because it looks right</div>
+      <div class="r"><span class="tag">✓ Right</span>Use the set square and mark the right-angle symbol</div>
+      <div class="why">A construction must be exact. The square symbol also tells the marker what you intended.</div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">One-line summary</div>
+      <p style="margin-bottom:0">Ruler + set square → <strong>parallel / perpendicular</strong>. Compasses + ruler → <strong>circles and copied lengths</strong>. Ruler + protractor (+ compasses) → <strong>triangles</strong>. Never rub out your arcs.</p>
+    </div>
+  </section>
+
+  <div class="done-bar">
+    <button type="button" aria-pressed="false">Mark this section as completed</button>
+    <span style="color:var(--muted);font-size:13.5px">Saved on this device only.</span>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — 5.3 Basic Constructions</span><span>Form 1 Mathematics</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

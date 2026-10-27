@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-check Quiz · Ch.5 Introduction to Geometry</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="11">
+
+<div id="site-header"></div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>Revision<span>/</span>Self-check Quiz</div>
+    <span class="chip">REVISION · 21 questions</span>
+    <h1>Self-check Quiz</h1>
+    <p class="zh">自我測驗 — 即時對答案、即時解釋</p>
+    <div class="objectives">
+      <h2>Before you start</h2>
+      <ol>
+        <li>Answer without looking anything up — this is a check, not a test.</li>
+        <li>Every question gives feedback straight away, so read the explanation even when you are right.</li>
+        <li>Aim for <strong>17 out of 21</strong>. Below that, revisit the section named in the feedback.</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <section class="sec">
+    <div class="score">
+      <div>
+        <div style="font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Your score</div>
+        <div class="big" id="quiz-score">0 / 0</div>
+      </div>
+      <div style="flex:1;min-width:200px">
+        <div class="prog-track"><div class="prog-fill" id="quiz-progress" style="width:0"></div></div>
+        <p style="margin:6px 0 0;font-size:13.5px;color:var(--muted)">One attempt per question — the buttons lock once you answer.</p>
+      </div>
+    </div>
+
+    <div id="quiz"></div>
+
+    <div class="callout tip" style="margin-top:24px">
+      <div class="h">What to do with your score</div>
+      <p style="margin-bottom:0"><strong>19–21:</strong> you are ready. Skim the <a href="09-mistakes.html">common mistakes</a> page and stop.<br>
+      <strong>15–18:</strong> re-read the section named in the feedback of every question you missed.<br>
+      <strong>Below 15:</strong> work through the four content pages again, starting with <a href="02-angles.html">Angles</a> — most of this chapter rests on it.</p>
+    </div>
+  </section>
+
+  <div class="done-bar">
+    <button type="button" aria-pressed="false">Mark this section as completed</button>
+    <span style="color:var(--muted);font-size:13.5px">Saved on this device only.</span>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — Self-check Quiz</span><span>Form 1 Mathematics</span></div>
+</footer>
+
+<script>
+window.QUIZ = [
+  {
+    topic: "5.1A",
+    q: 'Which of the following has a <strong>fixed length</strong>?',
+    options: ["A straight line", "A line segment", "A point"],
+    answer: 1,
+    why: "Only a line segment has two endpoints, so only a segment can be measured. A line goes on forever."
+  },
+  {
+    topic: "5.1B",
+    q: 'The angle <span class="m">∠PQR</span> has its vertex at…',
+    options: ["P", "Q", "R", "the midpoint of PR"],
+    answer: 1,
+    why: "The middle letter is always the vertex. ∠PQR and ∠RQP are the same angle; ∠QPR is a different one."
+  },
+  {
+    topic: "5.1B",
+    q: 'Which of the following is a <strong>reflex</strong> angle?',
+    options: ["45°", "90°", "175°", "250°"],
+    answer: 3,
+    why: "A reflex angle is greater than 180° and less than 360°. 175° is still obtuse."
+  },
+  {
+    topic: "5.1B",
+    q: 'The supplement of 68° is…',
+    options: ["22°", "112°", "122°", "292°"],
+    answer: 1,
+    why: "Supplementary angles add to 180°: 180° − 68° = 112°. (The complement would be 22°.)"
+  },
+  {
+    topic: "5.1B",
+    q: 'In the figure, AOB is a straight line, <span class="m">∠AOC = 120°</span> and <span class="m">∠COB = x</span>. Then <span class="m">x</span> =',
+    fig: `<svg viewBox="0 0 200 140" width="210" role="img" aria-label="AOB is a straight line; angle AOC is 120 degrees and angle COB is x">
+      <line x1="30" y1="110" x2="170" y2="110" stroke="#33475b" stroke-width="2.4"/>
+      <line x1="100" y1="110" x2="135" y2="49.4" stroke="#d97706" stroke-width="2.4"/>
+      <path d="M 56 110 A 44 44 0 0 1 122 71.9" fill="none" stroke="#1d4ed8" stroke-width="2.2"/>
+      <path d="M 122 71.9 A 44 44 0 0 1 144 110" fill="none" stroke="#0d9488" stroke-width="2.2"/>
+      <circle cx="100" cy="110" r="3.6" fill="#14212e"/>
+      <text x="18" y="115" class="lbl">A</text>
+      <text x="176" y="115" class="lbl">B</text>
+      <text x="140" y="42" class="lbl">C</text>
+      <text x="88" y="130" class="lbl">O</text>
+      <text x="70" y="58" class="lbl-sm" fill="#1d4ed8" text-anchor="middle">120°</text>
+      <text x="156" y="80" class="lbl-sm" fill="#0f766e">x</text>
+    </svg>`,
+    options: ["50°", "60°", "70°", "120°"],
+    answer: 1,
+    why: "Angles on a straight line add to 180°: x = 180° − 120° = 60°."
+  },
+  {
+    topic: "5.1C",
+    q: 'Which symbol means “is parallel to”?',
+    options: ["⊥", "//", "△", "∠"],
+    answer: 1,
+    why: "// means parallel (never meet); ⊥ means perpendicular (meet at 90°)."
+  },
+  {
+    topic: "5.1C",
+    q: 'Two lines are marked with a small square where they meet. This means the lines are…',
+    options: ["parallel", "equal in length", "perpendicular", "curved"],
+    answer: 2,
+    why: "The small square is the right-angle symbol, so the lines are perpendicular: AB ⊥ CD."
+  },
+  {
+    topic: "5.2B",
+    q: 'A triangle has two angles of 35° and 85°. The third angle is…',
+    options: ["50°", "60°", "70°", "120°"],
+    answer: 1,
+    why: "∠ sum of △ = 180°, so the third angle is 180° − 35° − 85° = 60°."
+  },
+  {
+    topic: "5.2B",
+    q: 'Which set of angles can be the three interior angles of a triangle?',
+    options: ["30°, 60°, 100°", "45°, 45°, 90°", "50°, 50°, 90°", "20°, 30°, 140°"],
+    answer: 1,
+    why: "Only 45° + 45° + 90° = 180°. The others total 190°, 190° and 190° respectively."
+  },
+  {
+    topic: "5.2B",
+    q: 'A triangle with sides 4 cm, 4 cm and 6 cm is…',
+    options: ["equilateral", "isosceles", "scalene", "right-angled"],
+    answer: 1,
+    why: "Two sides are equal, so it is isosceles. Equilateral needs all three equal; scalene needs all three different."
+  },
+  {
+    topic: "5.2B",
+    q: 'Which statement about an <strong>equilateral</strong> triangle must be true?',
+    options: ["Each interior angle is 60°", "It is not isosceles", "One angle is a right angle", "Its angles add up to 360°"],
+    answer: 0,
+    why: "Three equal angles sharing 180° gives 60° each. An equilateral triangle is also isosceles, and its angles always total 180°."
+  },
+  {
+    topic: "5.2C",
+    q: 'How many diagonals are there in a regular pentagon?',
+    options: ["2", "4", "5", "10"],
+    answer: 2,
+    why: "n(n − 3) ÷ 2 = 5 × 2 ÷ 2 = 5. Ten counts each diagonal twice."
+  },
+  {
+    topic: "5.2C",
+    q: 'A rhombus is…',
+    options: ["a regular polygon", "equilateral but not necessarily regular", "equiangular", "always a square"],
+    answer: 1,
+    why: "All four sides are equal, but the angles are not all equal — so it fails the “regular” test."
+  },
+  {
+    topic: "5.2C",
+    q: 'Which of the following is <strong>not</strong> a property of a regular polygon?',
+    options: ["All sides are equal", "All interior angles are equal", "It is convex", "It has at least one reflex interior angle"],
+    answer: 3,
+    why: "A regular polygon has all angles equal and less than 180°, so it is convex. A reflex interior angle would make it concave."
+  },
+  {
+    topic: "5.2A",
+    q: 'The longest chord of a circle is its…',
+    options: ["radius", "diameter", "arc", "circumference"],
+    answer: 1,
+    why: "The diameter passes through the centre, which makes it the longest chord. A radius is not a chord at all."
+  },
+  {
+    topic: "5.2A",
+    q: 'The region bounded by two radii and an arc is called a…',
+    options: ["sector", "segment", "chord", "semicircle"],
+    answer: 0,
+    why: "Two radii + arc = sector. A chord + arc = segment. A sector always reaches the centre."
+  },
+  {
+    topic: "5.4",
+    q: 'Which of the following is a <strong>polyhedron</strong>?',
+    options: ["Sphere", "Circular cylinder", "Circular cone", "Square pyramid"],
+    answer: 3,
+    why: "A square pyramid is enclosed by polygons only (1 square + 4 triangles). The other three all have a curved surface."
+  },
+  {
+    topic: "5.4",
+    q: 'Which solid does <strong>not</strong> have uniform cross-sections?',
+    options: ["Cube", "Circular cylinder", "Circular cone", "Triangular prism"],
+    answer: 2,
+    why: "A cone tapers to its apex, so its cross-sections get smaller. Prisms, cubes and cylinders keep the same cross-section all the way through — a sphere does not, because its circular slices change size."
+  },
+  {
+    topic: "5.4",
+    q: 'A square pyramid has…',
+    options: ["5 vertices, 8 edges and 5 faces", "4 vertices, 6 edges and 4 faces", "6 vertices, 9 edges and 5 faces", "5 vertices, 5 edges and 5 faces"],
+    answer: 0,
+    why: "4 base corners + 1 apex = 5 vertices; 4 base edges + 4 slanting edges = 8; 1 square + 4 triangles = 5 faces."
+  },
+  {
+    topic: "5.3",
+    q: 'Which tools do you need to construct a line perpendicular to a given line through a point?',
+    options: ["A ruler and a set square", "A pair of compasses only", "A protractor only", "A ruler only"],
+    answer: 0,
+    why: "The right angle of the set square, slid along a ruler, guarantees perpendicularity. Compasses are for circles and lengths."
+  }
+];
+</script>
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.4 3-D Figures · Ch.5 Introduction to Geometry</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="07">
+
+<div id="site-header"></div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.4 Three-Dimensional Figures</div>
+    <span class="chip">SECTION 5.4 · Worksheet 5.4</span>
+    <h1>3-D Figures</h1>
+    <p class="zh">立體圖形 — 多面體、稜柱、稜錐、球體、截面</p>
+    <div class="objectives">
+      <h2>Learning objectives</h2>
+      <ol>
+        <li>Know the two types of solids: <strong>polyhedra</strong> and <strong>non-polyhedra</strong>.</li>
+        <li>Understand prisms, pyramids, circular cylinders, circular cones and spheres.</li>
+        <li>Understand <strong>cross-sections</strong> and <strong>uniform cross-sections</strong>.</li>
+        <li>Sketch the 2-D representation of a solid, with hidden edges dotted.</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 -->
+  <section class="sec">
+    <h2><span class="n">1</span>From flat to solid <span class="zh">由平面到立體</span></h2>
+    <p class="lead">A solid is a 3-D object. It has three things to count: <strong>faces</strong>, <strong>edges</strong> and <strong>vertices</strong>.</p>
+
+    <div class="grid g3">
+      <div class="card">
+        <h3>Face 面</h3>
+        <p style="margin-bottom:0">A flat surface of the solid. A cube has 6 square faces. A face is 2-D — it has area but no thickness.</p>
+      </div>
+      <div class="card">
+        <h3>Edge 稜</h3>
+        <p style="margin-bottom:0">A line segment where <strong>two faces meet</strong>. A cube has 12 edges.</p>
+      </div>
+      <div class="card">
+        <h3>Vertex 頂點</h3>
+        <p style="margin-bottom:0">A point where <strong>edges meet</strong> — a corner. A cube has 8 vertices.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="h">Why count them?</div>
+      <p style="margin-bottom:0">Counting faces, edges and vertices is the fastest way to describe a solid precisely. It also tells you immediately whether a solid is a polyhedron.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec">
+    <h2><span class="n">2</span>Polyhedra and non-polyhedra <span class="zh">多面體與非多面體</span></h2>
+
+    <div class="def">
+      <div class="t">Definition — learn it word for word</div>
+      <p style="margin-bottom:0">A <strong>polyhedron</strong> (多面體, plural <em>polyhedra</em>) is a solid enclosed by <strong>polygons only</strong>. Every face is a flat polygon — there is no curved surface anywhere.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="fig-box">
+        <svg viewBox="0 0 330 190" width="330" role="img" aria-label="A cube, a cuboid and a square pyramid — all polyhedra">
+          <!-- cube -->
+          <polygon points="20,80 70,80 70,130 20,130" fill="#eaf1ff" stroke="#2563eb" stroke-width="2"/>
+          <polygon points="20,80 42,58 92,58 70,80" fill="#dce8ff" stroke="#2563eb" stroke-width="2"/>
+          <polygon points="70,80 92,58 92,108 70,130" fill="#eaf1ff" stroke="#2563eb" stroke-width="2"/>
+          <g fill="none" stroke="#93a6b9" stroke-width="1.6" stroke-dasharray="5 4">
+            <line x1="42" y1="58" x2="42" y2="108"/><line x1="42" y1="108" x2="92" y2="108"/><line x1="20" y1="130" x2="42" y2="108"/>
+          </g>
+          <!-- cuboid -->
+          <polygon points="112,85 172,85 172,125 112,125" fill="#e6f7f4" stroke="#0d9488" stroke-width="2"/>
+          <polygon points="112,85 132,65 192,65 172,85" fill="#d3f0ea" stroke="#0d9488" stroke-width="2"/>
+          <polygon points="172,85 192,65 192,105 172,125" fill="#e6f7f4" stroke="#0d9488" stroke-width="2"/>
+          <g fill="none" stroke="#93a6b9" stroke-width="1.6" stroke-dasharray="5 4">
+            <line x1="132" y1="65" x2="132" y2="105"/><line x1="132" y1="105" x2="192" y2="105"/><line x1="112" y1="125" x2="132" y2="105"/>
+          </g>
+          <!-- square pyramid -->
+          <polygon points="222,125 282,125 302,108 242,108" fill="#fef4e6" stroke="#d97706" stroke-width="2"/>
+          <polygon points="222,125 282,125 262,62" fill="#fde9cc" stroke="#d97706" stroke-width="2"/>
+          <polygon points="282,125 302,108 262,62" fill="#fef4e6" stroke="#d97706" stroke-width="2"/>
+          <g fill="none" stroke="#d97706" stroke-width="2"><line x1="222" y1="125" x2="262" y2="62"/><line x1="302" y1="108" x2="262" y2="62"/></g>
+          <g fill="none" stroke="#93a6b9" stroke-width="1.6" stroke-dasharray="5 4">
+            <line x1="242" y1="108" x2="262" y2="62"/><line x1="222" y1="125" x2="242" y2="108"/><line x1="242" y1="108" x2="302" y2="108"/>
+          </g>
+          <g class="lbl-sm" text-anchor="middle" fill="#33475b">
+            <text x="56" y="158">cube</text><text x="152" y="158">cuboid</text><text x="262" y="158">square pyramid</text>
+          </g>
+        </svg>
+        <p style="margin:8px 0 0;font-weight:800;color:#166534">✓ Polyhedra — all faces are polygons</p>
+      </div>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 330 220" width="300" role="img" aria-label="A cylinder, a cone and a sphere — non-polyhedra">
+          <ellipse cx="66" cy="70" rx="38" ry="13" fill="#fdeceb" stroke="#dc2626" stroke-width="2"/>
+          <path d="M 28 70 L 28 140 A 38 13 0 0 0 104 140 L 104 70" fill="#fdeceb" stroke="#dc2626" stroke-width="2"/>
+          <path d="M 28 140 A 38 13 0 0 1 104 140" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="66" y="176" class="lbl-sm" text-anchor="middle">circular cylinder</text>
+
+          <ellipse cx="170" cy="140" rx="34" ry="12" fill="#fdeceb" stroke="#dc2626" stroke-width="2"/>
+          <path d="M 136 140 L 170 60 L 204 140" fill="#fdeceb" stroke="#dc2626" stroke-width="2"/>
+          <path d="M 136 140 A 34 12 0 0 0 204 140" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="170" y="176" class="lbl-sm" text-anchor="middle">circular cone</text>
+
+          <circle cx="262" cy="102" r="40" fill="#fdeceb" stroke="#dc2626" stroke-width="2"/>
+          <ellipse cx="262" cy="102" rx="40" ry="13" fill="none" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="5 4"/>
+          <text x="262" y="176" class="lbl-sm" text-anchor="middle">sphere</text>
+        </svg>
+        <p style="margin:8px 0 0;font-weight:800;color:#b91c1c">✗ Non-polyhedra — they have a curved surface</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="h">The classic question: “Is a sphere a polyhedron?”</div>
+      <p style="margin-bottom:0"><strong>No.</strong> A sphere has no flat faces at all — its whole surface is curved. The same is true for a cylinder, a cone and a hemisphere. If a solid has even <em>one</em> curved surface, it is <strong>not</strong> a polyhedron.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec">
+    <h2><span class="n">3</span>Prisms <span class="zh">稜柱</span></h2>
+    <p class="lead">A prism has <strong>two identical, parallel faces</strong> (the bases) and flat rectangular side faces joining them. Its cross-section is the same all the way through.</p>
+
+    <div class="grid g2">
+      <div class="fig-box" style="display:flex;flex-direction:column;justify-content:center">
+        <svg viewBox="0 0 340 185" width="100%" style="max-width:400px" role="img" aria-label="Right triangular prism: front rectangle A-D-F-C, triangular ends ABC and DEF, hidden edges dotted">
+          <!-- visible faces: the front rectangle A-D-F-C and the right triangular end D-E-F -->
+          <polygon points="78,126 214,126 214,42 78,42" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.4" stroke-linejoin="round"/>
+          <polygon points="214,126 270,86 214,42" fill="#dce8ff" stroke="#2563eb" stroke-width="2.4" stroke-linejoin="round"/>
+          <!-- three hidden edges meet at B, the back-bottom-left vertex -->
+          <g stroke="#8fa3b8" stroke-width="1.8" stroke-dasharray="6 5" stroke-linecap="round" fill="none">
+            <line x1="134" y1="86" x2="78" y2="126"/>
+            <line x1="134" y1="86" x2="270" y2="86"/>
+            <line x1="134" y1="86" x2="78" y2="42"/>
+          </g>
+          <g fill="#14212e">
+            <circle cx="78" cy="126" r="3.4"/><circle cx="78" cy="42" r="3.4"/>
+            <circle cx="214" cy="126" r="3.4"/><circle cx="270" cy="86" r="3.4"/><circle cx="214" cy="42" r="3.4"/>
+          </g>
+          <circle cx="134" cy="86" r="3" fill="#8fa3b8"/>
+          <g class="lbl">
+            <text x="72" y="146">A</text><text x="64" y="36">C</text>
+            <text x="126" y="88" text-anchor="end" fill="#61748a">B</text>
+            <text x="216" y="146">D</text><text x="282" y="90">E</text><text x="222" y="34">F</text>
+          </g>
+          <text x="170" y="172" class="lbl-sm" text-anchor="middle" fill="#61748a">triangular prism · dotted = hidden edges</text>
+        </svg>
+      </div>
+      <div class="card">
+        <h3>How to describe a prism</h3>
+        <ul>
+          <li><strong>Bases</strong> — two identical polygons, parallel to each other.</li>
+          <li><strong>Lateral faces</strong> — rectangles joining the two bases.</li>
+          <li><strong>Named by its base:</strong> triangular prism, rectangular prism, pentagonal prism.</li>
+        </ul>
+        <div class="callout tip" style="margin-bottom:0">
+          <div class="h">Naming rule</div>
+          <p style="margin-bottom:0">Look at the <strong>base</strong>, not the long side. A “triangular prism” is one whose <em>base</em> are triangles — the three long faces are rectangles.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mem">
+      <div class="h">Everyday prisms</div>
+      <p style="margin-bottom:0">A Toblerone box (triangular prism), a brick (rectangular prism), a hexagonal pencil before it is sharpened (hexagonal prism), a fish tank (rectangular prism).</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec">
+    <h2><span class="n">4</span>Pyramids <span class="zh">稜錐</span></h2>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>How to describe a pyramid</h3>
+        <ul>
+          <li><strong>Base</strong> — one polygon (any number of sides).</li>
+          <li><strong>Apex</strong> (錐頂) — a single point at the top, above the base.</li>
+          <li><strong>Lateral faces</strong> — all <strong>triangles</strong>, meeting at the apex.</li>
+          <li><strong>Named by its base:</strong> triangular pyramid, square pyramid, pentagonal pyramid.</li>
+        </ul>
+        <p style="margin-bottom:0">A triangular pyramid has only 4 faces, so it is also called a <strong>tetrahedron</strong> (四面體).</p>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 320 240" width="320" role="img" aria-label="Square pyramid with hidden edges dotted">
+          <polygon points="80,170 180,170 230,130 130,130" fill="#fef4e6" stroke="#d97706" stroke-width="2.4"/>
+          <polygon points="80,170 180,170 155,50" fill="#fde9cc" stroke="#d97706" stroke-width="2.4"/>
+          <polygon points="180,170 230,130 155,50" fill="#fef4e6" stroke="#d97706" stroke-width="2.4"/>
+          <g fill="none" stroke="#d97706" stroke-width="2.4"><line x1="80" y1="170" x2="155" y2="50"/><line x1="230" y1="130" x2="155" y2="50"/></g>
+          <g fill="none" stroke="#8fa3b8" stroke-width="1.8" stroke-dasharray="6 5">
+            <line x1="130" y1="130" x2="155" y2="50"/><line x1="80" y1="170" x2="130" y2="130"/><line x1="130" y1="130" x2="230" y2="130"/>
+          </g>
+          <g class="lbl"><text x="152" y="40">V</text><text x="66" y="186">A</text><text x="186" y="188">B</text><text x="238" y="136">C</text><text x="118" y="124">D</text></g>
+          <text x="160" y="222" class="lbl-sm" text-anchor="middle" fill="#61748a">square pyramid · V is the apex</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="h">A cone is NOT a pyramid</div>
+      <p style="margin-bottom:0">A cone has a <strong>curved</strong> lateral surface, so it is not a polyhedron and not a pyramid. A pyramid’s lateral faces are flat triangles. They look similar, but one has curved faces and the other does not.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec">
+    <h2><span class="n">5</span>Cylinder, cone and sphere <span class="zh">圓柱、圓錐、球</span></h2>
+    <div class="grid g3">
+      <div class="fig-box">
+        <svg viewBox="0 0 220 200" width="220" role="img" aria-label="Circular cylinder">
+          <path d="M 40 60 L 40 140 A 70 22 0 0 0 180 140 L 180 60" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.4"/>
+          <ellipse cx="110" cy="60" rx="70" ry="22" fill="#d3f0ea" stroke="#0d9488" stroke-width="2.4"/>
+          <path d="M 40 140 A 70 22 0 0 1 180 140" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="6 5"/>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Circular cylinder 圓柱</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">2 circular ends + 1 curved surface.<br>Uniform cross-sections (circles).</p>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 220 200" width="220" role="img" aria-label="Circular cone">
+          <ellipse cx="110" cy="150" rx="66" ry="20" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.4"/>
+          <path d="M 44 150 L 110 46 L 176 150" fill="#d3f0ea" stroke="#0d9488" stroke-width="2.4"/>
+          <path d="M 44 150 A 66 20 0 0 0 176 150" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="6 5"/>
+          <circle cx="110" cy="46" r="3.4" fill="#14212e"/>
+          <text x="120" y="42" class="lbl-sm">apex</text>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Circular cone 圓錐</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">1 circular base, 1 apex, 1 curved surface.<br>Cross-sections shrink towards the apex.</p>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 220 200" width="220" role="img" aria-label="Sphere">
+          <circle cx="110" cy="105" r="66" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.4"/>
+          <ellipse cx="110" cy="105" rx="66" ry="22" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="6 5"/>
+          <ellipse cx="110" cy="105" rx="24" ry="66" fill="none" stroke="#0d9488" stroke-width="1.4" stroke-dasharray="4 5" opacity=".55"/>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Sphere 球</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">1 completely curved surface.<br>No vertices, no edges, no flat faces.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec">
+    <h2><span class="n">6</span>Explore: count the faces, edges and vertices <span class="zh">互動探索</span></h2>
+    <div class="card" id="solid-demo">
+      <div class="seg-ctl" style="margin-bottom:14px">
+        <button type="button" data-solid="cube">Cube</button>
+        <button type="button" data-solid="cuboid">Cuboid</button>
+        <button type="button" data-solid="triprism" class="on">Triangular prism</button>
+        <button type="button" data-solid="pentaprism">Pentagonal prism</button>
+        <button type="button" data-solid="squarepyr">Square pyramid</button>
+        <button type="button" data-solid="tetr">Triangular pyramid</button>
+        <button type="button" data-solid="cylinder">Cylinder</button>
+        <button type="button" data-solid="cone">Cone</button>
+        <button type="button" data-solid="sphere">Sphere</button>
+      </div>
+      <div class="grid g2" style="align-items:start">
+        <div>
+          <h3 style="margin-top:0" id="sd-name">Triangular prism 三稜柱</h3>
+          <div class="tbl-wrap" style="margin-top:8px">
+            <table class="compact">
+              <tbody>
+                <tr><th>Vertices</th><td id="sd-v">6</td></tr>
+                <tr><th>Edges</th><td id="sd-e">9</td></tr>
+                <tr><th>Faces</th><td id="sd-f">5</td></tr>
+                <tr><th>Polyhedron?</th><td id="sd-poly">Yes — 2 triangles + 3 rectangles</td></tr>
+                <tr><th>Uniform cross-section?</th><td id="sd-uni">Yes — a triangle</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="def" style="margin:0">
+          <div class="t">Something to notice</div>
+          <p id="sd-note" style="margin-bottom:0">The two bases are parallel and identical.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout ext">
+      <div class="h">Extension · Euler's formula (not required in this chapter)</div>
+      <p style="margin-bottom:0">You may notice a pattern: <span class="m">V − E + F = 2</span> for every polyhedron. Try it with the cube (<span class="m">8 − 12 + 6 = 2</span>) and the square pyramid (<span class="m">5 − 8 + 5 = 2</span>). This is <strong>Euler's formula</strong>; it has been moved to Book 3A enrichment and is <em>not</em> examined in this chapter.</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="sec">
+    <h2><span class="n">7</span>Cross-sections <span class="zh">截面</span></h2>
+    <p class="lead">When you cut a solid with a flat plane, the exposed surface is called a <strong>cross-section</strong>. Think of slicing a loaf of bread: every slice is a cross-section.</p>
+
+    <div class="def">
+      <div class="t">Two definitions</div>
+      <p><strong>Cross-section</strong> (截面): the plane figure you get when a solid is cut by a plane.</p>
+      <p style="margin-bottom:0"><strong>Uniform cross-section</strong> (均勻橫截面): a solid has uniform cross-sections if the cross-sections all have <strong>the same shape and size as its base</strong>, when the solid is cut by any plane parallel to the base.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="fig-box">
+        <svg viewBox="0 0 250 228" width="100%" style="max-width:300px" role="img" aria-label="A cuboid cut by a plane parallel to its base; the cross-section is a rectangle the same size as the base">
+          <!-- the solid is drawn translucent so the cut inside it can be seen -->
+          <g fill-opacity=".45">
+            <polygon points="60,90 160,90 160,190 60,190" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.2"/>
+            <polygon points="60,90 94,56 194,56 160,90" fill="#dce8ff" stroke="#2563eb" stroke-width="2.2"/>
+            <polygon points="160,90 194,56 194,156 160,190" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.2"/>
+          </g>
+          <g fill="none" stroke="#8fa3b8" stroke-width="1.6" stroke-dasharray="5 4">
+            <line x1="94" y1="56" x2="94" y2="156"/><line x1="94" y1="156" x2="194" y2="156"/><line x1="60" y1="190" x2="94" y2="156"/>
+          </g>
+          <!-- the cut: a rectangle the same shape and size as the base -->
+          <polygon points="60,140 94,106 194,106 160,140" fill="#dc2626" fill-opacity=".22" stroke="#dc2626" stroke-width="2.4" stroke-linejoin="round"/>
+          <text x="127" y="216" class="lbl-sm" text-anchor="middle" fill="#b91c1c">cross-section = rectangle</text>
+        </svg>
+        <figcaption>Cut parallel to the base → the cross-section has the <strong>same shape as the base</strong>.</figcaption>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 300 230" width="300" role="img" aria-label="A square pyramid cut horizontally gives a smaller square">
+          <polygon points="60,175 160,175 200,143 100,143" fill="#fef4e6" stroke="#d97706" stroke-width="2.2"/>
+          <polygon points="60,175 160,175 130,55" fill="#fde9cc" stroke="#d97706" stroke-width="2.2"/>
+          <polygon points="160,175 200,143 130,55" fill="#fef4e6" stroke="#d97706" stroke-width="2.2"/>
+          <g fill="none" stroke="#d97706" stroke-width="2.2"><line x1="60" y1="175" x2="130" y2="55"/><line x1="200" y1="143" x2="130" y2="55"/></g>
+          <g fill="none" stroke="#8fa3b8" stroke-width="1.6" stroke-dasharray="5 4">
+            <line x1="100" y1="143" x2="130" y2="55"/><line x1="60" y1="175" x2="100" y2="143"/><line x1="100" y1="143" x2="200" y2="143"/>
+          </g>
+          <polygon points="97,120 143,120 163,104 117,104" fill="#fdeceb" fill-opacity=".8" stroke="#dc2626" stroke-width="2.2"/>
+          <text x="130" y="212" class="lbl-sm" text-anchor="middle" fill="#b91c1c">cross-section = smaller square</text>
+        </svg>
+        <figcaption>Cut a pyramid horizontally → the cross-section is a <strong>smaller</strong> copy of the base. So a pyramid does <strong>not</strong> have uniform cross-sections.</figcaption>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Solid</th><th>Uniform cross-sections?</th><th>Shape of the cross-section</th></tr></thead>
+        <tbody>
+          <tr><td>Cube / cuboid</td><td>Yes</td><td>a square / rectangle</td></tr>
+          <tr><td>Triangular prism</td><td>Yes</td><td>a triangle</td></tr>
+          <tr><td>Pentagonal prism</td><td>Yes</td><td>a pentagon</td></tr>
+          <tr><td>Circular cylinder</td><td>Yes</td><td>a circle</td></tr>
+          <tr><td>Sphere</td><td><strong>No</strong></td><td>circles that get smaller away from the centre</td></tr>
+          <tr><td>Pyramid (any)</td><td><strong>No</strong></td><td>shrinks towards the apex</td></tr>
+          <tr><td>Circular cone</td><td><strong>No</strong></td><td>shrinks towards the apex</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="h">The sphere trap</div>
+      <p style="margin-bottom:0">Every cross-section of a sphere is a circle — but the circles are <strong>different sizes</strong>. So a sphere has circular cross-sections, yet it does <strong>not</strong> have uniform cross-sections. “Uniform” needs the same shape <em>and</em> the same size.</p>
+    </div>
+
+    <div class="callout mem">
+      <div class="h">The quick test</div>
+      <p style="margin-bottom:0"><strong>Prism or cylinder → yes. Pyramid, cone or sphere → no.</strong> The shape has to stay exactly the same size all the way through; anything that tapers (to an apex or to a point on the surface) fails.</p>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="sec">
+    <h2><span class="n">8</span>Drawing a solid in 2-D <span class="zh">立體圖形的平面表示</span></h2>
+    <p class="lead">On paper a solid is only a picture. Two conventions make the picture readable.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Two rules</h3>
+        <ol style="margin-bottom:0">
+          <li><strong>Hidden edges are drawn dotted</strong> (or dashed). They are the edges you could not see if the solid were real.</li>
+          <li><strong>Parallel edges stay parallel</strong> on paper, and equal edges are drawn equal in length.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Why the dotted lines matter</h3>
+        <p style="margin-bottom:0">A cube drawn with only the visible edges looks like three squares glued together. The dotted edges are what make it a <em>solid</em>. In a test, forgetting the dotted lines usually costs a mark.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 420 220" width="420" role="img" aria-label="The same cuboid drawn with and without hidden edges">
+        <g>
+          <polygon points="40,80 120,80 120,170 40,170" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.2"/>
+          <polygon points="40,80 68,52 148,52 120,80" fill="#dce8ff" stroke="#2563eb" stroke-width="2.2"/>
+          <polygon points="120,80 148,52 148,142 120,170" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.2"/>
+          <text x="94" y="196" class="lbl-sm" text-anchor="middle" fill="#b91c1c">✗ looks flat</text>
+        </g>
+        <text x="196" y="120" class="lbl" fill="#61748a">→</text>
+        <g>
+          <polygon points="240,80 320,80 320,170 240,170" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.2"/>
+          <polygon points="240,80 268,52 348,52 320,80" fill="#dce8ff" stroke="#2563eb" stroke-width="2.2"/>
+          <polygon points="320,80 348,52 348,142 320,170" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.2"/>
+          <g fill="none" stroke="#8fa3b8" stroke-width="1.8" stroke-dasharray="6 5">
+            <line x1="268" y1="52" x2="268" y2="142"/><line x1="268" y1="142" x2="348" y2="142"/><line x1="240" y1="170" x2="268" y2="142"/>
+          </g>
+          <text x="294" y="196" class="lbl-sm" text-anchor="middle" fill="#166534">✓ reads as a solid</text>
+        </g>
+      </svg>
+      <figcaption>The only difference is the three dotted edges at the back.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 9 -->
+  <section class="sec">
+    <h2><span class="n">9</span>Worked examples <span class="zh">例題</span></h2>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 1</span>Is it a polyhedron?</div>
+      <div class="eg-body">
+        <p>Decide whether each solid is a polyhedron: (a) a cube, (b) a sphere, (c) a triangular prism, (d) a circular cone.</p>
+        <button class="reveal-btn" data-reveal="#s1">Show solution</button>
+        <div id="s1" class="sol hidden">
+          <p><strong>(a) Yes</strong> — six square faces, all polygons.</p>
+          <p><strong>(b) No</strong> — the whole surface is curved.</p>
+          <p><strong>(c) Yes</strong> — two triangles and three rectangles.</p>
+          <p style="margin-bottom:0"><strong>(d) No</strong> — the lateral surface is curved.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 2</span>Count vertices, edges and faces</div>
+      <div class="eg-body">
+        <p>Write down the number of vertices, edges and faces of (a) a triangular prism, (b) a square pyramid.</p>
+        <button class="reveal-btn" data-reveal="#s2">Show solution</button>
+        <div id="s2" class="sol hidden">
+          <p><strong>(a) Triangular prism:</strong> 6 vertices, 9 edges, 5 faces (2 triangles + 3 rectangles).</p>
+          <p style="margin-bottom:0"><strong>(b) Square pyramid:</strong> 5 vertices (4 base corners + the apex), 8 edges (4 base + 4 slanting), 5 faces (1 square + 4 triangles).</p>
+          <p style="margin:10px 0 0;font-size:14.5px;color:var(--muted)">A reliable way to count edges of a prism: <span class="m">3 × (number of sides of the base)</span>. For a triangular prism: <span class="m">3 × 3 = 9</span>. For a pentagonal prism: <span class="m">3 × 5 = 15</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 3</span>Cross-section reasoning</div>
+      <div class="eg-body">
+        <p>A solid has a square base. When it is cut by a plane parallel to that base, every cross-section is the same square.</p>
+        <p><strong>(a)</strong> What kind of solid could it be? &nbsp; <strong>(b)</strong> Could it be a square pyramid?</p>
+        <button class="reveal-btn" data-reveal="#s3">Show solution</button>
+        <div id="s3" class="sol hidden">
+          <p><strong>(a)</strong> A <strong>prism with a square base</strong> — a cuboid (or a cube). It has uniform cross-sections.</p>
+          <p style="margin-bottom:0"><strong>(b) No.</strong> In a square pyramid the cross-sections parallel to the base get smaller as you move towards the apex, so they are not the same size.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="sec">
+    <h2><span class="n">10</span>Let's check <span class="zh">課堂練習</span></h2>
+    <div class="check">
+      <div class="t">Check yourself</div>
+      <ol>
+        <li>A solid is enclosed by polygons only. What is it called?</li>
+        <li>Name a solid with 5 faces: one square and four triangles.</li>
+        <li>Which solids have a curved surface: cube, cylinder, cone, sphere, triangular prism?</li>
+        <li>Does a circular cylinder have uniform cross-sections? What shape are they?</li>
+        <li>Does a triangular pyramid have uniform cross-sections?</li>
+        <li>How many edges does a pentagonal prism have?</li>
+        <li>Why do we draw some edges of a solid as dotted lines?</li>
+      </ol>
+      <button class="reveal-btn" data-reveal="#sc">Show answers</button>
+      <div id="sc" class="sol hidden">
+        <ol>
+          <li>A <strong>polyhedron</strong>.</li>
+          <li>A <strong>square pyramid</strong>.</li>
+          <li><strong>Cylinder, cone and sphere</strong>.</li>
+          <li>Yes — circles.</li>
+          <li>No — the cross-sections get smaller towards the apex.</li>
+          <li><span class="m">3 × 5 = 15</span> edges.</li>
+          <li>Because they are <strong>hidden</strong> behind the solid; dotting them shows the shape is 3-D.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="sec">
+    <h2><span class="n">!</span>Common mistakes <span class="zh">常見錯誤</span></h2>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“A sphere is a polyhedron because it is a solid.”</div>
+      <div class="r"><span class="tag">✓ Right</span>No — a polyhedron must be enclosed by polygons only</div>
+      <div class="why">A sphere has no flat face at all. Curved surface = not a polyhedron.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“A cone is a pyramid with a circular base.”</div>
+      <div class="r"><span class="tag">✓ Right</span>A cone is <strong>not</strong> a pyramid</div>
+      <div class="why">A pyramid’s lateral faces must be flat triangles. A cone’s surface is curved.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“A pyramid has uniform cross-sections because all its slices are squares.”</div>
+      <div class="r"><span class="tag">✓ Right</span>The slices must be the <strong>same size</strong>, not just the same shape</div>
+      <div class="why">“Uniform” means same shape <em>and</em> same size. A pyramid’s slices shrink.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Naming a prism by its long rectangular face</div>
+      <div class="r"><span class="tag">✓ Right</span>Name it by its <strong>base</strong></div>
+      <div class="why">A triangular prism has 3 rectangular lateral faces and 2 triangular ends.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Drawing all edges as solid lines</div>
+      <div class="r"><span class="tag">✓ Right</span>Hidden edges are dotted</div>
+      <div class="why">Without the dotted edges the picture looks flat and the sketch loses a mark.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“A cube has 12 faces.”</div>
+      <div class="r"><span class="tag">✓ Right</span>A cube has <strong>6</strong> faces, <strong>12</strong> edges, <strong>8</strong> vertices</div>
+      <div class="why">Faces = flat surfaces; edges = lines where faces meet. Mixing them up is very common.</div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">One-line summary</div>
+      <p style="margin-bottom:0"><strong>Polyhedron</strong> = flat polygon faces only. <strong>Prism</strong> = two identical parallel ends + rectangular sides (uniform cross-section). <strong>Pyramid</strong> = one base + apex (no uniform cross-section). <strong>Sphere</strong> = all curved, every slice a circle but the circles change size (not uniform).</p>
+    </div>
+  </section>
+
+  <div class="done-bar">
+    <button type="button" aria-pressed="false">Mark this section as completed</button>
+    <span style="color:var(--muted);font-size:13.5px">Saved on this device only.</span>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — 5.4 3-D Figures</span><span>Form 1 Mathematics</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

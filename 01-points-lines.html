@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.1A Points, Lines &amp; Surfaces · Ch.5 Introduction to Geometry</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="01">
+
+<div id="site-header"></div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.1 Basic Concepts<span>/</span>5.1A</div>
+    <span class="chip">SECTION 5.1A · Worksheet 5.1</span>
+    <h1>Points, Lines &amp; Surfaces</h1>
+    <p class="zh">點、線與面 — 幾何學的起點</p>
+    <div class="objectives">
+      <h2>Learning objectives</h2>
+      <ol>
+        <li>Understand the ideas of a point, a line, a line segment and a surface (plane).</li>
+        <li>Know the difference between a <strong>straight line</strong> and a <strong>line segment</strong>.</li>
+        <li>Name and write these objects with correct notation.</li>
+        <li>Measure the length of a line segment and write the answer with units.</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 -->
+  <section class="sec">
+    <h2><span class="n">1</span>Everything starts with a point <span class="zh">點</span></h2>
+    <p class="lead">Geometry is the study of shapes and space. In geometry we do not draw a real object — we draw a <em>model</em> of it. A point, a line and a plane are the three “undefined” objects that every other shape is built from, so we describe them instead of defining them.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Point</h3>
+        <p>A <strong>point</strong> tells you <em>where</em> something is. It has <strong>position but no size</strong> — no length, no width, no thickness.</p>
+      <div class="fig-box">
+        <svg viewBox="0 0 320 104" width="320" role="img" aria-label="A point A">
+          <circle cx="160" cy="56" r="4.5" fill="#14212e"/>
+          <text x="172" y="50" class="lbl">A</text>
+          <text x="160" y="92" class="lbl-sm" text-anchor="middle" fill="#61748a">a point has position only</text>
+        </svg>
+        <p style="margin:6px 0 0;font-weight:700">Point <span class="m">A</span></p>
+      </div>
+        <ul>
+          <li>We draw it as a small dot: <strong>•</strong></li>
+          <li>We name it with a <strong>CAPITAL letter</strong>: <span class="m">A</span>, <span class="m">B</span>, <span class="m">P</span>, <span class="m">Q</span>…</li>
+          <li>In real life: the tip of a pencil, a corner of a room, a star in the sky.</li>
+        </ul>
+        <div class="callout warn" style="margin-bottom:0">
+          <div class="h">Never do this</div>
+          <p>Writing <span class="m">a</span> or <span class="m">p</span> (small letter) for a point. Small letters are kept for lines, lengths and angles.</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <h3>Surface (plane)</h3>
+        <p>A <strong>surface</strong> or <strong>plane</strong> is a <em>flat</em> surface with <strong>no thickness</strong> that extends in all directions without ending.</p>
+        <ul>
+          <li>A plane has <strong>no edges and no corners</strong> — what you draw is only a piece of it.</li>
+          <li>A flat shape drawn on a plane is called a <strong>plane figure</strong> (平面圖形).</li>
+          <li>In real life: the top of a desk, a whiteboard, the surface of calm water.</li>
+        </ul>
+        <figure style="margin:0">
+          <svg viewBox="0 0 300 118" width="300" role="img" aria-label="A plane extending in all directions">
+            <path d="M30 74 L150 34 L272 74 L152 114 Z" fill="#eef4ff" stroke="#8fa3b8" stroke-width="1.6"/>
+            <g fill="#b9cdf5">
+              <circle cx="98" cy="72" r="2"/><circle cx="128" cy="62" r="2"/><circle cx="158" cy="52" r="2"/>
+              <circle cx="188" cy="62" r="2"/><circle cx="218" cy="72" r="2"/>
+              <circle cx="128" cy="82" r="2"/><circle cx="158" cy="92" r="2"/><circle cx="188" cy="82" r="2"/>
+            </g>
+            <text x="152" y="26" class="lbl-sm" text-anchor="middle">a plane (a piece of it)</text>
+          </svg>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec">
+    <h2><span class="n">2</span>Line, Line Segment <span class="zh">直線、線段</span></h2>
+    <p class="lead">These two look similar on paper, but they are different objects. The difference is <strong>how many endpoints</strong> they have — and therefore whether they have a length.</p>
+
+    <div class="grid g2">
+
+
+      <div class="fig-box">
+        <svg viewBox="0 0 340 104" width="340" role="img" aria-label="Line AB extends forever in both directions">
+          <line x1="26" y1="56" x2="294" y2="56" stroke="#33475b" stroke-width="2.6"/>
+          <circle cx="90" cy="56" r="3.6" fill="#14212e"/>
+          <circle cx="230" cy="56" r="3.6" fill="#14212e"/>
+          <text x="90" y="44" class="lbl" text-anchor="middle">A</text>
+          <text x="230" y="44" class="lbl" text-anchor="middle">B</text>
+          <text x="320" y="60" class="lbl" text-anchor="middle">L</text>
+          <text x="160" y="86" class="lbl-sm" text-anchor="middle" fill="#61748a">no endpoints · no fixed length</text>
+        </svg>
+        <p style="margin:6px 0 0;font-weight:700">Straight line <span class="nl"><span class="t m">L</span></span> 直線L</p>
+      </div>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 320 104" width="320" role="img" aria-label="Line segment PQ with length 4 cm">
+          <line x1="70" y1="56" x2="250" y2="56" stroke="#2563eb" stroke-width="3"/>
+          <circle cx="70" cy="56" r="4.5" fill="#14212e"/>
+          <circle cx="250" cy="56" r="4.5" fill="#14212e"/>
+          <text x="70" y="84" class="lbl" text-anchor="middle">P</text>
+          <text x="250" y="84" class="lbl" text-anchor="middle">Q</text>
+          <line x1="70" y1="34" x2="250" y2="34" stroke="#8fa3b8" stroke-width="1.4"/>
+          <line x1="70" y1="29" x2="70" y2="39" stroke="#8fa3b8" stroke-width="1.4"/>
+          <line x1="250" y1="29" x2="250" y2="39" stroke="#8fa3b8" stroke-width="1.4"/>
+          <text x="160" y="26" class="lbl-sm" text-anchor="middle">4 cm</text>
+        </svg>
+        <p style="margin:6px 0 0;font-weight:700">Line segment PQ 線段PQ</p>
+      </div>
+    </div>
+
+    <div class="def">
+      <div class="t">Key point — the one sentence to remember</div>
+      <p>A <strong>line segment</strong> (say PQ) is a part of a line which has <strong>two endpoints</strong> (say <span class="m">P</span> and <span class="m">Q</span>) and a <strong>fixed length</strong> (say 4 cm).<br> We can simply write <span class="m">PQ = 4 cm</span>.</p>
+      <p style="margin-bottom:0">A <strong>line</strong> has no endpoints, so it has <strong>no length</strong> — you can never write <span class="m">L = 4 cm</span> for a line.</p>
+    </div>
+
+    <h3>Side by side</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Object</th><th>Endpoints</th><th>Length?</th><th>Symbol</th><th>How to say it</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Point</strong></td><td>—</td><td>No size</td><td><span class="m">A</span></td><td>“point A”</td></tr>
+          <tr><td><strong>Line segment</strong></td><td>2</td><td>Yes, fixed</td><td>AB</td><td>“segment AB”</td></tr>
+          <tr><td><strong>Straight line</strong></td><td>0</td><td>No</td><td><span class="nl"><span class="t m">L</span></span></td><td>“line L”</td></tr>
+          <tr><td><strong>Curve</strong></td><td>varies</td><td>varies</td><td>—</td><td>“curve AB”</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec">
+    <h2><span class="n">3</span>Measuring a line segment <span class="zh">量度線段</span></h2>
+    <p class="lead">Length is measured with a <strong>ruler</strong>. The unit is usually the centimetre (cm) or the millimetre (mm), and <span class="m">1 cm = 10 mm</span>.</p>
+
+    <figure>
+      <svg viewBox="0 0 460 150" width="460" role="img" aria-label="Measuring segment AB with a ruler: AB is 5 cm">
+        <line x1="60" y1="34" x2="330" y2="34" stroke="#2563eb" stroke-width="3"/>
+        <circle cx="60" cy="34" r="4.2" fill="#14212e"/>
+        <circle cx="330" cy="34" r="4.2" fill="#14212e"/>
+        <text x="60" y="24" class="lbl" text-anchor="middle">A</text>
+        <text x="330" y="24" class="lbl" text-anchor="middle">B</text>
+        <g stroke="#8fa3b8" stroke-width="1.4">
+          <line x1="60" y1="40" x2="60" y2="54"/><line x1="330" y1="40" x2="330" y2="54"/>
+        </g>
+        <rect x="30" y="56" width="400" height="56" rx="6" fill="#fbfdff" stroke="#33475b" stroke-width="1.8"/>
+        <g stroke="#33475b" stroke-width="1.4">
+          <line x1="60" y1="56" x2="60" y2="82"/><line x1="330" y1="56" x2="330" y2="82"/>
+          <line x1="87" y1="56" x2="87" y2="70"/><line x1="114" y1="56" x2="114" y2="70"/>
+          <line x1="141" y1="56" x2="141" y2="70"/><line x1="168" y1="56" x2="168" y2="70"/>
+          <line x1="195" y1="56" x2="195" y2="70"/><line x1="222" y1="56" x2="222" y2="70"/>
+          <line x1="249" y1="56" x2="249" y2="70"/><line x1="276" y1="56" x2="276" y2="70"/>
+          <line x1="303" y1="56" x2="303" y2="70"/><line x1="357" y1="56" x2="357" y2="70"/>
+          <line x1="384" y1="56" x2="384" y2="70"/><line x1="411" y1="56" x2="411" y2="70"/>
+        </g>
+        <g class="lbl-sm" text-anchor="middle" fill="#33475b">
+          <text x="60" y="100">0</text><text x="114" y="100">1</text><text x="168" y="100">2</text>
+          <text x="222" y="100">3</text><text x="276" y="100">4</text><text x="330" y="100">5</text>
+          <text x="384" y="100">6</text>
+        </g>
+        <text x="195" y="128" class="lbl-sm" text-anchor="middle" fill="#61748a">each small gap = 1 mm</text>
+      </svg>
+      <figcaption>Place the <strong>0 mark</strong> (not the end of the ruler) at one endpoint, then read the mark at the other endpoint: <span class="m">AB = 5 cm</span>.</figcaption>
+    </figure>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>How to measure correctly</h3>
+        <ol class="steps" style="margin-bottom:0">
+          <li>Put the <strong>0 mark</strong> exactly on one endpoint.</li>
+          <li>Keep the ruler <strong>along</strong> the segment (not tilted).</li>
+          <li>Read the mark at the other endpoint — look straight down, not from the side.</li>
+          <li>Write the answer <strong>with a unit</strong>: 5 cm, not just 5.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Converting units</h3>
+        <p style="margin-bottom:6px"><span class="m">1 cm = 10 mm</span> &nbsp;·&nbsp; <span class="m">1 m = 100 cm</span></p>
+        <div class="tbl-wrap" style="margin:10px 0 0">
+          <table class="compact">
+            <tbody>
+              <tr><td>4 cm</td><td>= 40 mm</td></tr>
+              <tr><td>7.5 cm</td><td>= 75 mm</td></tr>
+              <tr><td>120 mm</td><td>= 12 cm</td></tr>
+              <tr><td>2 m</td><td>= 200 cm</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec">
+    <h2><span class="n">4</span>Worked examples <span class="zh">例題</span></h2>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 1</span>Naming line segments</div>
+      <div class="eg-body">
+        <p>In the figure, <span class="m">A</span>, <span class="m">B</span>, <span class="m">C</span> and <span class="m">D</span> lie on a straight line in that order, with <span class="m">AB = 3 cm</span>, <span class="m">BC = 2 cm</span> and <span class="m">CD = 3 cm</span>.</p>
+        <figure style="margin:10px 0">
+          <svg viewBox="0 0 420 96" width="420" role="img" aria-label="Points A B C D on a line">
+            <line x1="40" y1="52" x2="380" y2="52" stroke="#33475b" stroke-width="2.4"/>
+            <g fill="#14212e">
+              <circle cx="70" cy="52" r="4"/><circle cx="150" cy="52" r="4"/>
+              <circle cx="230" cy="52" r="4"/><circle cx="350" cy="52" r="4"/>
+            </g>
+            <g class="lbl" text-anchor="middle">
+              <text x="70" y="40">A</text><text x="150" y="40">B</text><text x="230" y="40">C</text><text x="350" y="40">D</text>
+            </g>
+            <g class="lbl-sm" text-anchor="middle" fill="#61748a">
+              <text x="110" y="74">3 cm</text><text x="190" y="74">2 cm</text><text x="290" y="74">3 cm</text>
+            </g>
+          </svg>
+        </figure>
+        <p><strong>(a)</strong> Name the line segment which has the same length as <span class="m">AB</span>.<br>
+           <strong>(b)</strong> Find the length of <span class="m">AD</span>.</p>
+        <button class="reveal-btn" data-reveal="#s1" data-show="Show solution" data-hide="Hide solution">Show solution</button>
+        <div id="s1" class="sol hidden">
+          <ol class="steps">
+            <li><span class="m">CD</span> is 3 cm long, and <span class="m">AB</span> is also 3 cm. So <span class="m">CD</span> has the same length as <span class="m">AB</span>.</li>
+            <li><span class="m">AD = AB + BC + CD = 3 + 2 + 3 = 8 cm</span></li>
+          </ol>
+          <p class="ans" style="margin-top:10px">(a) CD &nbsp;&nbsp; (b) AD = 8 cm</p>
+          <p style="margin:10px 0 0;font-size:14.5px;color:var(--muted)">Note: <span class="m">AC</span> = 5 cm and <span class="m">BD</span> = 5 cm, so <span class="m">AC</span> and <span class="m">BD</span> are also equal in length. Both are correct answers to a question worded “name a segment with the same length as …”.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 2</span>Line or segment?</div>
+      <div class="eg-body">
+        <p>Decide whether each statement is true or false.</p>
+        <p><strong>(a)</strong> <span class="m">AB = 6 cm</span> can describe a straight line.<br>
+           <strong>(b)</strong> A line segment has two endpoints.<br>
+           <strong>(c)</strong> A ray has no endpoint.</p>
+        <button class="reveal-btn" data-reveal="#s2">Show solution</button>
+        <div id="s2" class="sol hidden">
+          <p><strong>(a) False.</strong> A line has no endpoints, so it has no fixed length. Only a <em>segment</em> has a length.</p>
+          <p><strong>(b) True.</strong> That is exactly what makes it a segment.</p>
+          <p><strong>(c) False.</strong> A ray has <em>one</em> endpoint and then goes on forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec">
+    <h2><span class="n">5</span>Let's check <span class="zh">課堂練習</span></h2>
+    <div class="check">
+      <div class="t">Check yourself</div>
+      <p>Refer to the figure. <span class="m">P</span>, <span class="m">Q</span>, <span class="m">R</span> and <span class="m">S</span> lie on a straight line, <span class="m">PQ = 4 cm</span>, <span class="m">QR = 4 cm</span> and <span class="m">RS = 2 cm</span>.</p>
+      <figure style="margin:8px 0">
+        <svg viewBox="0 0 420 90" width="420" role="img" aria-label="Points P Q R S on a line">
+          <line x1="40" y1="50" x2="380" y2="50" stroke="#33475b" stroke-width="2.4"/>
+          <g fill="#14212e"><circle cx="80" cy="50" r="4"/><circle cx="170" cy="50" r="4"/><circle cx="260" cy="50" r="4"/><circle cx="320" cy="50" r="4"/></g>
+          <g class="lbl" text-anchor="middle"><text x="80" y="38">P</text><text x="170" y="38">Q</text><text x="260" y="38">R</text><text x="320" y="38">S</text></g>
+          <g class="lbl-sm" text-anchor="middle" fill="#61748a"><text x="125" y="72">4 cm</text><text x="215" y="72">4 cm</text><text x="290" y="72">2 cm</text></g>
+        </svg>
+      </figure>
+      <ol>
+        <li>Name the line segment(s) which has / have the same length as <span class="m">PQ</span>.</li>
+        <li>Name the line segment which is the longest.</li>
+        <li>Find <span class="m">PS</span>.</li>
+        <li>Is <span class="m">PR = QS</span>? Explain briefly.</li>
+      </ol>
+      <button class="reveal-btn" data-reveal="#c1">Show answers</button>
+      <div id="c1" class="sol hidden">
+        <ol>
+          <li><span class="m">QR</span> (also 4 cm).</li>
+          <li><span class="m">PS</span> = 10 cm, so it is the longest.</li>
+          <li><span class="m">PS = 4 + 4 + 2 = 10 cm</span></li>
+          <li>No. <span class="m">PR = 4 + 4 = 8 cm</span> but <span class="m">QS = 4 + 2 = 6 cm</span>, so <span class="m">PR ≠ QS</span>.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="sec">
+    <h2><span class="n">!</span>Common mistakes <span class="zh">常見錯誤</span></h2>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span><span class="m">AB = 4 cm</span> where <span class="m">AB</span> is a line</div>
+      <div class="r"><span class="tag">✓ Right</span><span class="m">AB</span> = 4 cm (a segment has a length)</div>
+      <div class="why">A line never ends, so it has no length. Only a line segment can be measured.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Point <span class="m">a</span>, point <span class="m">b</span></div>
+      <div class="r"><span class="tag">✓ Right</span>Point <span class="m">A</span>, point <span class="m">B</span></div>
+      <div class="why">Points use CAPITAL letters. Small letters are used for lines and for angles.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span><span class="m">AC</span> is a segment in the figure above</div>
+      <div class="r"><span class="tag">✓ Right</span><span class="m">AC</span> <em>is</em> a segment, but it is not drawn — it is made of <span class="m">AB</span> + <span class="m">BC</span></div>
+      <div class="why">Any two points on a line form a segment, even if no line is drawn between them. Read the question: does it ask for segments <em>shown</em> or <em>all possible</em> segments?</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Answer: 5</div>
+      <div class="r"><span class="tag">✓ Right</span>Answer: 5 cm</div>
+      <div class="why">A length without a unit is incomplete — and in a test it can cost a mark.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Measuring from the end of the ruler</div>
+      <div class="r"><span class="tag">✓ Right</span>Measuring from the <strong>0 mark</strong></div>
+      <div class="why">Many rulers have a small blank margin before the 0 mark. Starting at the edge gives a wrong length.</div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">Self-check before you move on</div>
+      <p>Can you explain, in one sentence each, the difference between a line and a line segment, (ii) a point and a plane? If yes, you are ready for angles.</p>
+    </div>
+  </section>
+
+  <div class="done-bar">
+    <button type="button" aria-pressed="false">Mark this section as completed</button>
+    <span style="color:var(--muted);font-size:13.5px">Saved on this device only.</span>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — 5.1A Points, Lines &amp; Surfaces</span><span>Form 1 Mathematics</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

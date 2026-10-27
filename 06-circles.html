@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.2A Circles · Ch.5 Introduction to Geometry</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="06">
+
+<div id="site-header"></div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.2 Plane Figures<span>/</span>5.2A</div>
+    <span class="chip">SECTION 5.2A · Worksheet 5.2</span>
+    <h1>Circles</h1>
+    <p class="zh">圓 — 圓心、半徑、直徑、弦、弧、扇形、弓形</p>
+    <div class="objectives">
+      <h2>Learning objectives</h2>
+      <ol>
+        <li>Understand the concept of a circle.</li>
+        <li>Name the parts of a circle correctly: centre, radius, diameter, chord, arc, sector, segment.</li>
+        <li>Use the relationship <span class="m">diameter = 2 × radius</span>.</li>
+        <li>Avoid mixing up a chord, a diameter, a sector and a segment.</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 -->
+  <section class="sec">
+    <h2><span class="n">1</span>What is a circle? <span class="zh">甚麼是圓</span></h2>
+    <p class="lead">A circle is the set of <strong>all</strong> points that are the <strong>same distance</strong> from a fixed point. That fixed point is the <strong>centre</strong>.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <div class="def" style="margin-top:0">
+          <div class="t">Definition</div>
+          <p style="margin-bottom:0">A <strong>circle</strong> is a plane figure made of all the points that are a fixed distance from a fixed point called the <strong>centre</strong>.</p>
+        </div>
+        <p>The distance from the centre to any point on the circle is the same everywhere — that is what makes it a circle and not an oval.</p>
+        <p style="margin-bottom:0"><strong>Real life:</strong> a wheel, a clock face, a coin, the rim of a cup, a pizza.</p>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 300 220" width="300" role="img" aria-label="Circle with centre O and several radii of equal length">
+          <circle cx="150" cy="110" r="88" fill="#f7faff" stroke="#2563eb" stroke-width="2.6"/>
+          <g stroke="#8fa3b8" stroke-width="1.6" stroke-dasharray="4 4">
+            <line x1="150" y1="110" x2="238" y2="110"/><line x1="150" y1="110" x2="150" y2="22"/>
+            <line x1="150" y1="110" x2="62" y2="110"/><line x1="150" y1="110" x2="150" y2="198"/>
+            <line x1="150" y1="110" x2="212" y2="48"/><line x1="150" y1="110" x2="88" y2="172"/>
+          </g>
+          <circle cx="150" cy="110" r="4.4" fill="#14212e"/>
+          <text x="158" y="126" class="lbl">O</text>
+          <text x="176" y="102" class="lbl-sm" fill="#61748a">r</text>
+          <text x="150" y="214" class="lbl-sm" text-anchor="middle" fill="#61748a">every radius is the same length</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec">
+    <h2><span class="n">2</span>The parts of a circle <span class="zh">圓的各部分</span></h2>
+    <p class="lead">Click each name to light up the part on the diagram. This is the vocabulary question that appears in every test.</p>
+
+    <div class="card">
+      <div class="grid g2" style="align-items:start">
+        <div id="circle-demo">
+          <svg viewBox="0 0 400 340" width="400" role="img" aria-label="A circle with its parts labelled">
+            <!-- segment fill -->
+            <g class="circ-part" data-part="segment">
+              <path class="fillme" d="M 97.8 116 A 118 118 0 0 1 302.2 116 Z" fill="#e6f7f4" fill-opacity=".7" stroke="#0d9488" stroke-width="2"/>
+            </g>
+            <!-- sector fill -->
+            <g class="circ-part" data-part="sector">
+              <path class="fillme" d="M 200 175 L 318 175 A 118 118 0 0 1 259 277.2 Z" fill="#fef4e6" fill-opacity=".85" stroke="#d97706" stroke-width="2"/>
+            </g>
+            <!-- circumference -->
+            <g class="circ-part" data-part="circumference">
+              <circle cx="200" cy="175" r="118" fill="none" stroke="#93a6b9" stroke-width="2.4"/>
+            </g>
+            <!-- diameter -->
+            <g class="circ-part" data-part="diameter">
+              <line x1="82" y1="175" x2="318" y2="175" stroke="#7c3aed" stroke-width="2.8"/>
+            </g>
+            <!-- chord -->
+            <g class="circ-part" data-part="chord">
+              <line x1="97.8" y1="116" x2="302.2" y2="116" stroke="#0d9488" stroke-width="2.8"/>
+            </g>
+            <!-- radius -->
+            <g class="circ-part" data-part="radius">
+              <line x1="200" y1="175" x2="103.3" y2="242.7" stroke="#2563eb" stroke-width="2.8"/>
+            </g>
+            <!-- arc -->
+            <g class="circ-part" data-part="arc">
+              <path d="M 200 57 A 118 118 0 0 1 318 175" fill="none" stroke="#14212e" stroke-width="5"/>
+            </g>
+            <!-- centre -->
+            <g class="circ-part" data-part="centre">
+              <circle class="dot" cx="200" cy="175" r="5" fill="#14212e"/>
+            </g>
+            <!-- labels -->
+            <g class="lbl">
+              <text x="200" y="45" text-anchor="middle">A</text>
+              <text x="68" y="180">C</text>
+              <text x="330" y="180">D</text>
+              <text x="92" y="258">F</text>
+              <text x="88" y="110">P</text>
+              <text x="310" y="110">Q</text>
+              <text x="266" y="292">E</text>
+              <text x="186" y="168">O</text>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="seg-ctl" style="margin-bottom:12px">
+            <button type="button" data-cp="centre">Centre</button>
+            <button type="button" data-cp="radius">Radius</button>
+            <button type="button" data-cp="diameter">Diameter</button>
+            <button type="button" data-cp="chord">Chord</button>
+            <button type="button" data-cp="arc">Arc</button>
+            <button type="button" data-cp="sector">Sector</button>
+            <button type="button" data-cp="segment">Segment</button>
+            <button type="button" data-cp="circumference">Circumference</button>
+          </div>
+          <div class="def" style="margin:0">
+            <div class="t">Now showing</div>
+            <p id="cp-title" style="font-weight:800;font-size:17px;margin-bottom:6px">Radius 半徑</p>
+            <p id="cp-desc" style="margin-bottom:0">A line segment from the centre to any point on the circle. All radii of the same circle are equal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Part</th><th>中文</th><th>Definition</th><th>In the figure</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Centre</strong></td><td>圓心</td><td>The fixed point in the middle. Named with a capital letter, usually <span class="m">O</span>.</td><td><span class="m">O</span></td></tr>
+          <tr><td><strong>Radius</strong> <small>(pl. radii)</small></td><td>半徑</td><td>Segment from the centre to a point on the circle.</td><td><span class="seg m">OF</span></td></tr>
+          <tr><td><strong>Diameter</strong></td><td>直徑</td><td>A chord that passes through the centre — the longest chord.</td><td><span class="seg m">CD</span></td></tr>
+          <tr><td><strong>Chord</strong></td><td>弦</td><td>Segment joining any two points on the circle.</td><td><span class="seg m">PQ</span></td></tr>
+          <tr><td><strong>Arc</strong></td><td>弧</td><td>Part of the circumference.</td><td>arc <span class="m">AD</span></td></tr>
+          <tr><td><strong>Sector</strong></td><td>扇形</td><td>Region enclosed by <strong>two radii and an arc</strong>.</td><td>the orange slice <span class="m">ODE</span></td></tr>
+          <tr><td><strong>Segment</strong></td><td>弓形</td><td>Region enclosed by <strong>a chord and an arc</strong>.</td><td>the green region above <span class="seg m">PQ</span></td></tr>
+          <tr><td><strong>Circumference</strong></td><td>圓周</td><td>The whole boundary (perimeter) of the circle.</td><td>the outline</td></tr>
+          <tr><td><strong>Semicircle</strong></td><td>半圓</td><td>Half a circle — the region cut off by a diameter.</td><td>half of the circle</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec">
+    <h2><span class="n">3</span>The one relationship you must know <span class="zh">直徑與半徑</span></h2>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Diameter and radius</h3>
+        <p class="m" style="font-size:19px;text-align:center;margin:14px 0">diameter = 2 × radius</p>
+        <p class="m" style="font-size:19px;text-align:center;margin:14px 0">radius = diameter ÷ 2</p>
+        <p style="margin-bottom:0">A diameter is made of <strong>two radii</strong> in a straight line, so it is always exactly twice as long as a radius.</p>
+      </div>
+      <div class="card">
+        <h3>Three facts worth remembering</h3>
+        <ul style="margin-bottom:0">
+          <li>All <strong>radii</strong> of the same circle are equal.</li>
+          <li>The <strong>diameter</strong> is the <strong>longest chord</strong> of a circle.</li>
+          <li>A chord does <strong>not</strong> have to pass through the centre — only a diameter does.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="h">Notation</div>
+      <p style="margin-bottom:0">There is no special symbol for a circle in this chapter — write “the circle with centre <span class="m">O</span>”. An arc can be written with a curved mark above the letters, e.g. arc <span class="m">AB</span>. Always give the <strong>centre</strong> when naming a circle, because two circles can share the same two points.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec">
+    <h2><span class="n">4</span>Worked examples <span class="zh">例題</span></h2>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 1</span>Radius and diameter</div>
+      <div class="eg-body">
+        <p>A circle with centre <span class="m">O</span> has radius <span class="m">7.5 cm</span>.</p>
+        <p><strong>(a)</strong> Find its diameter. &nbsp;&nbsp; <strong>(b)</strong> A chord of the circle is <span class="m">16 cm</span> long. Is that possible?</p>
+        <button class="reveal-btn" data-reveal="#r1">Show solution</button>
+        <div id="r1" class="sol hidden">
+          <p><strong>(a)</strong> <span class="m">diameter = 2 × 7.5 cm = 15 cm</span></p>
+          <p style="margin-bottom:0"><strong>(b)</strong> No. The longest possible chord is the diameter, <span class="m">15 cm</span>. A <span class="m">16 cm</span> chord would not fit inside the circle.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 2</span>Name that part</div>
+      <div class="eg-body">
+        <p>In the circle with centre <span class="m">O</span>, <span class="m">A</span> and <span class="m">B</span> are points on the circle and <span class="m">AB</span> passes through <span class="m">O</span>. <span class="m">C</span> and <span class="m">D</span> are also on the circle, and <span class="m">CD</span> does <em>not</em> pass through <span class="m">O</span>.</p>
+        <p><strong>(a)</strong> What is <span class="seg m">AB</span> called? &nbsp;&nbsp; <strong>(b)</strong> What is <span class="seg m">CD</span> called?<br>
+           <strong>(c)</strong> What is <span class="seg m">OA</span> called? &nbsp;&nbsp; <strong>(d)</strong> Which is longer, <span class="m">AB</span> or <span class="m">CD</span>?</p>
+        <button class="reveal-btn" data-reveal="#r2">Show solution</button>
+        <div id="r2" class="sol hidden">
+          <p><strong>(a)</strong> A <strong>diameter</strong> — a chord passing through the centre.</p>
+          <p><strong>(b)</strong> A <strong>chord</strong> (not a diameter, because it does not pass through <span class="m">O</span>).</p>
+          <p><strong>(c)</strong> A <strong>radius</strong>.</p>
+          <p style="margin-bottom:0"><strong>(d)</strong> <span class="m">AB</span> is longer. The diameter is the longest chord.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 3</span>True or false</div>
+      <div class="eg-body">
+        <p>Decide whether each statement must be correct.</p>
+        <p><strong>(a)</strong> A line segment joining any two points on a circle is a diameter.<br>
+           <strong>(b)</strong> All radii of a circle are equal.<br>
+           <strong>(c)</strong> A sector is bounded by a chord and an arc.</p>
+        <button class="reveal-btn" data-reveal="#r3">Show solution</button>
+        <div id="r3" class="sol hidden">
+          <p><strong>(a) False.</strong> It is a <em>chord</em>. It is only a diameter if it passes through the centre.</p>
+          <p><strong>(b) True.</strong> That is the defining property of a circle.</p>
+          <p style="margin-bottom:0"><strong>(c) False.</strong> That describes a <strong>segment</strong>. A sector is bounded by <em>two radii</em> and an arc.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec">
+    <h2><span class="n">5</span>Let's check <span class="zh">課堂練習</span></h2>
+    <div class="check">
+      <div class="t">Check yourself</div>
+      <ol>
+        <li>Fill in the blanks: a diameter is the longest ______ of a circle.</li>
+        <li>A circle has diameter <span class="m">24 cm</span>. What is its radius?</li>
+        <li>Two circles have radii <span class="m">3 cm</span> and <span class="m">6 cm</span>. What are their diameters?</li>
+        <li>Name the region bounded by two radii and an arc.</li>
+        <li>Name the region bounded by a chord and an arc.</li>
+        <li>Can a chord be longer than a diameter? Explain.</li>
+        <li>How many diameters does a circle have?</li>
+      </ol>
+      <button class="reveal-btn" data-reveal="#rc">Show answers</button>
+      <div id="rc" class="sol hidden">
+        <ol>
+          <li>… the longest <strong>chord</strong>.</li>
+          <li><span class="m">24 ÷ 2 = 12 cm</span></li>
+          <li><span class="m">6 cm</span> and <span class="m">12 cm</span></li>
+          <li>A <strong>sector</strong> (扇形).</li>
+          <li>A <strong>segment</strong> (弓形).</li>
+          <li>No. The diameter passes through the centre, so it is the longest possible chord.</li>
+          <li>Infinitely many — every line through the centre cuts the circle into a diameter.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec">
+    <h2><span class="n">!</span>Common mistakes <span class="zh">常見錯誤</span></h2>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“Any segment joining two points on a circle is a diameter.”</div>
+      <div class="r"><span class="tag">✓ Right</span>It is a <strong>chord</strong>; a diameter must pass through the centre</div>
+      <div class="why">This exact statement is a standard multiple-choice trap. Read it carefully — the word “diameter” hides the missing condition.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Mixing up sector and segment</div>
+      <div class="r"><span class="tag">✓ Right</span>Sector = 2 radii + arc; Segment = 1 chord + arc</div>
+      <div class="why">A <strong>sector</strong> reaches the centre (like a pizza slice); a <strong>segment</strong> does not.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span><span class="m">radius = 2 × diameter</span></div>
+      <div class="r"><span class="tag">✓ Right</span><span class="m">diameter = 2 × radius</span></div>
+      <div class="why">The diameter goes all the way across, so it is the <em>bigger</em> one.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Calling the circumference “the circle”</div>
+      <div class="r"><span class="tag">✓ Right</span>The circumference is the <em>boundary</em>; the circle includes everything inside</div>
+      <div class="why">In everyday speech they are the same; in geometry they are not.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“The arc is a straight line from A to B.”</div>
+      <div class="r"><span class="tag">✓ Right</span>An arc is <strong>curved</strong>; the straight segment <span class="seg m">AB</span> is a chord</div>
+      <div class="why">Two different objects between the same two points: one curved (arc), one straight (chord).</div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">One-line summary</div>
+      <p style="margin-bottom:0">Everything starts at the <strong>centre</strong>. Centre → circle = <strong>radius</strong>; through the centre to the far side = <strong>diameter</strong> (= 2r); any two points = <strong>chord</strong>; two radii + arc = <strong>sector</strong>; chord + arc = <strong>segment</strong>.</p>
+    </div>
+  </section>
+
+  <div class="done-bar">
+    <button type="button" aria-pressed="false">Mark this section as completed</button>
+    <span style="color:var(--muted);font-size:13.5px">Saved on this device only.</span>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — 5.2A Circles</span><span>Form 1 Mathematics</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.2B Triangles · Ch.5 Introduction to Geometry</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="04">
+
+<div id="site-header"></div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.2 Plane Figures<span>/</span>5.2B</div>
+    <span class="chip">SECTION 5.2B · Worksheet 5.2</span>
+    <h1>Triangles</h1>
+    <p class="zh">三角形 — 分類與內角和</p>
+    <div class="objectives">
+      <h2>Learning objectives</h2>
+      <ol>
+        <li>Understand the concept of a triangle and its parts.</li>
+        <li>Classify triangles <strong>by the lengths of the sides</strong>.</li>
+        <li>Classify triangles <strong>by the sizes of the angles</strong>.</li>
+        <li>Recognise that the sum of the interior angles of a triangle is <span class="m">180°</span> and use it to find unknowns.</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 -->
+  <section class="sec">
+    <h2><span class="n">1</span>What is a triangle? <span class="zh">甚麼是三角形</span></h2>
+    <p class="lead">A triangle is the simplest polygon: <strong>three</strong> straight sides, <strong>three</strong> vertices and <strong>three</strong> interior angles.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Parts of a triangle</h3>
+        <ul>
+          <li><strong>Vertices</strong> (頂點): <span class="m">A</span>, <span class="m">B</span>, <span class="m">C</span> — always capital letters.</li>
+          <li><strong>Sides</strong> (邊): AB, BC, CA.</li>
+          <li><strong>Interior angles</strong> (內角): <span class="m">∠A</span>, <span class="m">∠B</span>, <span class="m">∠C</span> — inside the triangle.</li>
+        </ul>
+        <p style="margin-bottom:6px"><strong>Notation:</strong> the triangle with vertices <span class="m">A</span>, <span class="m">B</span>, <span class="m">C</span> is written <span class="m">△ABC</span> and read “triangle ABC”.</p>
+        <div class="callout warn" style="margin-bottom:0">
+          <div class="h">Watch the symbol</div>
+          <p style="margin-bottom:0"><span class="m">△</span> is a triangle; <span class="m">∠</span> is an angle. <span class="m">△ABC</span> is the whole shape, <span class="m">∠ABC</span> is just one corner of it.</p>
+        </div>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 320 200" width="320" role="img" aria-label="Triangle ABC with its vertices, sides and interior angles">
+          <polygon points="160,34 52,166 280,166" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.8" stroke-linejoin="round"/>
+          <path d="M 137.2 61.9 A 36 36 0 0 0 184.2 60.6" fill="none" stroke="#0d9488" stroke-width="2.4"/>
+          <path d="M 74.8 138.1 A 36 36 0 0 1 88.0 166.0" fill="none" stroke="#0d9488" stroke-width="2.4"/>
+          <path d="M 255.8 139.4 A 36 36 0 0 0 244.0 166.0" fill="none" stroke="#0d9488" stroke-width="2.4"/>
+          <g fill="#14212e"><circle cx="160" cy="34" r="4.4"/><circle cx="52" cy="166" r="4.4"/><circle cx="280" cy="166" r="4.4"/></g>
+          <g class="lbl"><text x="160" y="22" text-anchor="middle">A</text><text x="36" y="186">B</text><text x="288" y="186">C</text></g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="def">
+      <div class="t">Naming rule</div>
+      <p style="margin-bottom:0">Name a triangle by its three vertices: <span class="m">△ABC</span>, <span class="m">△BCA</span> and <span class="m">△CAB</span> are the <strong>same</strong> triangle. <span class="m">△ACB</span> is also the same — any order works, as long as all three letters appear. (This is different from angles, where the vertex must be in the middle.)</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec">
+    <h2><span class="n">2</span>Classified by the lengths of the sides <span class="zh">按邊長分類</span></h2>
+
+    <div class="grid g3">
+      <div class="fig-box">
+        <svg viewBox="0 0 220 170" width="220" role="img" aria-label="Equilateral triangle">
+          <polygon points="110,28 48,136 172,136" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.6" stroke-linejoin="round"/>
+          <g stroke="#dc2626" stroke-width="2.4" stroke-linecap="round">
+            <line x1="73.8" y1="79" x2="84.2" y2="85"/>
+            <line x1="135.8" y1="84" x2="146.2" y2="75"/>
+            <line x1="110" y1="130" x2="110" y2="142"/>
+          </g>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Equilateral triangle 等邊三角形</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">All three sides are equal.<br>Each interior angle is <span class="m">60°</span>.</p>
+      </div>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 220 170" width="220" role="img" aria-label="Isosceles triangle">
+          <polygon points="110,28 56,140 164,140" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.6" stroke-linejoin="round"/>
+          <g stroke="#dc2626" stroke-width="2.4" stroke-linecap="round">
+            <line x1="77.6" y1="81.4" x2="88.4" y2="86.6"/>
+            <line x1="142.4" y1="81.4" x2="131.6" y2="86.6"/>
+          </g>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Isosceles triangle 等腰三角形</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">Two sides are equal.<br>The two angles at the base are equal.</p>
+      </div>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 220 170" width="220" role="img" aria-label="Scalene triangle">
+          <polygon points="132,30 48,140 176,140" fill="#fef4e6" stroke="#d97706" stroke-width="2.6" stroke-linejoin="round"/>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Scalene triangle 不等邊三角形</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">All three sides are unequal.<br>All three angles are different.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">The tick marks tell you</div>
+      <p style="margin-bottom:0">In a figure, equal sides are marked with matching <strong>tick marks</strong> (the little dashes). One dash on two sides = those two sides are equal. Two dashes = a different pair of equal sides. <strong>Never judge equality by looking.</strong></p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec">
+    <h2><span class="n">3</span>Classified by the sizes of the angles <span class="zh">按角的大小分類</span></h2>
+
+    <div class="grid g3">
+      <div class="fig-box">
+        <svg viewBox="0 0 220 170" width="220" role="img" aria-label="Acute-angled triangle">
+          <polygon points="60,140 168,140 108,44" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.6" stroke-linejoin="round"/>
+          <g fill="none" stroke="#0d9488" stroke-width="2">
+            <path d="M 80.0 140.0 A 20 20 0 0 0 68.9 122.1"/><path d="M 148.0 140.0 A 20 20 0 0 1 157.4 123.0"/>
+            <path d="M 99.1 61.9 A 20 20 0 0 0 118.6 61.0"/>
+          </g>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Acute-angled triangle 銳角三角形</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">All three angles are acute (less than <span class="m">90°</span>).</p>
+      </div>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 220 170" width="220" role="img" aria-label="Right-angled triangle">
+          <polygon points="56,140 176,140 56,40" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M 56 122 L 74 122 L 74 140" fill="none" stroke="#14212e" stroke-width="2"/>
+          <text x="116" y="84" class="lbl-sm" fill="#0f766e">hypotenuse</text>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Right-angled triangle 直角三角形</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">One angle is a right angle. The side opposite it is the <strong>hypotenuse</strong> (斜邊), the longest side.</p>
+      </div>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 220 170" width="220" role="img" aria-label="Obtuse-angled triangle">
+          <polygon points="44,140 180,140 110,86" fill="#fef4e6" stroke="#d97706" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M 85.2 106.3 A 32 32 0 0 0 135.3 105.5" fill="none" stroke="#b45309" stroke-width="2.2"/>
+          <text x="110" y="108" class="lbl-sm" fill="#b45309" text-anchor="middle">&gt;90°</text>
+        </svg>
+        <p style="margin:8px 0 2px;font-weight:800">Obtuse-angled triangle 鈍角三角形</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">One angle is an obtuse angle (between <span class="m">90°</span> and <span class="m">180°</span>).</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="h">A triangle can have two names</div>
+      <p style="margin-bottom:0">The two ways of classifying are <strong>independent</strong>. A triangle with a right angle and two equal sides is an <strong>isosceles right-angled triangle</strong> (等腰直角三角形). The one in the figure below has a right angle at <span class="m">B</span>, with <span class="m">AB = BC</span>.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="fig-box">
+        <svg viewBox="0 0 300 170" width="300" role="img" aria-label="Isosceles right-angled triangle">
+          <polygon points="70,140 190,140 70,40" fill="#f2ecfe" stroke="#7c3aed" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M 70 122 L 88 122 L 88 140" fill="none" stroke="#14212e" stroke-width="2"/>
+          <g stroke="#dc2626" stroke-width="2"><line x1="124" y1="134" x2="124" y2="146"/><line x1="76" y1="84" x2="64" y2="84"/></g>
+          <g class="lbl"><text x="56" y="156">A</text><text x="196" y="156">C</text><text x="56" y="32">B</text></g>
+        </svg>
+        <p style="margin:6px 0 0;font-weight:700">Isosceles right-angled triangle</p>
+      </div>
+      <div class="card">
+        <h3>The six names at a glance</h3>
+        <div class="tbl-wrap" style="margin:0">
+          <table class="compact">
+            <thead><tr><th>By sides</th><th>Property</th></tr></thead>
+            <tbody>
+              <tr><td>Equilateral</td><td>all sides equal → all angles <span class="m">60°</span></td></tr>
+              <tr><td>Isosceles</td><td>2 sides equal → 2 base angles equal</td></tr>
+              <tr><td>Scalene</td><td>all sides unequal</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-wrap" style="margin:10px 0 0">
+          <table class="compact">
+            <thead><tr><th>By angles</th><th>Property</th></tr></thead>
+            <tbody>
+              <tr><td>Acute-angled</td><td>all 3 angles <span class="m">&lt; 90°</span></td></tr>
+              <tr><td>Right-angled</td><td>one angle <span class="m">= 90°</span></td></tr>
+              <tr><td>Obtuse-angled</td><td>one angle <span class="m">&gt; 90°</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec">
+    <h2><span class="n">4</span>Angle sum of a triangle <span class="zh">三角形內角和</span></h2>
+
+    <div class="def">
+      <div class="t">Key point — the most used fact in the chapter</div>
+      <p>The sum of all the <strong>interior angles</strong> of a triangle is <span class="m">180°</span>.</p>
+      <p class="m" style="text-align:center;font-size:19px;margin:8px 0">In △ABC, &nbsp; ∠A + ∠B + ∠C = 180°</p>
+      <p style="margin-bottom:0"><strong>Abbreviation to write:</strong> <span class="m">(∠ sum of △)</span></p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 460 250" width="460" role="img" aria-label="The three angles of a triangle placed together at one point form a straight line">
+        <!-- triangle -->
+        <polygon points="30,150 150,150 110.8,82.2" fill="#f8fbff" stroke="#33475b" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M 48.0 150.0 A 18 18 0 0 0 43.8 138.4" fill="none" stroke="#0d9488" stroke-width="2.6"/>
+        <path d="M 132.0 150.0 A 18 18 0 0 1 141.0 134.4" fill="none" stroke="#d97706" stroke-width="2.6"/>
+        <path d="M 97.0 93.8 A 18 18 0 0 0 119.8 97.8" fill="none" stroke="#7c3aed" stroke-width="2.6"/>
+        <g class="lbl-sm"><text x="20" y="166">A</text><text x="152" y="166">B</text><text x="112" y="74">C</text></g>
+        <text x="90" y="192" class="lbl-sm" text-anchor="middle" fill="#61748a">the three angles of △ABC</text>
+
+        <!-- sectors -->
+        <path d="M 300 190 L 400 190 A 100 100 0 0 0 376.6 125.7 Z" fill="#e6f7f4" stroke="#0d9488" stroke-width="1.6"/>
+        <path d="M 300 190 L 376.6 125.7 A 100 100 0 0 0 282.6 91.5 Z" fill="#fef4e6" stroke="#d97706" stroke-width="1.6"/>
+        <path d="M 300 190 L 282.6 91.5 A 100 100 0 0 0 200 190 Z" fill="#f2ecfe" stroke="#7c3aed" stroke-width="1.6"/>
+        <line x1="170" y1="190" x2="410" y2="190" stroke="#33475b" stroke-width="2.2"/>
+        <circle cx="300" cy="190" r="4" fill="#14212e"/>
+        <text x="362" y="170" class="lbl-sm" fill="#0f766e">40°</text>
+        <text x="322" y="128" class="lbl-sm" fill="#b45309">60°</text>
+        <text x="246" y="148" class="lbl-sm" fill="#6d28d9">80°</text>
+        <text x="300" y="226" class="lbl-sm" text-anchor="middle" fill="#1d4ed8">the two outer arms form a straight line → 180°</text>
+      </svg>
+      <figcaption>Tear the three corners off any triangle and place them together: they always lie exactly on a straight line. That is <strong>why</strong> the sum is 180°.</figcaption>
+    </figure>
+
+    <div class="card">
+      <h3>Try it yourself</h3>
+      <p style="font-size:14.5px;color:var(--muted)">Move the two sliders. The third angle is always forced to make the total 180°.</p>
+      <div class="grid g2" style="align-items:center">
+        <div id="tri-demo"></div>
+        <div>
+          <div class="slider-row"><label for="tri-a">∠A</label><input type="range" id="tri-a" min="25" max="130" value="55"><span class="readout" id="tri-a-val">55°</span></div>
+          <div class="slider-row"><label for="tri-b">∠B</label><input type="range" id="tri-b" min="25" max="130" value="65"><span class="readout" id="tri-b-val">65°</span></div>
+          <div class="slider-row"><label>∠C</label><span class="readout" id="tri-c-val" style="background:#f2ecfe;border-color:#ddd0fb">60°</span></div>
+          <p id="tri-sum" style="margin:10px 0 0;font-size:16px;text-align:center"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout ext">
+      <div class="h">Extension · why 180° and not 360°?</div>
+      <p style="margin-bottom:0">A square has 4 right angles: <span class="m">4 × 90° = 360°</span>. Cut the square along a diagonal and you get two triangles, each taking half of the 360°: <span class="m">360° ÷ 2 = 180°</span>. This is the idea behind the polygon formula you will meet later.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec">
+    <h2><span class="n">5</span>Worked examples <span class="zh">例題</span></h2>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 1</span>One unknown angle</div>
+      <div class="eg-body">
+        <p>In <span class="m">△ABC</span>, <span class="m">∠A = 42°</span> and <span class="m">∠B = 73°</span>. Find <span class="m">∠C</span>.</p>
+        <button class="reveal-btn" data-reveal="#t1">Show solution</button>
+        <div id="t1" class="sol hidden">
+          <p>In <span class="m">△ABC</span>,</p>
+          <p class="m">∠A + ∠B + ∠C = 180° &nbsp; (∠ sum of △)</p>
+          <p class="m">42° + 73° + ∠C = 180°</p>
+          <p class="m">∠C = 180° − 115° = 65°</p>
+          <p class="ans" style="margin-bottom:0">∠C = 65°</p>
+          <p style="margin:10px 0 0;font-size:14.5px;color:var(--muted)">All three angles are acute, so <span class="m">△ABC</span> is an <strong>acute-angled triangle</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 2</span>Isosceles triangle with <span class="m">x</span></div>
+      <div class="eg-body">
+        <p>In <span class="m">△PQR</span>, <span class="m">PQ = PR</span> and <span class="m">∠P = 112°</span>. Find <span class="m">∠Q</span>.</p>
+        <figure style="margin:8px 0">
+          <svg viewBox="0 0 300 180" width="300" role="img" aria-label="Isosceles triangle PQR with apex angle 112 degrees">
+            <polygon points="150,30 66,150 234,150" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.6" stroke-linejoin="round"/>
+            <g stroke="#dc2626" stroke-width="2"><line x1="104" y1="86" x2="116" y2="98"/><line x1="196" y1="86" x2="184" y2="98"/></g>
+            <path d="M 130.5 57.9 A 34 34 0 0 0 169.5 57.9" fill="none" stroke="#b45309" stroke-width="2.2"/>
+            <g class="lbl"><text x="150" y="22" text-anchor="middle">P</text><text x="50" y="168">Q</text><text x="240" y="168">R</text></g>
+            <text x="150" y="80" class="lbl-sm" text-anchor="middle" fill="#b45309">112°</text>
+          </svg>
+        </figure>
+        <button class="reveal-btn" data-reveal="#t2">Show solution</button>
+        <div id="t2" class="sol hidden">
+          <p>Since <span class="m">PQ = PR</span>, the two base angles are equal: <span class="m">∠Q = ∠R = x</span>.</p>
+          <p>In <span class="m">△PQR</span>,</p>
+          <p class="m">112° + x + x = 180° &nbsp; (∠ sum of △)</p>
+          <p class="m">2x = 68°</p>
+          <p class="ans" style="margin-bottom:0">x = 34°, so ∠Q = 34°</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="eg">
+      <div class="eg-head"><span class="badge">Example 3</span>Two steps: angle sum, then straight line</div>
+      <div class="eg-body">
+        <p>In the figure, <span class="m">QRS</span> is a straight line, <span class="m">∠QPR = 52°</span>, <span class="m">∠PQR = 64°</span> and <span class="m">∠PSR = 30°</span>. Find <span class="m">x</span> and <span class="m">y</span>.</p>
+        <figure style="margin:8px 0">
+          <svg viewBox="0 0 360 205" width="100%" style="max-width:420px" role="img" aria-label="Triangle PQR with QRS a straight line, and triangle PRS">
+          <line x1="14" y1="172" x2="352" y2="172" stroke="#33475b" stroke-width="2.4"/>
+          <polygon points="104,37 38,172 170,172" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.4" stroke-linejoin="round"/>
+          <line x1="104" y1="37" x2="338" y2="172" stroke="#7c3aed" stroke-width="2.4"/>
+          <path d="M 52.9 141.5 A 34 34 0 0 1 72.0 172.0" fill="none" stroke="#1d4ed8" stroke-width="2.2"/>
+          <path d="M 86.4 72.9 A 40 40 0 0 0 121.6 72.9" fill="none" stroke="#1d4ed8" stroke-width="2.2"/>
+          <path d="M 131.2 92.7 A 62 62 0 0 0 157.7 68.0" fill="none" stroke="#b45309" stroke-width="2.2"/>
+          <path d="M 155.1 141.5 A 34 34 0 0 1 204.0 172.0" fill="none" stroke="#b91c1c" stroke-width="2.2"/>
+          <path d="M 308.5 155.0 A 34 34 0 0 0 304.0 172.0" fill="none" stroke="#1d4ed8" stroke-width="2.2"/>
+          <circle cx="104" cy="37" r="4" fill="#14212e"/>
+          <text x="104" y="26" class="lbl" text-anchor="middle">P</text>
+          <circle cx="38" cy="172" r="4" fill="#14212e"/>
+          <text x="38" y="192" class="lbl" text-anchor="middle">Q</text>
+          <circle cx="170" cy="172" r="4" fill="#14212e"/>
+          <text x="170" y="192" class="lbl" text-anchor="middle">R</text>
+          <circle cx="338" cy="172" r="4" fill="#14212e"/>
+          <text x="338" y="192" class="lbl" text-anchor="middle">S</text>
+          <text x="82.1" y="144.5" class="lbl-sm" fill="#1d4ed8" text-anchor="middle">64°</text>
+          <text x="104.0" y="95.0" class="lbl-sm" fill="#1d4ed8" text-anchor="middle">52°</text>
+          <text x="155.2" y="91.8" class="lbl-sm" fill="#b45309" text-anchor="middle">y</text>
+          <text x="194.9" y="132.1" class="lbl-sm" fill="#b91c1c" text-anchor="middle">x</text>
+          <text x="287.8" y="158.5" class="lbl-sm" fill="#1d4ed8" text-anchor="middle">30°</text>
+        </svg>
+        </figure>
+        <p><em>Hint from the textbook: work on the triangle that has only one unknown angle first.</em></p>
+        <button class="reveal-btn" data-reveal="#t3">Show solution</button>
+        <div id="t3" class="sol hidden">
+          <p><strong>Step 1 — find x.</strong> In <span class="m">△PQR</span>,</p>
+          <p class="m">∠PRQ = 180° − 52° − 64° = 64° &nbsp; (∠ sum of △)</p>
+          <p>Since <span class="m">QRS</span> is a straight line, <span class="m">x</span> and this <span class="m">64°</span> are adjacent angles on it:</p>
+          <p class="m">x + 64° = 180° &nbsp; (adj. ∠s on st. line)</p>
+          <p class="m">x = 116°</p>
+          <p><strong>Step 2 — find y.</strong> In <span class="m">△PRS</span>,</p>
+          <p class="m">y + 116° + 30° = 180° &nbsp; (∠ sum of △)</p>
+          <p class="m">y = 34°</p>
+          <p class="ans" style="margin-bottom:0">x = 116°, y = 34°</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec">
+    <h2><span class="n">6</span>Let's check <span class="zh">課堂練習</span></h2>
+
+    <div class="check">
+      <div class="t">Check 1 · can these be the angles of a triangle?</div>
+      <p>Add the three angles. If the total is exactly <span class="m">180°</span> — and none of them is <span class="m">0°</span> — they can.</p>
+      <ol style="margin-bottom:6px">
+        <li><span class="m">40°, 50°, 90°</span></li>
+        <li><span class="m">100°, 30°, 60°</span></li>
+        <li><span class="m">80°, 100°, 0°</span></li>
+        <li><span class="m">8°, 163°, 9°</span></li>
+      </ol>
+      <button class="reveal-btn" data-reveal="#c1">Show answers</button>
+      <div id="c1" class="sol hidden">
+        <ol>
+          <li><strong>Yes</strong> — <span class="m">40 + 50 + 90 = 180</span>. (It is a right-angled triangle.)</li>
+          <li><strong>No</strong> — <span class="m">100 + 30 + 60 = 190</span>.</li>
+          <li><strong>No</strong> — the total is <span class="m">180</span>, but an angle of <span class="m">0°</span> is impossible; the triangle would be flat.</li>
+          <li><strong>Yes</strong> — <span class="m">8 + 163 + 9 = 180</span>. (Obtuse-angled, since <span class="m">163° &gt; 90°</span>.)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="check">
+      <div class="t">Check 2 · classify and calculate</div>
+      <ol>
+        <li>A triangle has angles <span class="m">90°, 45°, 45°</span>. Give its full name.</li>
+        <li>A triangle has sides <span class="m">5 cm, 5 cm, 8 cm</span>. What type is it by its sides? What do you know about two of its angles?</li>
+        <li>In <span class="m">△ABC</span>, <span class="m">∠A = ∠B</span> and <span class="m">∠C = 100°</span>. Find <span class="m">∠A</span>.</li>
+        <li>Can a triangle have two right angles? Explain.</li>
+      </ol>
+      <button class="reveal-btn" data-reveal="#c2">Show answers</button>
+      <div id="c2" class="sol hidden">
+        <ol>
+          <li>An <strong>isosceles right-angled triangle</strong> (two equal angles → two equal sides).</li>
+          <li>Isosceles. The two angles opposite the equal sides are equal.</li>
+          <li><span class="m">∠A + ∠B = 180° − 100° = 80°</span>, and they are equal, so <span class="m">∠A = 40°</span>.</li>
+          <li>No — two right angles already total <span class="m">180°</span>, leaving <span class="m">0°</span> for the third angle, which is impossible.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="sec">
+    <h2><span class="n">!</span>Common mistakes <span class="zh">常見錯誤</span></h2>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“An isosceles triangle is an equilateral triangle.”</div>
+      <div class="r"><span class="tag">✓ Right</span>An equilateral triangle is a isosceles triangle</div>
+      <div class="why">Isosceles needs only <strong>two</strong> equal sides. Equilateral needs <strong>three</strong>. The arrow of truth points one way only.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“A right-angled triangle cannot be isosceles.”</div>
+      <div class="r"><span class="tag">✓ Right</span><span class="m">90°, 45°, 45°</span> is a perfectly good isosceles right-angled triangle</div>
+      <div class="why">The two classifications are independent — a triangle can carry one name from each list.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Using <span class="m">360°</span> for the angle sum</div>
+      <div class="r"><span class="tag">✓ Right</span><span class="m">180°</span> for a triangle</div>
+      <div class="why"><span class="m">360°</span> is for angles <em>at a point</em> (or a quadrilateral). A triangle is always <span class="m">180°</span>.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>“It looks equilateral, so all angles are 60°.”</div>
+      <div class="r"><span class="tag">✓ Right</span>Only if the sides are marked equal</div>
+      <div class="why">Check for tick marks. Unmarked sides are not equal just because they look it.</div>
+    </div>
+
+    <div class="wr">
+      <div class="w"><span class="tag">✗ Wrong</span>Forgetting the reason in brackets</div>
+      <div class="r"><span class="tag">✓ Right</span>Write <span class="m">(∠ sum of △)</span> or <span class="m">(adj. ∠s on st. line)</span></div>
+      <div class="why">In a long question the reason earns a method mark. It also proves you know <em>why</em> the step is true.</div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">One-line summary</div>
+      <p style="margin-bottom:0">Three sides, three angles, one fact: they add to <strong>180°</strong>. Classify by sides (equilateral / isosceles / scalene) and by angles (acute / right / obtuse) — and a triangle may have one name from each list.</p>
+    </div>
+  </section>
+
+  <div class="done-bar">
+    <button type="button" aria-pressed="false">Mark this section as completed</button>
+    <span style="color:var(--muted);font-size:13.5px">Saved on this device only.</span>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — 5.2B Triangles</span><span>Form 1 Mathematics</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
