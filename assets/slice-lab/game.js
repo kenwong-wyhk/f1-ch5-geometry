@@ -374,6 +374,89 @@
   /* ---------------------------------------------------------- *
    *  6. sound (tiny WebAudio synth, no files)
    * ---------------------------------------------------------- */
+  /* ---------------------------------------------------------- *
+   * 6b. victory fanfare
+   *     Written out as note data and scheduled on any
+   *     AudioContext, so it can also be rendered offline in a
+   *     test (see SliceLab.renderFanfare) and checked for level.
+   *     Key of C, 4/4, about 150 bpm.
+   * ---------------------------------------------------------- */
+  var FAN_MELODY = [
+    /* G4   C5    E5    G5        C6 */
+    [392.00, 0.00, 0.16, 0.050],
+    [523.25, 0.13, 0.16, 0.055],
+    [659.25, 0.26, 0.16, 0.055],
+    [783.99, 0.39, 0.36, 0.058],
+    [1046.50, 0.72, 0.52, 0.060],
+    /* B5   G5    A5    G5    C5    D5      G5 */
+    [987.77, 1.24, 0.16, 0.046],
+    [783.99, 1.40, 0.16, 0.046],
+    [880.00, 1.56, 0.16, 0.048],
+    [783.99, 1.72, 0.16, 0.048],
+    [523.25, 1.88, 0.16, 0.046],
+    [587.33, 2.04, 0.16, 0.048],
+    [783.99, 2.20, 0.62, 0.056],
+    /* C6 — the landing */
+    [1046.50, 2.86, 1.10, 0.062]
+  ];
+  var FAN_BASS = [
+    [130.81, 0.00, 0.60, 0.070],   /* C3 */
+    [196.00, 0.72, 0.50, 0.055],   /* G3 */
+    [174.61, 1.56, 0.62, 0.055],   /* F3 */
+    [196.00, 2.20, 0.60, 0.058],   /* G3 */
+    [130.81, 2.86, 1.25, 0.070]    /* C3 */
+  ];
+  var FAN_PAD = [
+    [523.25, 0.72, 0.44, 0.026], [659.25, 0.72, 0.44, 0.021], [783.99, 0.72, 0.44, 0.019],
+    [392.00, 2.20, 0.58, 0.024], [493.88, 2.20, 0.58, 0.019], [587.33, 2.20, 0.58, 0.017],
+    [523.25, 2.86, 1.05, 0.027], [659.25, 2.86, 1.05, 0.023], [783.99, 2.86, 1.05, 0.021]
+  ];
+  /* extra flourish when the last cut falls */
+  var FAN_BIG = [
+    [1046.50, 3.08, 0.13, 0.050], [1318.51, 3.20, 0.13, 0.050],
+    [1567.98, 3.32, 0.13, 0.050], [2093.00, 3.44, 0.85, 0.055],
+    [130.81, 3.44, 1.10, 0.065], [523.25, 3.44, 1.00, 0.028],
+    [659.25, 3.44, 1.00, 0.024], [783.99, 3.44, 1.00, 0.022]
+  ];
+
+  function scheduleFanfare(ctx, dest, big) {
+    var t0 = ctx.currentTime + 0.03;
+    var end = 0;
+
+    function note(freq, at, dur, vol, type) {
+      var t = t0 + at;
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || "triangle";
+      o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.016);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g);
+      g.connect(dest);
+      o.start(t);
+      o.stop(t + dur + 0.04);
+      if (at + dur > end) end = at + dur;
+    }
+
+    var i;
+    for (i = 0; i < FAN_MELODY.length; i++) {
+      note(FAN_MELODY[i][0], FAN_MELODY[i][1], FAN_MELODY[i][2], FAN_MELODY[i][3], "triangle");
+    }
+    for (i = 0; i < FAN_BASS.length; i++) {
+      note(FAN_BASS[i][0], FAN_BASS[i][1], FAN_BASS[i][2], FAN_BASS[i][3], "sine");
+    }
+    for (i = 0; i < FAN_PAD.length; i++) {
+      note(FAN_PAD[i][0], FAN_PAD[i][1], FAN_PAD[i][2], FAN_PAD[i][3], "triangle");
+    }
+    if (big) {
+      for (i = 0; i < FAN_BIG.length; i++) {
+        note(FAN_BIG[i][0], FAN_BIG[i][1], FAN_BIG[i][2], FAN_BIG[i][3],
+          FAN_BIG[i][1] > 3.0 && FAN_BIG[i][0] < 200 ? "sine" : "triangle");
+      }
+    }
+    return end;
+  }
+
   var Sound = {
     ctx: null, noiseBuf: null, on: save.sound,
     ensure: function () {
@@ -426,10 +509,29 @@
       this.noise(0.38, 5200, 420, 0.16, 0.8);
       this.tone(180, 46, 0.32, "sine", 0.13);
     },
-    chime: function () {
-      this.tone(660, 660, 0.5, "sine", 0.075);
-      this.tone(990, 990, 0.62, "sine", 0.05, 0.07);
-      this.tone(1320, 1320, 0.5, "triangle", 0.028, 0.13);
+    /* the victory tune — one shot, own bus so it can be cut short */
+    fanfare: function (big) {
+      var c = this.ensure(); if (!c) return;
+      this.stopFanfare();
+      var bus = c.createGain();
+      bus.gain.value = 2.3;      /* sits above the cutting SFX, still headroom */
+      bus.connect(c.destination);
+      this._bus = bus;
+      scheduleFanfare(c, bus, !!big);
+    },
+    stopFanfare: function () {
+      var c = this.ctx, bus = this._bus;
+      if (!c || !bus) return;
+      this._bus = null;
+      try {
+        bus.gain.cancelScheduledValues(c.currentTime);
+        bus.gain.setTargetAtTime(0, c.currentTime, 0.05);
+      } catch (e) {
+        bus.gain.value = 0;
+      }
+      setTimeout(function () {
+        try { bus.disconnect(); } catch (e) { }
+      }, 500);
     },
     thud: function () {
       this.tone(150, 52, 0.3, "sine", 0.1);
@@ -946,7 +1048,7 @@
     btnRetry.textContent = win ? "CUT AGAIN" : "TRY AGAIN";
 
     if (win) {
-      Sound.chime();
+      Sound.fanfare(S.index === LEVELS.length - 1);
       var prev = save.stars[S.index] || 0;
       save.stars[S.index] = Math.max(prev, stars);
       persist();
@@ -989,6 +1091,7 @@
 
   function openMenu() {
     if (S.phase === "cutting") return;   /* let the blade finish */
+    Sound.stopFanfare();
     panelStart.hidden = false;
     panelResult.hidden = true;
     S.phase = "menu";
@@ -1002,6 +1105,7 @@
   }
 
   function goToLevel(i) {
+    Sound.stopFanfare();
     closeMenu();
     stageEl.classList.remove("is-result");
     buildLevel(i);
@@ -1011,6 +1115,7 @@
   }
 
   function retry() {
+    Sound.stopFanfare();
     panelResult.hidden = true;
     stageEl.classList.remove("is-result");
     S.phase = "aim";
@@ -1227,7 +1332,7 @@
     persist();
     btnSound.classList.toggle("off", !Sound.on);
     btnSound.textContent = Sound.on ? "♪" : "♪";
-    if (Sound.on) Sound.click();
+    if (Sound.on) Sound.click(); else Sound.stopFanfare();
   });
 
   lvGrid.addEventListener("click", function (e) {
@@ -1352,7 +1457,27 @@
     },
     slice: doSlice,
     state: S,
-    levels: LEVELS
+    levels: LEVELS,
+    /* render the fanfare offline and report peak / RMS — used by dev checks */
+    renderFanfare: function (big) {
+      var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!OAC) return Promise.reject(new Error("no OfflineAudioContext"));
+      var secs = big ? 5 : 4.2;
+      var oc = new OAC(1, Math.ceil(44100 * secs), 44100);
+      var bus = oc.createGain();
+      bus.gain.value = 2.3;
+      bus.connect(oc.destination);
+      scheduleFanfare(oc, bus, !!big);
+      return oc.startRendering().then(function (buf) {
+        var d = buf.getChannelData(0), peak = 0, sum = 0;
+        for (var i = 0; i < d.length; i++) {
+          var v = Math.abs(d[i]);
+          if (v > peak) peak = v;
+          sum += d[i] * d[i];
+        }
+        return { peak: peak, rms: Math.sqrt(sum / d.length), seconds: secs };
+      });
+    }
   };
   /* deep link: 12-slice-game.html?lv=7  jumps straight to cut 7 */
   try {
