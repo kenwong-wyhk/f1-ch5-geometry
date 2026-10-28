@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slice Lab · Cross-sections · Ch.5 Introduction to Geometry</title>
+<meta name="description" content="A cutting game for HKDSE Form 1 Maths: aim a plane through prisms, pyramids, cylinders, cones and spheres until the cross-section on the card is exposed.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/slice-lab/slice.css">
+</head>
+<body data-page="12">
+
+<div id="site-header"></div>
+
+<main class="slice-main">
+  <div class="wrap">
+
+    <div class="slice-head">
+      <div>
+        <span class="chip">5.4 · Cross-sections · 截面</span>
+        <h1>Slice Lab <span class="zh">截面切割實驗室</span></h1>
+      </div>
+      <p class="slice-sub">Aim the blade, slice the solid, and expose the cross-section named on the card.
+        Prisms, pyramids, cylinder, cone and sphere — all fourteen cuts are waiting.</p>
+    </div>
+
+    <div class="stage" id="stage">
+      <canvas id="stage-canvas"></canvas>
+
+      <!-- ================= HUD ================= -->
+      <div class="hud">
+
+        <div class="hud-top">
+          <div class="lv-badge">
+            <span class="k">CUT</span><b id="lv-no">01</b><span class="of">/ 14</span>
+          </div>
+
+          <div class="goal" id="goal">
+            <span class="k">EXPOSE</span>
+            <b id="goal-name">Square</b>
+            <span class="zh" id="goal-zh">正方形</span>
+          </div>
+
+          <div class="hud-btns">
+            <button type="button" class="icon-btn" id="btn-sound" aria-label="Toggle sound" title="Sound">♪</button>
+            <button type="button" class="icon-btn" id="btn-menu" aria-label="Level menu" title="Levels">☰</button>
+          </div>
+        </div>
+
+        <div class="console" id="console">
+          <div class="console-h">
+            <span>CUT CONSOLE<em>切割控制台</em></span>
+            <button type="button" class="hint-btn" id="btn-hint">HINT</button>
+          </div>
+          <div class="console-body">
+            <canvas id="pad" width="200" height="200" aria-label="Drag to aim the cutting plane"></canvas>
+          </div>
+          <div class="sl-readout">
+            <div><span>TILT</span><b id="ro-tilt">0°</b></div>
+            <div><span>TURN</span><b id="ro-turn">0°</b></div>
+            <div><span>DEPTH</span><b id="ro-depth">0.00</b></div>
+          </div>
+          <label class="depth-row" for="depth">
+            <span>DEPTH 深度</span>
+            <input id="depth" type="range" min="-1" max="1" step="0.01" value="0" aria-label="Depth of the cut">
+          </label>
+          <button type="button" class="slice-btn" id="btn-slice"><span>SLICE</span><em>切</em></button>
+        </div>
+
+        <div class="scanner">
+          <div class="scanner-h">SECTION SCANNER<span>截面掃描</span></div>
+          <canvas id="scan" width="240" height="160"></canvas>
+          <div class="scan-name" id="scan-name">—</div>
+        </div>
+
+        <div class="sl-tip" id="tip">Drag the solid to orbit · aim the blade with the pad</div>
+        <div class="toast" id="toast"></div>
+        <div class="flash" id="flash"></div>
+      </div>
+
+      <!-- ================= START ================= -->
+      <div class="panel panel-start" id="start-panel">
+        <div class="panel-inner">
+          <div class="brandline">5.4 · CROSS-SECTIONS</div>
+          <h2>Slice Lab</h2>
+          <p class="lede">One blade, one plane, one new face. Cut each solid until the exposed
+            face is the shape on the card — then read why it happened.</p>
+
+          <div class="sl-steps">
+            <div class="sl-step"><b>1</b><span>Aim the blade<br><small>drag the dial · TILT &amp; TURN</small></span></div>
+            <div class="sl-step"><b>2</b><span>Slide it in<br><small>DEPTH moves the plane</small></span></div>
+            <div class="sl-step"><b>3</b><span>Slice<br><small>read the new face</small></span></div>
+          </div>
+
+          <div class="lv-grid" id="lv-grid"></div>
+
+          <label class="assist"><input type="checkbox" id="assist"> <span>Show shape names in the scanner <em>(easier)</em></span></label>
+
+          <button type="button" class="btn-play" id="btn-play">START CUTTING</button>
+          <p class="tiny">Keys: <kbd>←</kbd><kbd>→</kbd> turn · <kbd>↑</kbd><kbd>↓</kbd> tilt · <kbd>+</kbd><kbd>−</kbd> depth · <kbd>Enter</kbd> slice</p>
+        </div>
+      </div>
+
+      <!-- ================= RESULT ================= -->
+      <div class="panel panel-result" id="result-panel" hidden>
+        <div class="res-wrap">
+          <div class="res-id">
+            <div class="res-tag"><span class="res-stars" id="res-stars"></span><span class="res-verdict" id="res-verdict">PERFECT CUT</span></div>
+            <div class="res-shape"><b id="res-name">Square</b><span id="res-zh">正方形</span></div>
+          </div>
+          <p class="res-rule" id="res-rule"></p>
+          <div class="res-actions">
+            <button type="button" class="btn-ghost" id="btn-show" hidden>SHOW ME</button>
+            <button type="button" class="btn-ghost" id="btn-retry">TRY AGAIN</button>
+            <button type="button" class="btn-next" id="btn-next">NEXT CUT →</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /stage -->
+
+    <div class="slice-foot">
+      <div class="foot-card">
+        <h3>What is a cross-section?</h3>
+        <p>The flat face you see after a plane cuts through a solid. Its shape depends on <strong>where</strong> the plane
+          goes and <strong>which way</strong> it is tilted — that is the whole game.</p>
+      </div>
+      <div class="foot-card">
+        <h3>Two rules that solve half the levels</h3>
+        <p><strong>Parallel to the base</strong> → same shape as the base. <strong>Straight through the apex</strong> of a
+          pyramid or cone → a triangle.</p>
+      </div>
+      <div class="foot-card">
+        <h3>For the teacher</h3>
+        <p>14 levels, each with a one-sentence rule shown after the cut. Progress and stars are stored in this browser only.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wrap"><div id="pager"></div></div>
+</main>
+
+<script src="assets/libs/three.min.js"></script>
+<script src="assets/libs/OrbitControls.js"></script>
+<script src="assets/slice-lab/geom.js"></script>
+<script src="assets/slice-lab/levels.js"></script>
+<script src="assets/slice-lab/game.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

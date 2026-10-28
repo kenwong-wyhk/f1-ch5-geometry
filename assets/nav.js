@@ -17,7 +17,8 @@
     { file: "08-constructions.html", no: "5.3", title: "Basic Constructions", zh: "基本作圖", group: "Construction" },
     { file: "09-mistakes.html", no: "Rev", title: "Common Mistakes", zh: "常見錯誤", group: "Revision" },
     { file: "10-glossary.html", no: "Rev", title: "Terminology", zh: "術語表", group: "Revision" },
-    { file: "11-quiz.html", no: "Rev", title: "Self-check Quiz", zh: "自我測驗", group: "Revision" }
+    { file: "11-quiz.html", no: "Rev", title: "Self-check Quiz", zh: "自我測驗", group: "Revision" },
+    { file: "12-slice-game.html", no: "5.4", title: "Slice Lab", zh: "截面切割遊戲", group: "3-D Figures" }
   ];
 
   var GROUPS = [
@@ -124,7 +125,7 @@
         : '<a class="prev" href="index.html"><span class="k">← Back to</span><span class="v">Chapter menu</span></a>';
       html += next
         ? '<a class="next" href="' + next.file + '"><span class="k">Next →</span><span class="v">' + esc(next.title) + "</span></a>"
-        : '<a class="next" href="11-quiz.html"><span class="k">Finish with</span><span class="v">Self-check quiz</span></a>';
+        : '<a class="next" href="index.html"><span class="k">Back to</span><span class="v">Chapter menu</span></a>';
       pager.innerHTML = html;
     }
   }
