@@ -43,7 +43,7 @@
       brief: "Cut the sphere so the new face is a circle. Any angle you like.",
       hint: "No hint needed — every single cut of a sphere is a circle.",
       rule: "A sphere has no flat faces and no edges, so a plane can only ever cut it in a circle. Through the centre you get the biggest circle of all.",
-      ideal: { tilt: 32, turn: 20, depth: 0 }
+      ideal: { tilt: 45, turn: 0, depth: 0 }
     },
     {
       id: 5, solid: "cuboid", title: "Standing Up",
@@ -97,9 +97,9 @@
       id: 11, solid: "cylinder", title: "Stretch",
       target: "Ellipse", accept: ["ellipse"],
       brief: "Tilt the blade to stretch the circle into an ellipse.",
-      hint: "Tilt about 40°. Too steep and the cut runs off the flat end.",
+      hint: "Tilt the blade to 45°. Any steeper and the cut runs off the flat end.",
       rule: "Tilt the blade and the circle stretches into an ellipse. The more you tilt, the longer it gets — until the cut runs off the end of the cylinder.",
-      ideal: { tilt: 40, turn: 0, depth: 0 }
+      ideal: { tilt: 45, turn: 0, depth: 0 }
     },
     {
       id: 12, solid: "cone", title: "Slanted Cone",
@@ -113,15 +113,15 @@
       id: 13, solid: "cube", title: "Corner Chop",
       target: "Triangle", accept: TRI,
       brief: "Slice one corner off the cube — the new face is a triangle.",
-      hint: "TILT about 55°, TURN 45°, then slide the blade out towards a corner (DEPTH about 0.6).",
+      hint: "TILT 60°, TURN 45°, then slide the blade out towards a corner (DEPTH about 0.6).",
       rule: "A slanted cut near a corner crosses three edges, so the section is a triangle. Slice exactly across the diagonal and it is equilateral.",
-      ideal: { tilt: 55, turn: 45, depth: 0.62 }
+      ideal: { tilt: 60, turn: 45, depth: 0.6 }
     },
     {
       id: 14, solid: "cube", title: "Hexagon Boss",
       target: "Hexagon", accept: ["hexagon"],
       brief: "The famous one: cut the cube so the section is a regular hexagon.",
-      hint: "TILT about 55°, TURN 45°, DEPTH 0 — straight through the middle, square to a body diagonal.",
+      hint: "TILT 55°, TURN 45°, DEPTH 0 — straight through the middle, square to a body diagonal.",
       rule: "Aim the blade along a body diagonal through the centre and it crosses all six faces. Six equal sides, six equal angles — a regular hexagon.",
       ideal: { tilt: 55, turn: 45, depth: 0 }
     }

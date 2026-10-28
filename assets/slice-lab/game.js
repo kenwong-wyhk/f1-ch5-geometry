@@ -67,11 +67,11 @@
   var padEl = $("#pad"), scanEl = $("#scan");
   var elLvNo = $("#lv-no"), elGoalName = $("#goal-name"), elGoalZh = $("#goal-zh");
   var elTilt = $("#ro-tilt"), elTurn = $("#ro-turn"), elDepth = $("#ro-depth");
-  var elDepthInput = $("#depth");
   var elScanName = $("#scan-name");
   var elTip = $("#tip"), elToast = $("#toast"), elFlash = $("#flash");
   var btnSlice = $("#btn-slice"), btnSound = $("#btn-sound"), btnMenu = $("#btn-menu");
   var btnHint = $("#btn-hint");
+  var nudgeButtons = [$("#tilt-minus"), $("#tilt-plus"), $("#turn-minus"), $("#turn-plus"), $("#depth-minus"), $("#depth-plus")];
   var panelStart = $("#start-panel"), panelResult = $("#result-panel");
   var lvGrid = $("#lv-grid"), btnPlay = $("#btn-play");
   var resStars = $("#res-stars"), resVerdict = $("#res-verdict");
@@ -435,7 +435,13 @@
       this.tone(150, 52, 0.3, "sine", 0.1);
       this.noise(0.2, 700, 180, 0.05, 0.9);
     },
-    click: function () { this.tone(900, 700, 0.05, "square", 0.018); }
+    click: function () {
+      /* a held stepper fires fast — throttle so it ticks instead of buzzing */
+      var now = (window.performance || Date).now();
+      if (this._last && now - this._last < 85) return;
+      this._last = now;
+      this.tone(900, 700, 0.05, "square", 0.016);
+    }
   };
 
   /* ---------------------------------------------------------- *
@@ -508,7 +514,6 @@
 
     /* reset the aim: blade flat, through the middle */
     S.tilt = 0; S.turn = 0; S.depth = 0;
-    elDepthInput.value = "0";
 
     elLvNo.textContent = pad2(index + 1);
     elGoalName.textContent = S.lv.target;
@@ -553,7 +558,7 @@
 
     elTilt.textContent = Math.round(S.tilt) + "°";
     elTurn.textContent = Math.round(S.turn) + "°";
-    elDepth.textContent = (S.depth >= 0 ? "+" : "") + S.depth.toFixed(2);
+    elDepth.textContent = (S.depth > 0 ? "+" : "") + S.depth.toFixed(2);
 
     btnSlice.disabled = !S.section;
   }
@@ -829,8 +834,8 @@
 
   function setBusy(b) {
     btnSlice.disabled = b || !S.section;
-    padEl.style.pointerEvents = b ? "none" : "auto";
-    elDepthInput.disabled = b;
+    nudgeButtons.forEach(function (el) { if (el) el.disabled = b; });
+    if (btnReset) btnReset.disabled = b;
     btnHint.disabled = b;
   }
 
@@ -1105,53 +1110,85 @@
     pctx.stroke();
   }
 
-  var padActive = false;
-  function padEvent(e) {
-    var r = padEl.getBoundingClientRect();
-    var W = padEl.width, H = padEl.height;
-    var x = ((e.clientX - r.left) / r.width) * W;
-    var y = ((e.clientY - r.top) / r.height) * H;
-    var cx = W / 2, cy = H / 2;
-    var R = W / 2 - 14;
-    var dx = (x - cx) / R, dy = (y - cy) / R;
-    var rr = Math.hypot(dx, dy);
-    if (rr > 1) { dx /= rr; dy /= rr; rr = 1; }
-    var tilt = rr * 90;
-    var turn = (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360;
-    tilt = snap(tilt, [0, 15, 30, 45, 60, 75, 90], 2.2);
-    turn = snap(turn, [0, 45, 90, 135, 180, 225, 270, 315, 360], 2.2) % 360;
-    S.tilt = tilt;
-    if (tilt > 0.5) S.turn = turn;
+  /* ---------------------------------------------------------- *
+   * 12b. incremental aim — the blade only moves in fixed steps
+   * ---------------------------------------------------------- */
+  var TILT_STEP = 5, TURN_STEP = 15, DEPTH_STEP = 0.05;
+
+  function nudge(which, dir) {
+    if (S.phase !== "aim") return false;
+    if (which === "tilt") {
+      var t = clamp(S.tilt + dir * TILT_STEP, 0, 90);
+      if (t === S.tilt) return false;
+      S.tilt = t;
+    } else if (which === "turn") {
+      S.turn = (S.turn + dir * TURN_STEP + 360) % 360;
+    } else {
+      var d = clamp(Math.round((S.depth + dir * DEPTH_STEP) * 100) / 100, -1, 1);
+      if (d === S.depth) return false;
+      S.depth = d === 0 ? 0 : d;          /* keep the apex cuts exact */
+    }
+    Sound.click();
+    drawPad();
+    updateAim();
+    return true;
+  }
+
+  /* hold a button to keep stepping; the repeat speeds up so a long
+     press crosses 0°..90° quickly without overshooting a short tap */
+  function bindNudge(el, which, dir) {
+    if (!el) return;
+    var holdT = null, repT = null, delay = 120;
+
+    function stop() {
+      if (holdT) { clearTimeout(holdT); holdT = null; }
+      if (repT) { clearTimeout(repT); repT = null; }
+      delay = 120;
+    }
+    function tick() { nudge(which, dir); }
+    function repeat() {
+      tick();
+      delay = Math.max(45, delay * 0.84);
+      repT = setTimeout(repeat, delay);
+    }
+    el.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      try { el.setPointerCapture(e.pointerId); } catch (err) { }
+      stop();
+      tick();
+      holdT = setTimeout(repeat, 320);
+    });
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (ev) {
+      el.addEventListener(ev, stop);
+    });
+    el.addEventListener("blur", stop);
+    /* keyboard activation (Enter / Space) fires click with detail 0 —
+       a mouse click already stepped on pointerdown, so skip those */
+    el.addEventListener("click", function (e) { if (e.detail === 0) tick(); });
+  }
+
+  bindNudge($("#tilt-minus"), "tilt", -1);
+  bindNudge($("#tilt-plus"), "tilt", 1);
+  bindNudge($("#turn-minus"), "turn", -1);
+  bindNudge($("#turn-plus"), "turn", 1);
+  bindNudge($("#depth-minus"), "depth", -1);
+  bindNudge($("#depth-plus"), "depth", 1);
+
+  function resetAim(silent) {
+    S.tilt = 0; S.turn = 0; S.depth = 0;
+    if (!silent) Sound.tone(520, 320, 0.12, "sine", 0.05);
     drawPad();
     updateAim();
   }
 
-  padEl.addEventListener("pointerdown", function (e) {
-    if (S.phase !== "aim") return;
-    padActive = true;
-    padEl.setPointerCapture(e.pointerId);
-    padEvent(e);
-    e.preventDefault();
-  });
-  padEl.addEventListener("pointermove", function (e) {
-    if (!padActive) return;
-    padEvent(e);
-    e.preventDefault();
-  });
-  padEl.addEventListener("pointerup", function (e) {
-    padActive = false;
-    try { padEl.releasePointerCapture(e.pointerId); } catch (err) { }
-  });
-  padEl.addEventListener("pointercancel", function () { padActive = false; });
-
-  /* depth slider */
-  elDepthInput.addEventListener("input", function () {
-    var v = parseFloat(elDepthInput.value) || 0;
-    if (Math.abs(v) < 0.035) v = 0;
-    S.depth = v;
-    if (v === 0) elDepthInput.value = "0";
-    updateAim();
-  });
+  var btnReset = $("#btn-reset");
+  if (btnReset) {
+    btnReset.addEventListener("click", function () {
+      if (S.phase !== "aim") return;
+      resetAim();
+      toast("Blade reset — TILT 0°, TURN 0°, DEPTH 0.00", 1800);
+    });
+  }
 
   /* ---------------------------------------------------------- *
    * 13. UI wiring
@@ -1170,7 +1207,6 @@
     var id = S.lv.ideal;
     retry();
     S.tilt = id.tilt; S.turn = id.turn; S.depth = id.depth;
-    elDepthInput.value = String(id.depth);
     drawPad();
     updateAim();
     toast("Blade lined up — hit SLICE to see the section.", 3000);
@@ -1206,27 +1242,23 @@
     drawScanner();
   });
 
-  /* keyboard: aim without a mouse (good for a projector) */
+  /* keyboard: the same fixed steps, for a projector with no mouse */
   document.addEventListener("keydown", function (e) {
     if (S.phase !== "aim") return;
     var tag = (e.target && e.target.tagName) || "";
     if (tag === "INPUT" && e.target.type !== "range") return;
-    var step = e.shiftKey ? 1 : 5, used = true;
     switch (e.key) {
-      case "ArrowLeft": S.turn = (S.turn - step + 360) % 360; break;
-      case "ArrowRight": S.turn = (S.turn + step) % 360; break;
-      case "ArrowUp": S.tilt = clamp(S.tilt + step, 0, 90); break;
-      case "ArrowDown": S.tilt = clamp(S.tilt - step, 0, 90); break;
-      case "+": case "=": S.depth = clamp(S.depth + 0.05, -1, 1); break;
-      case "-": case "_": S.depth = clamp(S.depth - 0.05, -1, 1); break;
+      case "ArrowLeft": nudge("turn", -1); break;
+      case "ArrowRight": nudge("turn", 1); break;
+      case "ArrowUp": nudge("tilt", 1); break;
+      case "ArrowDown": nudge("tilt", -1); break;
+      case "+": case "=": nudge("depth", 1); break;
+      case "-": case "_": nudge("depth", -1); break;
+      case "0": resetAim(); toast("Blade reset — TILT 0°, TURN 0°, DEPTH 0.00", 1800); break;
       case "Enter": case " ": doSlice(); break;
-      default: used = false;
+      default: return;
     }
-    if (!used) return;
     e.preventDefault();
-    elDepthInput.value = String(S.depth);
-    drawPad();
-    updateAim();
   });
 
   /* ---------------------------------------------------------- *
@@ -1316,7 +1348,6 @@
     go: goToLevel,
     aim: function (tilt, turn, depth) {
       S.tilt = tilt; S.turn = turn; S.depth = depth;
-      elDepthInput.value = String(depth);
       drawPad(); updateAim();
     },
     slice: doSlice,

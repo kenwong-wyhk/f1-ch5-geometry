@@ -50,20 +50,36 @@
         <div class="console" id="console">
           <div class="console-h">
             <span>CUT CONSOLE<em>切割控制台</em></span>
-            <button type="button" class="hint-btn" id="btn-hint">HINT</button>
+            <span class="console-tools">
+              <button type="button" class="hint-btn" id="btn-hint">HINT</button>
+              <button type="button" class="hint-btn" id="btn-reset">RESET</button>
+            </span>
           </div>
-          <div class="console-body">
-            <canvas id="pad" width="200" height="200" aria-label="Drag to aim the cutting plane"></canvas>
+
+          <div class="aim">
+            <canvas id="pad" width="200" height="200" aria-hidden="true"></canvas>
+            <div class="steppers">
+              <div class="step-row">
+                <span class="lbl">TILT</span>
+                <button type="button" class="nudge" id="tilt-minus" aria-label="Tilt down">−</button>
+                <b id="ro-tilt">0°</b>
+                <button type="button" class="nudge" id="tilt-plus" aria-label="Tilt up">+</button>
+              </div>
+              <div class="step-row">
+                <span class="lbl">TURN</span>
+                <button type="button" class="nudge" id="turn-minus" aria-label="Turn anticlockwise">−</button>
+                <b id="ro-turn">0°</b>
+                <button type="button" class="nudge" id="turn-plus" aria-label="Turn clockwise">+</button>
+              </div>
+              <div class="step-row">
+                <span class="lbl">DEPTH</span>
+                <button type="button" class="nudge" id="depth-minus" aria-label="Move blade back">−</button>
+                <b id="ro-depth">0.00</b>
+                <button type="button" class="nudge" id="depth-plus" aria-label="Move blade forward">+</button>
+              </div>
+            </div>
           </div>
-          <div class="sl-readout">
-            <div><span>TILT</span><b id="ro-tilt">0°</b></div>
-            <div><span>TURN</span><b id="ro-turn">0°</b></div>
-            <div><span>DEPTH</span><b id="ro-depth">0.00</b></div>
-          </div>
-          <label class="depth-row" for="depth">
-            <span>DEPTH 深度</span>
-            <input id="depth" type="range" min="-1" max="1" step="0.01" value="0" aria-label="Depth of the cut">
-          </label>
+
           <button type="button" class="slice-btn" id="btn-slice"><span>SLICE</span><em>切</em></button>
         </div>
 
@@ -73,7 +89,7 @@
           <div class="scan-name" id="scan-name">—</div>
         </div>
 
-        <div class="sl-tip" id="tip">Drag the solid to orbit · aim the blade with the pad</div>
+        <div class="sl-tip" id="tip">Drag the solid to orbit · step the blade with TILT and TURN</div>
         <div class="toast" id="toast"></div>
         <div class="flash" id="flash"></div>
       </div>
@@ -87,7 +103,7 @@
             face is the shape on the card — then read why it happened.</p>
 
           <div class="sl-steps">
-            <div class="sl-step"><b>1</b><span>Aim the blade<br><small>drag the dial · TILT &amp; TURN</small></span></div>
+            <div class="sl-step"><b>1</b><span>Aim the blade<br><small>step TILT &amp; TURN</small></span></div>
             <div class="sl-step"><b>2</b><span>Slide it in<br><small>DEPTH moves the plane</small></span></div>
             <div class="sl-step"><b>3</b><span>Slice<br><small>read the new face</small></span></div>
           </div>
@@ -97,7 +113,7 @@
           <label class="assist"><input type="checkbox" id="assist"> <span>Show shape names in the scanner <em>(easier)</em></span></label>
 
           <button type="button" class="btn-play" id="btn-play">START CUTTING</button>
-          <p class="tiny">Keys: <kbd>←</kbd><kbd>→</kbd> turn · <kbd>↑</kbd><kbd>↓</kbd> tilt · <kbd>+</kbd><kbd>−</kbd> depth · <kbd>Enter</kbd> slice</p>
+          <p class="tiny">Keys: <kbd>←</kbd><kbd>→</kbd> turn · <kbd>↑</kbd><kbd>↓</kbd> tilt · <kbd>+</kbd><kbd>−</kbd> depth · <kbd>0</kbd> reset · <kbd>Enter</kbd> slice</p>
         </div>
       </div>
 
