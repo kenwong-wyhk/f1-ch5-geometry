@@ -38,6 +38,8 @@
   var CUT_DUR = 1.15;        /* one cut animation, start to next spirit */
   var DRAG_MIN = 8;          /* px before a stroke has a usable direction */
   var SWIPE_MIN = 24;        /* px before it counts as a cut at all */
+  var APEX_SNAP = 7;         /* degrees of aim assist around a pyramid / cone apex */
+  var APEX_SOLIDS = { squarePyramid: 1, tetra: 1, cone: 1 };
 
   /* ---------------------------------------------------------- *
    *  1. saved best
@@ -162,15 +164,16 @@
   var bladeGroup = new THREE.Group();
   scene.add(bladeGroup);
   var bladeGeo = new THREE.PlaneGeometry(3.0, 3.0);
+  var BLADE_INK = C(0x17130f), BLADE_SEAL = C(0xc0362c);
   var bladeMat = new THREE.MeshBasicMaterial({
-    color: C(0x17130f), transparent: true, opacity: 0.085,
+    color: BLADE_INK.clone(), transparent: true, opacity: 0.085,
     side: THREE.DoubleSide, depthWrite: false
   });
   var bladeMesh = new THREE.Mesh(bladeGeo, bladeMat);
   bladeGroup.add(bladeMesh);
   var bladeRim = new THREE.LineSegments(
     new THREE.EdgesGeometry(bladeGeo),
-    new THREE.LineBasicMaterial({ color: C(0x17130f), transparent: true, opacity: 0.42, depthWrite: false })
+    new THREE.LineBasicMaterial({ color: BLADE_INK.clone(), transparent: true, opacity: 0.42, depthWrite: false })
   );
   bladeGroup.add(bladeRim);
   bladeGroup.visible = false;
@@ -388,6 +391,18 @@
     return [Math.sin(t), Math.cos(t), 0];
   }
 
+  /* A pyramid's or cone's apex sits on the Y axis, so a centre plane can
+     only reach it when the blade is exactly vertical (t = ±90).  Asking a
+     finger to land on a single point is a coin toss, so within APEX_SNAP
+     degrees of vertical the blade clicks onto the apex.  Prisms and the
+     cylinder are left alone — they have no apex to aim at. */
+  function apexAssist(tilt) {
+    if (tilt === null || !S.vow || !APEX_SOLIDS[S.vow.solid]) return tilt;
+    if (tilt > 90 - APEX_SNAP) return 90;
+    if (tilt < -90 + APEX_SNAP) return -90;
+    return tilt;
+  }
+
   /* local X along the stroke direction, local Y along the hinge */
   function orientBlade(tilt) {
     var a = tilt * Math.PI / 180;
@@ -403,6 +418,14 @@
     var sec = GEO.sectionAt(S.tris, n, 0);
     S.preview = sec;
     S.tilt = tilt;
+    S.assist = Math.abs(Math.abs(tilt) - 90) < 1e-6 &&
+      !!(S.vow && APEX_SOLIDS[S.vow.solid]);
+
+    /* the blade turns seal-red when it has locked onto the apex */
+    bladeMat.color.copy(S.assist ? BLADE_SEAL : BLADE_INK);
+    bladeMat.opacity = S.assist ? 0.16 : 0.085;
+    bladeRim.material.color.copy(S.assist ? BLADE_SEAL : BLADE_INK);
+    bladeRim.material.opacity = S.assist ? 0.75 : 0.42;
 
     bladeGroup.position.set(0, 0, 0);
     orientBlade(tilt);
@@ -957,7 +980,7 @@
     var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
     if (!drag.moved && Math.hypot(dx, dy) < DRAG_MIN) return;
     drag.moved = true;
-    var tilt = tiltFromStroke(dx, dy);
+    var tilt = apexAssist(tiltFromStroke(dx, dy));
     if (tilt === null) return;
     drag.tilt = tilt;
     S.slashB = toCanvasXY(e);
@@ -971,7 +994,7 @@
     var far = Math.hypot(dx, dy) >= SWIPE_MIN;
     /* a fast flick can end before any pointermove arrives, so solve from
        the final vector as a fallback */
-    var tilt = drag.tilt === null ? tiltFromStroke(dx, dy) : drag.tilt;
+    var tilt = drag.tilt === null ? apexAssist(tiltFromStroke(dx, dy)) : drag.tilt;
     var a = S.slashA, b = toCanvasXY(e);
     drag = null;
     if (!far || tilt === null) { clearPreview(); S.slashA = S.slashB = null; return; }

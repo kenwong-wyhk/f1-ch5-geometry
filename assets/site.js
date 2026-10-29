@@ -84,7 +84,7 @@
     if (!pb) return;
     var total = parseInt(document.body.getAttribute("data-total") || "11", 10);
     pb.style.width = Math.round((done.length / total) * 100) + "%";
-    if (pn) pn.textContent = done.length + " / " + total + " sections";
+    if (pn) pn.textContent = done.length + " / " + total + " plates marked";
   }
   paintBar();
   if (!storageOK) {
@@ -456,7 +456,7 @@
     window.QUIZ.forEach(function (item, i) {
       var card = document.createElement("div");
       card.className = "qcard";
-      var html = '<div class="qn">Question ' + (i + 1) + " of " + total + (item.topic ? " · " + item.topic : "") + "</div>" +
+      var html = '<div class="qn">Question ' + (i + 1) + " of " + total + (item.topic ? ", " + item.topic : "") + "</div>" +
         '<div class="qt">' + item.q + "</div>" +
         (item.fig ? '<div class="qfig">' + item.fig + "</div>" : "") +
         "<div class='opts'>";

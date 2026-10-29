@@ -12,31 +12,46 @@
 
 <div id="site-header"></div>
 
+<header class="plate-head">
+  <div class="wrap">
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Lab · Cross-sections</div>
+        <h1>Slice Lab</h1>
+        <p class="zh">截面切割實驗室</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <path d="M30 40 H72 V84 H30 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 26 H86 V70 H72 M44 26 V40 M86 26 L72 40 M86 70 L72 84" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 40 L72 84" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.4</span></div>
+      <div><span class="k">Type</span><span class="v">Cutting game</span></div>
+      <div><span class="k">Plate</span><span class="v">12 / 14</span></div>
+      <div><span class="k">Levels</span><span class="v">14 cuts</span></div>
+    </div>
+    <p class="lab-lede">Aim the blade, slice the solid, and expose the cross-section named on the card. Prisms, pyramids, cylinder, cone and sphere: all fourteen cuts are waiting.</p>
+  </div>
+</header>
+
 <main class="slice-main">
   <div class="wrap">
 
-    <div class="slice-head">
-      <div>
-        <span class="chip">5.4 · Cross-sections · 截面</span>
-        <h1>Slice Lab <span class="zh">截面切割實驗室</span></h1>
-      </div>
-      <p class="slice-sub">Aim the blade, slice the solid, and expose the cross-section named on the card.
-        Prisms, pyramids, cylinder, cone and sphere — all fourteen cuts are waiting.</p>
-    </div>
-
     <div class="stage" id="stage">
-      <canvas id="stage-canvas"></canvas>
+      <canvas id="stage-canvas" role="img" aria-label="The solid on the turntable, with the cutting plane across it"></canvas>
 
       <!-- ================= HUD ================= -->
       <div class="hud">
 
         <div class="hud-top">
           <div class="lv-badge">
-            <span class="k">CUT</span><b id="lv-no">01</b><span class="of">/ 14</span>
+            <span class="k">Cut</span><b id="lv-no">01</b><span class="of">/ 14</span>
           </div>
 
           <div class="goal" id="goal">
-            <span class="k">EXPOSE</span>
+            <span class="k">Expose</span>
             <b id="goal-name">Square</b>
             <span class="zh" id="goal-zh">正方形</span>
           </div>
@@ -49,10 +64,10 @@
 
         <div class="console" id="console">
           <div class="console-h">
-            <span>CUT CONSOLE<em>切割控制台</em></span>
+            <span>Cut console<em>切割控制台</em></span>
             <span class="console-tools">
-              <button type="button" class="hint-btn" id="btn-hint">HINT</button>
-              <button type="button" class="hint-btn" id="btn-reset">RESET</button>
+              <button type="button" class="hint-btn" id="btn-hint">Hint</button>
+              <button type="button" class="hint-btn" id="btn-reset">Reset</button>
             </span>
           </div>
 
@@ -60,19 +75,19 @@
             <canvas id="pad" width="200" height="200" aria-hidden="true"></canvas>
             <div class="steppers">
               <div class="step-row">
-                <span class="lbl">TILT</span>
+                <span class="lbl">Tilt</span>
                 <button type="button" class="nudge" id="tilt-minus" aria-label="Tilt down">−</button>
                 <b id="ro-tilt">0°</b>
                 <button type="button" class="nudge" id="tilt-plus" aria-label="Tilt up">+</button>
               </div>
               <div class="step-row">
-                <span class="lbl">TURN</span>
+                <span class="lbl">Turn</span>
                 <button type="button" class="nudge" id="turn-minus" aria-label="Turn anticlockwise">−</button>
                 <b id="ro-turn">0°</b>
                 <button type="button" class="nudge" id="turn-plus" aria-label="Turn clockwise">+</button>
               </div>
               <div class="step-row">
-                <span class="lbl">DEPTH</span>
+                <span class="lbl">Depth</span>
                 <button type="button" class="nudge" id="depth-minus" aria-label="Move blade back">−</button>
                 <b id="ro-depth">0.00</b>
                 <button type="button" class="nudge" id="depth-plus" aria-label="Move blade forward">+</button>
@@ -80,13 +95,13 @@
             </div>
           </div>
 
-          <button type="button" class="slice-btn" id="btn-slice"><span>SLICE</span><em>切</em></button>
+          <button type="button" class="slice-btn" id="btn-slice"><span>Slice</span><em>切</em></button>
         </div>
 
         <div class="scanner">
-          <div class="scanner-h">SECTION SCANNER<span>截面掃描</span></div>
-          <canvas id="scan" width="240" height="160"></canvas>
-          <div class="scan-name" id="scan-name">—</div>
+          <div class="scanner-h">Section scanner<span>截面掃描</span></div>
+          <canvas id="scan" width="240" height="160" role="img" aria-label="The cross-section the current plane produces, seen face on"></canvas>
+          <div class="scan-name" id="scan-name">, </div>
         </div>
 
         <div class="sl-tip" id="tip">Drag the solid to orbit · step the blade with TILT and TURN</div>
@@ -97,10 +112,9 @@
       <!-- ================= START ================= -->
       <div class="panel panel-start" id="start-panel">
         <div class="panel-inner">
-          <div class="brandline">5.4 · CROSS-SECTIONS</div>
           <h2>Slice Lab</h2>
           <p class="lede">One blade, one plane, one new face. Cut each solid until the exposed
-            face is the shape on the card — then read why it happened.</p>
+            face is the shape on the card, then read why it happened.</p>
 
           <div class="sl-steps">
             <div class="sl-step"><b>1</b><span>Aim the blade<br><small>step TILT &amp; TURN</small></span></div>
@@ -112,8 +126,8 @@
 
           <label class="assist"><input type="checkbox" id="assist"> <span>Show shape names in the scanner <em>(easier)</em></span></label>
 
-          <button type="button" class="btn-play" id="btn-play">START CUTTING</button>
-          <p class="tiny">Keys: <kbd>←</kbd><kbd>→</kbd> turn · <kbd>↑</kbd><kbd>↓</kbd> tilt · <kbd>+</kbd><kbd>−</kbd> depth · <kbd>0</kbd> reset · <kbd>Enter</kbd> slice</p>
+          <button type="button" class="btn-play" id="btn-play">Start cutting</button>
+          <p class="tiny"><kbd>←</kbd><kbd>→</kbd> turn, <kbd>↑</kbd><kbd>↓</kbd> tilt, <kbd>+</kbd><kbd>−</kbd> depth, <kbd>0</kbd> reset, <kbd>Enter</kbd> slice.</p>
         </div>
       </div>
 
@@ -121,14 +135,14 @@
       <div class="panel panel-result" id="result-panel" hidden>
         <div class="res-wrap">
           <div class="res-id">
-            <div class="res-tag"><span class="res-stars" id="res-stars"></span><span class="res-verdict" id="res-verdict">PERFECT CUT</span></div>
+            <div class="res-tag"><span class="res-stars" id="res-stars"></span><span class="res-verdict" id="res-verdict">Perfect cut</span></div>
             <div class="res-shape"><b id="res-name">Square</b><span id="res-zh">正方形</span></div>
           </div>
           <p class="res-rule" id="res-rule"></p>
           <div class="res-actions">
-            <button type="button" class="btn-ghost" id="btn-show" hidden>SHOW ME</button>
-            <button type="button" class="btn-ghost" id="btn-retry">TRY AGAIN</button>
-            <button type="button" class="btn-next" id="btn-next">NEXT CUT →</button>
+            <button type="button" class="btn-ghost" id="btn-show" hidden>Show me</button>
+            <button type="button" class="btn-ghost" id="btn-retry">Try again</button>
+            <button type="button" class="btn-next" id="btn-next">Next cut</button>
           </div>
         </div>
       </div>
@@ -139,7 +153,7 @@
       <div class="foot-card">
         <h3>What is a cross-section?</h3>
         <p>The flat face you see after a plane cuts through a solid. Its shape depends on <strong>where</strong> the plane
-          goes and <strong>which way</strong> it is tilted — that is the whole game.</p>
+          goes and <strong>which way</strong> it is tilted, that is the whole game.</p>
       </div>
       <div class="foot-card">
         <h3>Two rules that solve half the levels</h3>

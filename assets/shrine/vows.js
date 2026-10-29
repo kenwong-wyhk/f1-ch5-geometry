@@ -6,6 +6,8 @@
      • it always passes through the spirit's centre (s = 0)
      • the player draws a line on screen and the blade leans to lie
        along it, so t is continuous over -90…90
+     • on a pyramid or cone, a tilt within 7° of vertical snaps onto
+       the apex (shrine.js `apexAssist`) — a point is too fine to aim at
      • each vow spawns its solid at `yaw` degrees, which is what makes the
        target reachable at all (the turn the player cannot control)
 
@@ -35,7 +37,7 @@
     },
     {
       id: "pyramid-trapezium", solid: "squarePyramid", yaw: 0,
-      target: "Trapezium", zh: "梯形", accept: TRAP, window: 34, tilt: 30,
+      target: "Trapezium", zh: "梯形", accept: TRAP, window: 32, tilt: 30,
       rule: "Tilt the cut and the square base is trimmed to a trapezium."
     },
     {
@@ -70,7 +72,7 @@
     },
     {
       id: "pyramid-triangle", solid: "squarePyramid", yaw: 45,
-      target: "Triangle", zh: "三角形", accept: TRI, window: 2, tilt: 90,
+      target: "Triangle", zh: "三角形", accept: TRI, window: 4, tilt: 90,
       rule: "Cut through the apex and the pyramid's section is a triangle."
     },
     {
@@ -105,7 +107,7 @@
     },
     {
       id: "cone-triangle", solid: "cone", yaw: 0,
-      target: "Triangle", zh: "三角形", accept: TRI, window: 2, tilt: 90,
+      target: "Triangle", zh: "三角形", accept: TRI, window: 4, tilt: 90,
       rule: "Upright through the apex: an isosceles triangle, two slant sides equal."
     }
   ];

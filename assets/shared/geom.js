@@ -373,7 +373,26 @@
     return { kind: kind, name: nm[0], zh: nm[1], label: extra || nm[0] };
   }
 
-  function classify(h) {
+  /* --- circle or ellipse? ---------------------------------------------
+     A cylinder or a cone only gives a circle when the blade is parallel
+     to the base. The sampled hull cannot answer that: a 5° cut is a circle
+     to within 4 parts in 1000, so an aspect test calls it a circle until
+     the tilt passes ~25°. The plane's own normal can answer it exactly, so
+     when the caller says which solid was cut we use the normal instead of
+     the outline. A sphere is the exception — every plane cuts it in a
+     circle, whatever the angle. */
+  var CURVED = { cylinder: 1, cone: 1, sphere: 1 };
+  var FLAT_COS = Math.cos(0.5 * Math.PI / 180);   /* within half a degree of flat */
+
+  function curvedName(ctx) {
+    if (!ctx || !ctx.n || !CURVED[ctx.solid]) return null;
+    if (ctx.solid === "sphere") return "circle";
+    var ax = ctx.axis || [0, 1, 0];
+    var c = Math.abs(ctx.n[0] * ax[0] + ctx.n[1] * ax[1] + ctx.n[2] * ax[2]);
+    return c >= FLAT_COS ? "circle" : "ellipse";
+  }
+
+  function classify(h, ctx) {
     var m = h.length;
     if (m < 3) return named("none");
 
@@ -399,6 +418,9 @@
       var flatEdge = false;
       for (i = 0; i < m; i++) if (L[i] > 0.16 * per) flatEdge = true;
       if (flatEdge) return named("truncated");
+      /* known solid: the blade's angle decides, not the outline */
+      var curved = curvedName(ctx);
+      if (curved) return named(curved);
       var xs = h.map(function (p) { return p[0]; }), ys = h.map(function (p) { return p[1]; });
       var w = Math.max.apply(null, xs) - Math.min.apply(null, xs);
       var hh = Math.max.apply(null, ys) - Math.min.apply(null, ys);

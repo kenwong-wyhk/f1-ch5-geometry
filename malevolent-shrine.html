@@ -12,21 +12,36 @@
 
 <div id="site-header"></div>
 
+<header class="plate-head">
+  <div class="wrap">
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Cross-sections</div>
+        <h1>Malevolent Shrine</h1>
+        <p class="zh">伏魔御廚子</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <polygon points="60,18 96,39 96,81 60,102 24,81 24,39" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M24 39 L96 81" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 81 L96 39" fill="none" stroke="#c0362c" stroke-width="1.2" stroke-dasharray="4 4"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.4</span></div>
+      <div><span class="k">Type</span><span class="v">Hidden · 60-second game</span></div>
+      <div><span class="k">Access</span><span class="v">Easter egg only</span></div>
+      <div><span class="k">Vows</span><span class="v">17 cuts</span></div>
+    </div>
+    <p class="lab-lede">Sixty seconds inside the domain. Every spirit that enters is cut by a flat plane: swipe at an angle, and the face it exposes is the answer.</p>
+  </div>
+</header>
+
 <main class="dm-main">
   <div class="wrap">
 
-    <div class="dm-head">
-      <div>
-        <span class="chip">5.4 · Cross-sections · 解</span>
-        <h1>Malevolent Shrine <span class="zh">伏魔御廚子</span></h1>
-      </div>
-      <p class="dm-sub">Sixty seconds inside the domain. Every spirit that enters is cut by a flat
-        plane — swipe at an angle, and the face it exposes is the answer.</p>
-    </div>
-
     <div class="dm-stage" id="dm-stage">
       <canvas id="dm-paper" class="dm-paper" aria-hidden="true"></canvas>
-      <canvas id="dm-canvas" class="dm-canvas"></canvas>
+      <canvas id="dm-canvas" class="dm-canvas" aria-hidden="true"></canvas>
       <canvas id="dm-ink" class="dm-ink" aria-hidden="true"></canvas>
 
       <div class="dm-hud">
@@ -47,7 +62,7 @@
         </div>
 
         <div class="dm-card" id="dm-card" hidden>
-          <canvas id="dm-card-shape" width="180" height="120"></canvas>
+          <canvas id="dm-card-shape" width="180" height="120" aria-hidden="true"></canvas>
           <div class="dm-card-txt">
             <div class="dm-card-k" id="dm-card-k">CUT</div>
             <b id="dm-card-name">Square</b>
@@ -93,11 +108,12 @@
       </div>
     </div><!-- /stage -->
 
+    <h2 class="sr-only">How this game teaches cross-sections</h2>
     <div class="dm-foot">
       <div class="dm-foot-card">
         <h3>What am I actually doing?</h3>
         <p>Every swipe is a plane through the spirit. The flat face it leaves behind is a
-          <strong>cross-section</strong> — and its shape depends only on the angle you chose.</p>
+          <strong>cross-section</strong>, and its shape depends only on the angle you chose.</p>
       </div>
       <div class="dm-foot-card">
         <h3>Reading the swipe</h3>
@@ -107,8 +123,9 @@
       </div>
       <div class="dm-foot-card">
         <h3>For the teacher</h3>
-        <p>17 vows across prisms, pyramids, cylinder, cone and sphere. The blade is continuous, and every
-          vow is proven winnable by <code>dev/check_vows.js</code>.</p>
+        <p>17 vows across prisms, pyramids, cylinder, cone and sphere. The blade is continuous, and a swipe
+          within 7° of vertical on a pyramid or cone clicks onto its apex: a point is too fine to aim at.
+          Every vow is proven winnable by <code>dev/check_vows.js</code>.</p>
       </div>
     </div>
 

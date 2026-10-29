@@ -4,26 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>5.2C Polygons · Ch.5 Introduction to Geometry</title>
+<meta name="description" content="Convex and concave polygons, equilateral, equiangular and regular, the names up to decagon, and counting diagonals.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-page="05">
 
 <div id="site-header"></div>
 
-<header class="page-hero">
+<header class="plate-head">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.2 Plane Figures<span>/</span>5.2C</div>
-    <span class="chip">SECTION 5.2C · Worksheet 5.2</span>
-    <h1>Polygons</h1>
-    <p class="zh">多邊形 — 凸、凹、等邊、等角、正多邊形</p>
-    <div class="objectives">
-      <h2>Learning objectives</h2>
-      <ol>
-        <li>Understand the concept of a polygon and name polygons by their number of sides.</li>
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span>5.2 Plane Figures<span>/</span>5.2C</div>
+        <h1>Polygons</h1>
+        <p class="zh">多邊形：凸、凹、等邊、等角、正多邊形</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <polygon points="60,18 101,48 85,96 35,96 19,48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M60 18 L85 96 M60 18 L35 96 M19 48 L85 96" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity=".45"/>
+  <circle cx="60" cy="18" r="3" fill="currentColor"/>
+  <circle cx="101" cy="48" r="3" fill="currentColor"/>
+  <circle cx="85" cy="96" r="3" fill="currentColor"/>
+  <circle cx="35" cy="96" r="3" fill="currentColor"/>
+  <circle cx="19" cy="48" r="3" fill="currentColor"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.2C</span></div>
+      <div><span class="k">Worksheet</span><span class="v">5.2</span></div>
+      <div><span class="k">Plate</span><span class="v">05 / 14</span></div>
+      <div><span class="k">Objectives</span><span class="v">4</span></div>
+    </div>
+    <div class="brief">
+      <div class="brief-h">Learning objectives</div>
+      <ol><li>Understand the concept of a polygon and name polygons by their number of sides.</li>
         <li>Tell a <strong>convex</strong> polygon from a <strong>concave</strong> one.</li>
         <li>Understand <strong>equilateral</strong>, <strong>equiangular</strong> and <strong>regular</strong> polygons.</li>
-        <li>Count the diagonals of a polygon.</li>
-      </ol>
+        <li>Count the diagonals of a polygon.</li></ol>
     </div>
   </div>
 </header>
@@ -41,24 +58,24 @@
         <h3>The four conditions</h3>
         <ol style="margin-bottom:0">
           <li>It is <strong>flat</strong> (a plane figure).</li>
-          <li>It is <strong>closed</strong> — no gaps, no loose ends.</li>
-          <li>Every side is a <strong>straight</strong> line segment — no curves.</li>
+          <li>It is <strong>closed</strong>: no gaps, no loose ends.</li>
+          <li>Every side is a <strong>straight</strong> line segment: no curves.</li>
           <li>The sides <strong>do not cross</strong> each other.</li>
         </ol>
       </div>
       <div class="fig-box">
         <svg viewBox="0 0 360 180" width="320" role="img" aria-label="One polygon and three shapes that are not polygons">
           <polygon points="46,34 94,64 76,120 22,120 4,64" fill="#eaf1ff" stroke="#2563eb" stroke-width="2.4" stroke-linejoin="round"/>
-          <text x="49" y="142" class="lbl-sm" text-anchor="middle" fill="#166534">✓ polygon</text>
+          <text x="49" y="142" class="lbl-sm" text-anchor="middle" fill="var(--color-accent-deep)">✓ polygon</text>
 
           <path d="M 118 120 L 118 60 L 176 60" fill="none" stroke="#dc2626" stroke-width="2.4"/>
-          <text x="147" y="142" class="lbl-sm" text-anchor="middle" fill="#b91c1c">✗ not closed</text>
+          <text x="147" y="142" class="lbl-sm" text-anchor="middle" fill="var(--color-accent-deep)">✗ not closed</text>
 
           <circle cx="236" cy="86" r="34" fill="none" stroke="#dc2626" stroke-width="2.4"/>
-          <text x="236" y="142" class="lbl-sm" text-anchor="middle" fill="#b91c1c">✗ curved</text>
+          <text x="236" y="142" class="lbl-sm" text-anchor="middle" fill="var(--color-accent-deep)">✗ curved</text>
 
           <path d="M 298 40 L 342 120 L 298 120 L 342 40" fill="none" stroke="#dc2626" stroke-width="2.4"/>
-          <text x="320" y="142" class="lbl-sm" text-anchor="middle" fill="#b91c1c">✗ crosses</text>
+          <text x="320" y="142" class="lbl-sm" text-anchor="middle" fill="var(--color-accent-deep)">✗ crosses</text>
         </svg>
       </div>
     </div>
@@ -66,10 +83,10 @@
     <div class="def">
       <div class="t">Vocabulary of every polygon</div>
       <ul style="margin:0">
-        <li><strong>Vertex</strong> (頂點, plural <em>vertices</em>) — a corner where two sides meet.</li>
-        <li><strong>Side</strong> (邊) — one of the straight segments forming the boundary.</li>
-        <li><strong>Interior angle</strong> (內角) — the angle inside the polygon at a vertex.</li>
-        <li><strong>Diagonal</strong> (對角線) — a segment joining <strong>two non-adjacent vertices</strong>.</li>
+        <li><strong>Vertex</strong> (頂點, plural <em>vertices</em>): a corner where two sides meet.</li>
+        <li><strong>Side</strong> (邊): one of the straight segments forming the boundary.</li>
+        <li><strong>Interior angle</strong> (內角): the angle inside the polygon at a vertex.</li>
+        <li><strong>Diagonal</strong> (對角線): a segment joining <strong>two non-adjacent vertices</strong>.</li>
       </ul>
     </div>
   </section>
@@ -93,7 +110,7 @@
         <p style="margin:6px 0 0;font-size:13.5px;font-weight:700;text-align:center">Pentagon<br><span style="color:var(--muted);font-weight:600">5 · 五邊形</span></p>
       </div>
       <div class="fig-box" style="padding:10px">
-        <svg viewBox="0 0 110 110" width="110" role="img" aria-label="Hexagon"><polygon points="55,13 91.4,34 91.4,76 55,97 18.6,76 18.6,34" fill="#f2ecfe" stroke="#7c3aed" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 110 110" width="110" role="img" aria-label="Hexagon"><polygon points="55,13 91.4,34 91.4,76 55,97 18.6,76 18.6,34" fill="var(--color-paper-2)" stroke="#7c3aed" stroke-width="2.2" stroke-linejoin="round"/></svg>
         <p style="margin:6px 0 0;font-size:13.5px;font-weight:700;text-align:center">Hexagon<br><span style="color:var(--muted);font-weight:600">6 · 六邊形</span></p>
       </div>
       <div class="fig-box" style="padding:10px">
@@ -130,13 +147,13 @@
           <polygon points="120,20 196,70 168,150 72,150 44,70" fill="#e6f7f4" stroke="#0d9488" stroke-width="2.6" stroke-linejoin="round"/>
         </svg>
         <p style="margin:8px 0 2px;font-weight:800">Convex polygon 凸多邊形</p>
-        <p style="margin:0;font-size:14px;color:var(--muted)">All interior angles are <strong>less than 180°</strong>.<br>It “bulges outwards” — no dent.</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">All interior angles are <strong>less than 180°</strong>.<br>It “bulges outwards”: no dent.</p>
       </div>
       <div class="fig-box">
         <svg viewBox="0 0 240 170" width="240" role="img" aria-label="Concave polygon">
           <polygon points="120,22 200,140 120,110 40,140" fill="#fdeceb" stroke="#dc2626" stroke-width="2.6" stroke-linejoin="round"/>
-          <path d="M 95.7 119.1 A 26 26 0 1 1 144.3 119.1" fill="none" stroke="#b91c1c" stroke-width="2.2"/>
-          <text x="120" y="72" class="lbl-sm" fill="#b91c1c" text-anchor="middle">&gt;180°</text>
+          <path d="M 95.7 119.1 A 26 26 0 1 1 144.3 119.1" fill="none" stroke="var(--color-accent-deep)" stroke-width="2.2"/>
+          <text x="120" y="72" class="lbl-sm" fill="var(--color-accent-deep)" text-anchor="middle">&gt;180°</text>
         </svg>
         <p style="margin:8px 0 2px;font-weight:800">Concave polygon 凹多邊形</p>
         <p style="margin:0;font-size:14px;color:var(--muted)">At least one interior angle is <strong>greater than 180°</strong>.<br>It has a “dent”.</p>
@@ -181,7 +198,7 @@
       </div>
       <div class="fig-box">
         <svg viewBox="0 0 200 150" width="200" role="img" aria-label="Regular polygon (square)">
-          <rect x="50" y="30" width="100" height="100" fill="#f2ecfe" stroke="#7c3aed" stroke-width="2.6"/>
+          <rect x="50" y="30" width="100" height="100" fill="var(--color-paper-2)" stroke="#7c3aed" stroke-width="2.6"/>
           <g fill="none" stroke="#6d28d9" stroke-width="1.6">
             <path d="M 50 42 L 62 42 L 62 30"/><path d="M 138 30 L 138 42 L 150 42"/>
             <path d="M 50 118 L 62 118 L 62 130"/><path d="M 138 130 L 138 118 L 150 118"/>
@@ -194,7 +211,7 @@
           </g>
         </svg>
         <p style="margin:8px 0 2px;font-weight:800">Regular polygon 正多邊形</p>
-        <p style="margin:0;font-size:14px;color:var(--muted)">All sides <strong>and</strong> all interior angles are equal — ticks <em>and</em> right angles.<br>Regular = equilateral <strong>+</strong> equiangular.</p>
+        <p style="margin:0;font-size:14px;color:var(--muted)">All sides <strong>and</strong> all interior angles are equal: ticks <em>and</em> right angles.<br>Regular = equilateral <strong>+</strong> equiangular.</p>
       </div>
     </div>
 
@@ -202,8 +219,8 @@
       <table>
         <thead><tr><th>Name</th><th>What is equal</th><th>Example</th><th>Regular?</th></tr></thead>
         <tbody>
-          <tr><td>Equilateral polygon</td><td>all sides</td><td>rhombus</td><td><strong>No</strong> — angles differ</td></tr>
-          <tr><td>Equiangular polygon</td><td>all interior angles</td><td>rectangle</td><td><strong>No</strong> — sides differ</td></tr>
+          <tr><td>Equilateral polygon</td><td>all sides</td><td>rhombus</td><td><strong>No</strong>: angles differ</td></tr>
+          <tr><td>Equiangular polygon</td><td>all interior angles</td><td>rectangle</td><td><strong>No</strong>: sides differ</td></tr>
           <tr><td>Regular polygon</td><td>all sides <em>and</em> all angles</td><td>square, regular pentagon</td><td><strong>Yes</strong></td></tr>
         </tbody>
       </table>
@@ -211,7 +228,7 @@
 
     <div class="callout warn">
       <div class="h">The trap</div>
-      <p style="margin-bottom:0">“All sides are equal, therefore it is a regular polygon.” — <strong>False.</strong> A rhombus has four equal sides but its angles are not all equal, so it is equilateral but <em>not</em> regular. You need <strong>both</strong> conditions.</p>
+      <p style="margin-bottom:0">“All sides are equal, therefore it is a regular polygon.”: <strong>False.</strong> A rhombus has four equal sides but its angles are not all equal, so it is equilateral but <em>not</em> regular. You need <strong>both</strong> conditions.</p>
     </div>
   </section>
 
@@ -277,7 +294,7 @@
           <div class="tbl-wrap" style="margin-top:14px">
             <table class="compact">
               <tbody>
-                <tr><th>Polygon</th><td id="poly-n">5 — pentagon</td></tr>
+                <tr><th>Polygon</th><td id="poly-n">5: pentagon</td></tr>
                 <tr><th>Diagonals</th><td id="poly-d">5</td></tr>
                 <tr><th>Interior angle sum <small>(extension)</small></th><td id="poly-s">540°</td></tr>
                 <tr><th>Each interior angle <small>(regular)</small></th><td id="poly-a">108°</td></tr>
@@ -292,7 +309,7 @@
       <div class="h">Extension · interior angle sum of a polygon</div>
       <p>Cut the polygon into triangles by drawing diagonals from one vertex. An <span class="m">n</span>-sided polygon splits into <span class="m">n − 2</span> triangles, and each triangle contributes <span class="m">180°</span>:</p>
       <p class="m" style="text-align:center;font-size:18px;margin:6px 0">sum of interior angles = (n − 2) × 180°</p>
-      <p style="margin-bottom:0">For a <strong>regular</strong> polygon each angle is <span class="m">(n − 2) × 180° ÷ n</span>. <em>This formula is not required in this chapter — you will study it formally later. The two lines above are here so the numbers in the explorer make sense.</em></p>
+      <p style="margin-bottom:0">For a <strong>regular</strong> polygon each angle is <span class="m">(n − 2) × 180° ÷ n</span>. <em>This formula is not required in this chapter: you will study it formally later. The two lines above are here so the numbers in the explorer make sense.</em></p>
     </div>
   </section>
 
@@ -358,9 +375,9 @@
         </div>
         <button class="reveal-btn" data-reveal="#p1">Show solution</button>
         <div id="p1" class="sol hidden">
-          <p><strong>A</strong> — convex: every interior angle is less than 180°. The identical ticks show all five sides are equal (<strong>equilateral</strong>) and the matching arcs show all five angles are equal (<strong>equiangular</strong>) — so it is <strong>regular</strong>.</p>
-          <p><strong>B</strong> — concave: the marked angle at the bottom middle is greater than 180°. It is not equilateral either (the two upper sides are much longer than the two lower ones), so it is not regular — and a regular polygon must be convex in any case.</p>
-          <p style="margin-bottom:0"><strong>C</strong> — convex hexagon: six matching ticks and six matching arcs, so it is equilateral and equiangular → <strong>regular</strong>.</p>
+          <p><strong>A</strong>: convex: every interior angle is less than 180°. The identical ticks show all five sides are equal (<strong>equilateral</strong>) and the matching arcs show all five angles are equal (<strong>equiangular</strong>), so it is <strong>regular</strong>.</p>
+          <p><strong>B</strong>: concave: the marked angle at the bottom middle is greater than 180°. It is not equilateral either (the two upper sides are much longer than the two lower ones), so it is not regular, and a regular polygon must be convex in any case.</p>
+          <p style="margin-bottom:0"><strong>C</strong>: convex hexagon: six matching ticks and six matching arcs, so it is equilateral and equiangular → <strong>regular</strong>.</p>
         </div>
       </div>
     </div>
@@ -385,7 +402,7 @@
 
   <!-- 8 -->
   <section class="sec">
-    <h2><span class="n">8</span>Let's check <span class="zh">課堂練習</span></h2>
+    <h2><span class="n">8</span>Let’s check <span class="zh">課堂練習</span></h2>
     <div class="check">
       <div class="t">Check yourself</div>
       <ol>
@@ -401,10 +418,10 @@
         <ol>
           <li>A <strong>heptagon</strong>.</li>
           <li><strong>False.</strong> A rhombus is equilateral but its angles are not all equal.</li>
-          <li><strong>True</strong> — four equal sides and four equal (90°) angles.</li>
+          <li><strong>True</strong>: four equal sides and four equal (90°) angles.</li>
           <li><span class="m">8(8 − 3) ÷ 2 = 20</span>.</li>
           <li><strong>No.</strong> In a regular polygon every interior angle is equal; if one had to be greater than 180°, all of them would be, and the sides could not close up. All regular polygons are convex.</li>
-          <li><strong>Zero.</strong> The formula gives <span class="m">3(3 − 3) ÷ 2 = 0</span> — it still works.</li>
+          <li><strong>Zero.</strong> The formula gives <span class="m">3(3 − 3) ÷ 2 = 0</span>: it still works.</li>
         </ol>
       </div>
     </div>
@@ -429,7 +446,7 @@
     <div class="wr">
       <div class="w"><span class="tag">✗ Wrong</span>Counting sides as diagonals</div>
       <div class="r"><span class="tag">✓ Right</span>Diagonals join <strong>non-adjacent</strong> vertices only</div>
-      <div class="why">A pentagon has 5 sides and 5 diagonals — do not add them together by mistake.</div>
+      <div class="why">A pentagon has 5 sides and 5 diagonals: do not add them together by mistake.</div>
     </div>
 
     <div class="wr">
@@ -460,7 +477,7 @@
 </main>
 
 <footer class="site-foot">
-  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — 5.2C Polygons</span><span>Form 1 Mathematics</span></div>
+  <div class="wrap"><span>5.2C Polygons</span><span>Chapter 5, Introduction to Geometry. Form 1 Mathematics.</span></div>
 </footer>
 
 <script src="assets/nav.js"></script>

@@ -13,6 +13,10 @@
    tilt produces an accepted shape.  It also checks the declared
    `window` is honest and that the declared `tilt` really works.
 
+   The grid is walked through the same apex aim-assist the game uses
+   (shrine.js `apexAssist`): on a pyramid or cone, a tilt within 7°
+   of vertical is pulled onto the apex.
+
    Run:  node assets/shrine/dev/check_vows.js
    ============================================================ */
 const GEO = require("../../shared/geom.js");
@@ -20,6 +24,15 @@ const VOWS = require("../vows.js");
 
 const TILTS = [];
 for (let t = -90; t <= 90; t += 5) TILTS.push(t);
+
+const APEX_SNAP = 7;
+const APEX = new Set(["squarePyramid", "tetra", "cone"]);
+function assist(tilt, solid) {
+  if (!APEX.has(solid)) return tilt;
+  if (tilt > 90 - APEX_SNAP) return 90;
+  if (tilt < -90 + APEX_SNAP) return -90;
+  return tilt;
+}
 
 function rotY(tris, deg) {
   if (!deg) return tris;
@@ -50,9 +63,9 @@ console.log("-------------------------------------------------------------------
 
 for (const v of VOWS) {
   const tris = rotY(trisFor(v.solid), v.yaw);
-  const wins = TILTS.filter((t) => v.accept.includes(kindAt(tris, t)));
+  const wins = TILTS.filter((t) => v.accept.includes(kindAt(tris, assist(t, v.solid))));
   const ok = wins.length > 0;
-  const idealOk = ok && v.accept.includes(kindAt(tris, v.tilt));
+  const idealOk = ok && v.accept.includes(kindAt(tris, assist(v.tilt, v.solid)));
   const windowOk = Math.abs(wins.length - v.window) <= 1;
   if (!ok || !idealOk || !windowOk) fail++;
 

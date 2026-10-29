@@ -11,13 +11,30 @@
 
 <div id="site-header"></div>
 
-<header class="lab-hero">
+<header class="plate-head">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Lab · Stacking a prism</div>
-    <span class="chip">5.4 · Interactive lab · 互動實驗室</span>
-    <h1>Stacking a Prism <span class="zh">由橫截面堆疊成柱體 — 均勻橫截面與體積</span></h1>
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Lab · Stacking a prism</div>
+        <h1>Stacking a Prism</h1>
+        <p class="zh">由橫截面堆疊成柱體：均勻橫截面與體積</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <ellipse cx="60" cy="48" rx="30" ry="8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 48 V90 M90 48 V90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 90 A30 8 0 0 0 90 90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 62 A30 8 0 0 0 90 62" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 76 A30 8 0 0 0 90 76" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.4</span></div>
+      <div><span class="k">Type</span><span class="v">Interactive lab</span></div>
+      <div><span class="k">Plate</span><span class="v">14 / 14</span></div>
+      <div><span class="k">Model</span><span class="v">2-D canvas · play / scrub</span></div>
+    </div>
     <p class="lab-lede">One flat shape, copied and stacked straight up: that is all a prism is. Every slice is the same
-      shape and the same size — the <strong>uniform cross-section</strong> — and the stack is what makes
+      shape and the same size: the <strong>uniform cross-section</strong>, and the stack is what makes
       <span class="m">V&nbsp;=&nbsp;A&nbsp;×&nbsp;h</span> work.</p>
   </div>
 </header>
@@ -27,9 +44,8 @@
   <div class="wrap wrap-lab">
     <div class="lab-frame">
       <div class="lab-bar">
-        <span class="live"></span>
-        <span class="t">Live model · choose a cross-section, then drag the solid to turn it</span>
-        <a class="lab-open" href="assets/apps/prism-stacking/index.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <span class="t">Live model. Choose a cross-section, then drag the solid to turn it.</span>
+        <a class="lab-open" href="assets/apps/prism-stacking/index.html" target="_blank" rel="noopener">Open full screen</a>
       </div>
       <div class="lab-stage paper">
         <iframe src="assets/apps/prism-stacking/index.html"
@@ -41,24 +57,25 @@
 
   <div class="wrap">
 
+    <h2 class="sr-only">Notes on this model</h2>
     <div class="lab-notes">
       <div class="lab-note">
         <h3>What you are looking at</h3>
         <p>Identical copies of one flat shape, stacked straight up. Nothing tapers and nothing twists: every slice is
-          <b>congruent</b> to the base. That is exactly what <b>uniform cross-section</b> means — same shape
+          <b>congruent</b> to the base. That is exactly what <b>uniform cross-section</b> means: same shape
           <em>and</em> same size.</p>
       </div>
       <div class="lab-note">
         <h3>Try this</h3>
         <p>Switch the cross-section to <b>trapezium</b>, then <b>L-shape</b>. Both are still prisms: the test is that
           the slice never changes, not that the base is a “nice” shape.</p>
-        <p>Then press <b>Lay it down</b> — the solid is unchanged, but a side face is now on the floor.</p>
+        <p>Then press <b>Lay it down</b>: the solid is unchanged, but a side face is now on the floor.</p>
       </div>
       <div class="lab-note">
         <h3>The rule it is showing</h3>
         <p><span class="eq">volume = area of cross-section × height</span></p>
         <p><span class="eq">V = A × h</span></p>
-        <p>The <b>Slices</b> slider changes how many slices you draw, not the volume — thinner slices, same total.</p>
+        <p>The <b>Slices</b> slider changes how many slices you draw, not the volume: thinner slices, same total.</p>
       </div>
     </div>
 
@@ -66,14 +83,14 @@
       <div class="h">The height is not always the “up” side</div>
       <p style="margin-bottom:0">Press <strong>Lay it down</strong> and the prism rests on a rectangular face. The
         cross-section is still the triangle (or trapezium, or L-shape), but the height is now the prism’s
-        <strong>length</strong>. The height is always measured <em>perpendicular to the cross-section</em> — that is
+        <strong>length</strong>. The height is always measured <em>perpendicular to the cross-section</em>, that is
         the only thing that matters.</p>
     </div>
 
     <div class="callout tip">
       <div class="h">Two questions to ask the class</div>
       <ol style="margin-bottom:0">
-        <li>Set <strong>Slices</strong> to 1, then to 40. The picture changes completely — does the volume change?
+        <li>Set <strong>Slices</strong> to 1, then to 40. The picture changes completely: does the volume change?
           Why not?</li>
         <li>A pyramid is stacked from slices too. Why does <span class="m">V = A × h</span> <em>not</em> work for it?</li>
       </ol>
@@ -83,7 +100,7 @@
       <div class="h">Beyond Chapter 5 · 延伸</div>
       <p style="margin-bottom:0">Volume is <strong>not</strong> assessed in Chapter 5. What <em>is</em> examined is the
         vocabulary: recognising whether a solid has a uniform cross-section, and saying why. Use this lab for that
-        question first — the formula is a bonus.</p>
+        question first: the formula is a bonus.</p>
     </div>
 
     <nav class="pager" id="pager" aria-label="Page navigation"></nav>
@@ -91,7 +108,7 @@
 </main>
 
 <footer class="site-foot">
-  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — Lab: Stacking a Prism</span><span>Form 1 Mathematics</span></div>
+  <div class="wrap"><span>Stacking a Prism</span><span>Chapter 5, Introduction to Geometry. Form 1 Mathematics.</span></div>
 </footer>
 
 <script src="assets/nav.js"></script>

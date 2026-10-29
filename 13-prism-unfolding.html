@@ -11,11 +11,25 @@
 
 <div id="site-header"></div>
 
-<header class="lab-hero">
+<header class="plate-head">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Lab · Unfolding a prism</div>
-    <span class="chip">5.4 · Interactive lab · 互動實驗室</span>
-    <h1>Unfolding a Prism <span class="zh">稜柱的展開圖 — 側面、底面與表面積</span></h1>
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Lab · Unfolding a prism</div>
+        <h1>Unfolding a Prism</h1>
+        <p class="zh">稜柱的展開圖：側面、底面與表面積</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <path d="M49 12 h22 v22 h-22 Z M49 34 h22 v22 h-22 Z M49 56 h22 v22 h-22 Z M49 78 h22 v22 h-22 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M27 34 h22 v22 h-22 Z M71 34 h22 v22 h-22 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.4</span></div>
+      <div><span class="k">Type</span><span class="v">Interactive lab</span></div>
+      <div><span class="k">Plate</span><span class="v">13 / 14</span></div>
+      <div><span class="k">Model</span><span class="v">3-D · drag to orbit</span></div>
+    </div>
     <p class="lab-lede">A prism is a flat shape given a thickness. Pull the hinges open and its surface flattens into a net:
       one long rectangle for the sides, plus the two bases as lids. Change the base and the height, and watch which
       number on the right does the moving.</p>
@@ -27,9 +41,8 @@
   <div class="wrap wrap-lab">
     <div class="lab-frame">
       <div class="lab-bar">
-        <span class="live"></span>
-        <span class="t">Live model · drag to orbit · scroll to zoom · slide “Unfold” to fold it back up</span>
-        <a class="lab-open" href="assets/apps/prism-unfolding/index.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        <span class="t">Live model. Drag to orbit, scroll to zoom, slide “Unfold” to fold it back up.</span>
+        <a class="lab-open" href="assets/apps/prism-unfolding/index.html" target="_blank" rel="noopener">Open full screen</a>
       </div>
       <div class="lab-stage">
         <iframe src="assets/apps/prism-unfolding/index.html"
@@ -41,10 +54,11 @@
 
   <div class="wrap">
 
+    <h2 class="sr-only">Notes on this model</h2>
     <div class="lab-notes">
       <div class="lab-note">
         <h3>What you are looking at</h3>
-        <p>The lateral surface is not one surface — it is <b>n</b> separate rectangles, hinged edge to edge.
+        <p>The lateral surface is not one surface: it is <b>n</b> separate rectangles, hinged edge to edge.
           Open every hinge flat and they line up into a <b>single long rectangle</b>. The two bases swing out on
           their own hinges, like lids.</p>
       </div>
@@ -52,13 +66,13 @@
         <h3>Try this</h3>
         <p>Set the base to <b>3</b> sides, then to <b>8</b>. The strip gets longer every time but never taller:
           its width is the whole <b>perimeter</b> of the base.</p>
-        <p>Now move <b>Prism height</b>. Only the height of the strip changes — the bases do not move at all.</p>
+        <p>Now move <b>Prism height</b>. Only the height of the strip changes: the bases do not move at all.</p>
       </div>
       <div class="lab-note">
         <h3>The rule it is showing</h3>
         <p><span class="eq">lateral area = perimeter × height</span></p>
         <p><span class="eq">surface area = lateral + 2 × base area</span></p>
-        <p>The panel also computes volume as <span class="eq">base area × height</span> — that formula belongs to a
+        <p>The panel also computes volume as <span class="eq">base area × height</span>, that formula belongs to a
           later chapter, so treat it here as a preview.</p>
       </div>
     </div>
@@ -75,7 +89,7 @@
 
     <div class="callout ext">
       <div class="h">Beyond Chapter 5 · 延伸</div>
-      <p style="margin-bottom:0">Surface area and volume of prisms are <strong>not</strong> assessed in Chapter 5 —
+      <p style="margin-bottom:0">Surface area and volume of prisms are <strong>not</strong> assessed in Chapter 5 , 
         the chapter only asks you to <em>describe</em> solids and their cross-sections. This lab is here so that the
         formulas arrive later with a picture already attached to them.</p>
     </div>
@@ -85,7 +99,7 @@
 </main>
 
 <footer class="site-foot">
-  <div class="wrap"><span>Chapter 5 · Introduction to Geometry — Lab: Unfolding a Prism</span><span>Form 1 Mathematics</span></div>
+  <div class="wrap"><span>Unfolding a Prism</span><span>Chapter 5, Introduction to Geometry. Form 1 Mathematics.</span></div>
 </footer>
 
 <script src="assets/nav.js"></script>

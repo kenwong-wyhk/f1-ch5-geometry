@@ -1,0 +1,114 @@
+/* ============================================================
+   Ch.5 Introduction to Geometry — tokens
+   Formwork, Drawing pour: tracing paper, blue-black ink, one red.
+   Every colour and face on the site resolves from this block.
+   ============================================================ */
+
+@font-face{
+  font-family:"Oswald";
+  src:url("fonts/oswald-latin-700.woff2") format("woff2");
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face{
+  font-family:"Archivo";
+  src:url("fonts/archivo-latin-var.woff2") format("woff2");
+  font-weight:400 800;
+  font-style:normal;
+  font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+:root{
+  color-scheme:light;
+
+  /* the sheet -------------------------------------------------- */
+  --color-paper:oklch(95% 0.014 84);
+  --color-paper-2:oklch(91.5% 0.016 84);
+  --color-paper-3:oklch(86% 0.018 84);
+  --color-plate:oklch(97.6% 0.008 84);
+  --color-plate-ink:oklch(95% 0.014 84);
+
+  /* the ink ---------------------------------------------------- */
+  --color-ink:oklch(22% 0.02 260);
+  --color-ink-2:oklch(33% 0.018 260);
+  --color-muted:oklch(46% 0.016 260);
+  --color-rule:oklch(82% 0.014 250);
+  --color-rule-2:oklch(70% 0.016 250);
+
+  /* the one red ------------------------------------------------ */
+  --color-accent:oklch(54% 0.2 30);
+  --color-accent-deep:oklch(45% 0.18 30);
+  --color-accent-ink:oklch(97% 0.008 86);
+  --color-accent-wash:oklch(94.5% 0.028 30);
+  --color-focus:oklch(54% 0.2 30);
+  --color-error:oklch(50% 0.19 27);
+  --color-success:oklch(40% 0.09 155);
+
+  /* faces ------------------------------------------------------ */
+  --font-display:"Oswald","Archivo",ui-sans-serif,sans-serif;
+  --font-body:"Archivo","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,
+    "PingFang HK","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  --font-cjk:"PingFang HK","Microsoft JhengHei","Noto Sans TC","Archivo",sans-serif;
+  --display-weight:700;
+  --tracking-display:-0.005em;
+
+  /* scale ------------------------------------------------------ */
+  --space-3xs:2px; --space-2xs:4px; --space-xs:8px; --space-sm:12px; --space-md:16px;
+  --space-lg:24px; --space-xl:40px; --space-2xl:64px; --space-3xl:96px; --space-4xl:144px;
+
+  --text-xs:0.8125rem; --text-sm:0.875rem; --text-md:1rem; --text-lg:1.1875rem;
+  --text-xl:1.4375rem; --text-2xl:1.75rem; --text-3xl:2.125rem;
+  --text-display:clamp(3rem, 5.2vw + 1rem, 5.75rem);
+  --text-display-s:clamp(2.25rem, 3.2vw + 0.9rem, 3.75rem);
+  --text-section:clamp(1.875rem, 1.5vw + 1.4rem, 2.75rem);
+  --text-title:clamp(1.25rem, 0.5vw + 1.1rem, 1.5625rem);
+  --text-lead:clamp(1.125rem, 0.3vw + 1.05rem, 1.3125rem);
+
+  /* shape ------------------------------------------------------ */
+  --radius-card:0; --radius-pill:0;
+  --rule-hair:1px; --rule-bar:3px;
+  --shadow-card:6px 6px 0 var(--color-ink);
+  --shadow-press:0 3px 0 var(--color-accent-deep);
+  --shadow-inset:inset 0 2px 3px color-mix(in oklab, var(--color-ink) 28%, transparent);
+
+  /* motion ----------------------------------------------------- */
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-in:cubic-bezier(0.7,0,0.84,0);
+  --ease-in-out:cubic-bezier(0.65,0,0.35,1);
+  --dur-micro:120ms; --dur-short:220ms; --dur-long:420ms;
+
+  /* frame ------------------------------------------------------ */
+  --container:1440px; --gutter:64px; --gap-columns:32px;
+  --section-gap-s:120px; --section-gap:144px; --section-gap-l:176px;
+  --z-base:1; --z-raised:10; --z-dropdown:100; --z-sticky:200;
+  --z-sticky-nav:300; --z-modal:400; --z-toast:500; --z-tooltip:600;
+
+  /* names the pages already write in their markup --------------- */
+  --paper:var(--color-paper);
+  --paper-2:var(--color-paper-2);
+  --surface:var(--color-plate);
+  --ink:var(--color-ink);
+  --ink-2:var(--color-ink-2);
+  --muted:var(--color-muted);
+  --rule:var(--color-rule);
+  --rule-2:var(--color-rule-2);
+  --brand:var(--color-accent);
+  --brand-d:var(--color-accent-deep);
+  --brand-l:var(--color-accent-wash);
+  --mark:var(--color-accent);
+  --sans:var(--font-body);
+  --display:var(--font-display);
+  --mono:var(--font-body);
+  --nav-h:66px;
+  --max:var(--container);
+  --read:68ch;
+}
+
+@media (max-width:60rem){ :root{ --gutter:24px; --section-gap-s:80px; --section-gap:96px; --section-gap-l:120px; } }
+@media (max-width:40rem){ :root{ --gutter:16px; --section-gap-s:56px; --section-gap:72px; --section-gap-l:96px; --gap-columns:16px; } }

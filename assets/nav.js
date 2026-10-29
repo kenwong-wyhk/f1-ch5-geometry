@@ -1,7 +1,7 @@
 /* ============================================================
    Shared navigation + pager for Ch.5 Introduction to Geometry
-   Builds the top bar, the mobile panel and the prev/next pager
-   so that every page stays in sync from a single source.
+   Builds the top bar, the mobile panel, the plate index and the
+   prev/next pager so every page stays in sync from one source.
    ============================================================ */
 (function () {
   "use strict";
@@ -18,9 +18,9 @@
     { file: "09-mistakes.html", no: "Rev", title: "Common Mistakes", zh: "常見錯誤", group: "Revision" },
     { file: "10-glossary.html", no: "Rev", title: "Terminology", zh: "術語表", group: "Revision" },
     { file: "11-quiz.html", no: "Rev", title: "Self-check Quiz", zh: "自我測驗", group: "Revision" },
-    { file: "12-slice-game.html", no: "5.4", title: "Slice Lab", zh: "截面切割遊戲", group: "3-D Figures" },
-    { file: "13-prism-unfolding.html", no: "5.4", title: "Unfolding a Prism", zh: "稜柱展開圖", group: "3-D Figures" },
-    { file: "14-prism-stacking.html", no: "5.4", title: "Stacking a Prism", zh: "橫截面堆疊", group: "3-D Figures" },
+    { file: "12-slice-game.html", no: "LAB", title: "Slice Lab", zh: "截面切割遊戲", group: "3-D Figures" },
+    { file: "13-prism-unfolding.html", no: "LAB", title: "Unfolding a Prism", zh: "稜柱展開圖", group: "3-D Figures" },
+    { file: "14-prism-stacking.html", no: "LAB", title: "Stacking a Prism", zh: "橫截面堆疊", group: "3-D Figures" },
     /* `hidden: true` keeps a page out of the menu, the mobile panel and the
        pager. It sits last and carries no number, so the numbered pages above
        stay 1…14 and their badges match their file names. The shrine is
@@ -45,6 +45,10 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  function pad(n) {
+    return n < 10 ? "0" + n : String(n);
+  }
+
   function buildNav() {
     var here = current();
     var isHome = here === "index.html" || here === "";
@@ -56,7 +60,7 @@
       var activeInGroup = items.some(function (p) { return p.file === here; });
       var drop = items.map(function (p) {
         return '<a href="' + p.file + '"' + (p.file === here ? ' class="active"' : "") + ">" +
-          '<span class="num">' + (PAGES.indexOf(p) + 1) + "</span>" +
+          '<span class="num">' + esc(p.no) + "</span>" +
           "<span>" + esc(p.title) + '<span class="zh">' + esc(p.zh) + "</span></span></a>";
       }).join("");
 
@@ -66,14 +70,14 @@
         '<div class="nav-drop">' + drop + "</div></div>";
     });
 
-    var mobile = '<div class="mp-head">Start here</div><a href="index.html"><span class="num">★</span>Home · 目錄</a>';
+    var mobile = '<div class="mp-head">Start here</div><a href="index.html"><span class="num">00</span>Contents <span class="zh">目錄</span></a>';
     GROUPS.forEach(function (g) {
       var items = PAGES.filter(function (p) { return p.group === g.key && !p.hidden; });
       if (!items.length) return;
-      mobile += '<div class="mp-head">' + esc(g.label) + " · " + esc(g.zh) + "</div>";
+      mobile += '<div class="mp-head">' + esc(g.label) + " " + esc(g.zh) + "</div>";
       items.forEach(function (p) {
-        mobile += '<a href="' + p.file + '"><span class="num">' + (PAGES.indexOf(p) + 1) + "</span>" +
-          "<span>" + esc(p.title) + '<span class="zh" style="display:block;font-size:12px;font-weight:500;color:#61748a">' + esc(p.zh) + "</span></span></a>";
+        mobile += '<a href="' + p.file + '"><span class="num">' + esc(p.no) + "</span>" +
+          "<span>" + esc(p.title) + '<span class="zh">' + esc(p.zh) + "</span></span></a>";
       });
     });
 
@@ -82,32 +86,63 @@
       host.className = "site-nav";
       host.innerHTML = '<div class="bar">' +
         '<a class="brand" href="index.html"><span class="mark">∠</span>' +
-        '<span><small>HKDSE · Form 1</small><b>Ch.5 Introduction to Geometry</b></span></a>' +
+        '<span><small>Form 1 Mathematics, HKDSE</small><b>Ch.5 Introduction to Geometry</b></span></a>' +
         '<nav class="nav-links" aria-label="Chapter menu">' + links + "</nav>" +
         '<button class="menu-btn" type="button" aria-label="Open chapter menu" aria-expanded="false">☰</button>' +
         "</div>" +
-        '<div class="mobile-panel" id="mobile-panel">' + mobile + "</div>";
+        '<div class="mobile-panel" id="mobile-panel">' + mobile + "</div>" +
+        '<span class="scroll-line" id="scroll-line" aria-hidden="true"></span>';
 
-      // dropdown behaviour (click to open, hover intent on desktop)
+      // Dropdown behaviour. On a device with a pointer, hovering opens the panel
+      // and it stays open while the pointer is over the button, the 8px bridge or
+      // the panel itself; leaving closes it after a short grace. A click only ever
+      // opens or pins, never closes what the hover just opened. On touch the
+      // button toggles, because there is no hover to do it.
+      var canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
       var groups = host.querySelectorAll(".nav-group");
+
+      function setOpen(g, open) {
+        g.classList.toggle("open", open);
+        g.querySelector("button").setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      function closeAll(except) {
+        groups.forEach(function (o) { if (o !== except) setOpen(o, false); });
+      }
+
       groups.forEach(function (g) {
         var btn = g.querySelector("button");
+        var timer = null;
+
+        function openNow() {
+          if (timer) { clearTimeout(timer); timer = null; }
+          closeAll(g);
+          setOpen(g, true);
+        }
+        function closeSoon() {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(function () { timer = null; setOpen(g, false); }, 180);
+        }
+
         btn.addEventListener("click", function (e) {
           e.stopPropagation();
+          if (canHover) { openNow(); return; }
           var wasOpen = g.classList.contains("open");
-          groups.forEach(function (o) { o.classList.remove("open"); o.querySelector("button").setAttribute("aria-expanded", "false"); });
-          if (!wasOpen) { g.classList.add("open"); btn.setAttribute("aria-expanded", "true"); }
+          closeAll(g);
+          setOpen(g, !wasOpen);
         });
-        g.addEventListener("mouseenter", function () {
-          groups.forEach(function (o) { o.classList.remove("open"); });
-          g.classList.add("open"); btn.setAttribute("aria-expanded", "true");
-        });
-        g.addEventListener("mouseleave", function () {
-          g.classList.remove("open"); btn.setAttribute("aria-expanded", "false");
+
+        if (!canHover) return;
+        g.addEventListener("mouseenter", openNow);
+        g.addEventListener("mouseleave", closeSoon);
+        g.addEventListener("focusin", openNow);
+        g.addEventListener("focusout", function (e) {
+          if (!g.contains(e.relatedTarget)) closeSoon();
         });
       });
-      document.addEventListener("click", function () {
-        groups.forEach(function (o) { o.classList.remove("open"); o.querySelector("button").setAttribute("aria-expanded", "false"); });
+
+      document.addEventListener("click", function () { closeAll(null); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeAll(null);
       });
 
       var mb = host.querySelector(".menu-btn");
@@ -131,17 +166,79 @@
       if (idx === -1) {
         // a hidden page has no neighbours in the chain: one way back, no more
         pager.classList.add("single");
-        html = '<a class="prev" href="index.html"><span class="k">← Back to</span><span class="v">Chapter menu</span></a>';
+        html = '<a class="prev" href="index.html"><span class="k">Back to</span><span class="v">Chapter menu</span></a>';
       } else {
         html += prev
-          ? '<a class="prev" href="' + prev.file + '"><span class="k">← Previous</span><span class="v">' + esc(prev.title) + "</span></a>"
-          : '<a class="prev" href="index.html"><span class="k">← Back to</span><span class="v">Chapter menu</span></a>';
+          ? '<a class="prev" href="' + prev.file + '"><span class="k">Previous, ' + esc(prev.no) + '</span><span class="v">' + esc(prev.title) + "</span></a>"
+          : '<a class="prev" href="index.html"><span class="k">Back to</span><span class="v">Chapter menu</span></a>';
         html += next
-          ? '<a class="next" href="' + next.file + '"><span class="k">Next →</span><span class="v">' + esc(next.title) + "</span></a>"
+          ? '<a class="next" href="' + next.file + '"><span class="k">Next, ' + esc(next.no) + '</span><span class="v">' + esc(next.title) + "</span></a>"
           : '<a class="next" href="index.html"><span class="k">Back to</span><span class="v">Chapter menu</span></a>';
       }
       pager.innerHTML = html;
     }
+
+    // reading progress in the top rule
+    var line = document.getElementById("scroll-line");
+    if (line && !isHome) {
+      var tick = function () {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        line.style.width = (h > 40 ? Math.min(100, Math.max(0, (y / h) * 100)) : 0) + "%";
+      };
+      window.addEventListener("scroll", tick, { passive: true });
+      window.addEventListener("resize", tick);
+      tick();
+    }
+
+    buildPlateIndex();
+  }
+
+  /* The sections of this plate, as a jump strip under the objectives.
+     Keeps a 12-screen lesson navigable without adding a second sidebar. */
+  function buildPlateIndex() {
+    var brief = document.querySelector(".brief");
+    if (!brief) return;
+    var secs = Array.prototype.slice.call(document.querySelectorAll("main .sec"));
+    if (secs.length < 3) return;
+
+    var strip = document.createElement("nav");
+    strip.className = "plate-index";
+    strip.setAttribute("aria-label", "Sections on this page");
+
+    secs.forEach(function (sec, i) {
+      var h = sec.querySelector("h2");
+      if (!h) return;
+      if (!sec.id) sec.id = "plate-sec-" + (i + 1);
+      var n = h.querySelector(".n");
+      var label = "";
+      Array.prototype.forEach.call(h.childNodes, function (node) {
+        if (node.nodeType === 3) label += node.textContent;
+      });
+      label = label.replace(/\s+/g, " ").trim();
+      if (!label) return;
+      var a = document.createElement("a");
+      a.href = "#" + sec.id;
+      a.innerHTML = (n ? "<b>" + esc(n.textContent) + "</b>" : "") + esc(label);
+      strip.appendChild(a);
+    });
+
+    if (!strip.children.length) return;
+    brief.parentNode.insertBefore(strip, brief.nextSibling);
+
+    // mark the section currently on screen
+    if (!("IntersectionObserver" in window)) return;
+    var links = Array.prototype.slice.call(strip.children);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = en.target.id;
+        links.forEach(function (a) {
+          a.classList.toggle("on", a.getAttribute("href") === "#" + id);
+        });
+      });
+    }, { rootMargin: "-72px 0px -70% 0px", threshold: 0 });
+    secs.forEach(function (s) { if (s.id) io.observe(s); });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", buildNav);

@@ -110,7 +110,7 @@
   renderer.localClippingEnabled = true;
 
   var scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x08101c, 9, 26);
+  scene.fog = new THREE.Fog(0x14171d, 9, 26);
 
   var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 200);
   var HOME_DIR = new THREE.Vector3(0.58, 0.40, 0.72).normalize();
@@ -131,22 +131,22 @@
   controls.target.set(0, 0, 0);
 
   /* ---- lights ---- */
-  scene.add(new THREE.HemisphereLight(0xbcd8ff, 0x091323, 0.36));
-  var keyLight = new THREE.DirectionalLight(0xfff4e6, 0.82);
+  scene.add(new THREE.HemisphereLight(0xf4f1e9, 0x14171d, 0.20));
+  var keyLight = new THREE.DirectionalLight(0xfff8ee, 0.78);
   keyLight.position.set(4.5, 7, 5.5);
   scene.add(keyLight);
-  var rimLight = new THREE.DirectionalLight(0x49b6ff, 0.72);
+  var rimLight = new THREE.DirectionalLight(0xd8d2c6, 0.22);
   rimLight.position.set(-5.5, 2.6, -5);
   scene.add(rimLight);
-  var warmLight = new THREE.DirectionalLight(0xffd9b0, 0.2);
+  var warmLight = new THREE.DirectionalLight(0xffe9d6, 0.12);
   warmLight.position.set(-2, -4, 4);
   scene.add(warmLight);
-  var underGlow = new THREE.PointLight(0x22d3ee, 1.1, 5, 2);
+  var underGlow = new THREE.PointLight(0xb03a2e, 0.8, 5, 2);
   underGlow.position.set(0, -1.6, 0.5);
   scene.add(underGlow);
 
   /* ---- floor grid + pedestal ---- */
-  var grid = new THREE.GridHelper(44, 66, 0x1d3f63, 0x122338);
+  var grid = new THREE.GridHelper(44, 66, 0x2f353d, 0x1c2027);
   grid.position.y = -1.62;
   grid.material.transparent = true;
   grid.material.opacity = 0.75;
@@ -155,7 +155,7 @@
   var pedestal = new THREE.Mesh(
     new THREE.RingGeometry(1.04, 1.15, 128),
     new THREE.MeshBasicMaterial({
-      color: 0x22d3ee, transparent: true, opacity: 0.34,
+      color: 0xb03a2e, transparent: true, opacity: 0.34,
       blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide
     })
   );
@@ -166,7 +166,7 @@
   var pedestal2 = new THREE.Mesh(
     new THREE.RingGeometry(0.2, 1.9, 128),
     new THREE.MeshBasicMaterial({
-      color: 0x1d7fa8, transparent: true, opacity: 0.07,
+      color: 0x8c2a20, transparent: true, opacity: 0.07,
       blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide
     })
   );
@@ -187,7 +187,7 @@
     x.fillRect(0, 0, 64, 64);
     return new THREE.CanvasTexture(c);
   }
-  var sparkTex = dotTexture("rgba(255,255,255,1)", "rgba(255,190,110,.55)");
+  var sparkTex = dotTexture("rgba(244,241,233,1)", "rgba(176,58,46,.55)");
 
   /* ---- dust motes ---- */
   var dust = (function () {
@@ -202,7 +202,7 @@
     var g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
     var m = new THREE.PointsMaterial({
-      size: 0.055, map: sparkTex, color: 0x86d9ff, transparent: true,
+      size: 0.055, map: sparkTex, color: 0xf4f1e9, transparent: true,
       opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false,
       sizeAttenuation: true
     });
@@ -218,13 +218,13 @@
     var x = c.getContext("2d");
     x.fillStyle = "#000";
     x.fillRect(0, 0, 512, 512);
-    x.strokeStyle = "rgba(90,210,255,.55)";
+    x.strokeStyle = "rgba(176,58,46,.55)";
     x.lineWidth = 1.4;
     for (var i = 0; i <= 512; i += 32) {
       x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 512); x.stroke();
       x.beginPath(); x.moveTo(0, i); x.lineTo(512, i); x.stroke();
     }
-    x.strokeStyle = "rgba(190,245,255,.95)";
+    x.strokeStyle = "rgba(244,241,233,.95)";
     x.lineWidth = 3;
     x.strokeRect(1.5, 1.5, 509, 509);
     var g = x.createRadialGradient(256, 256, 40, 256, 256, 330);
@@ -243,7 +243,7 @@
 
   var bladeGeo = new THREE.PlaneGeometry(3.7, 3.7);
   var bladeMat = new THREE.MeshBasicMaterial({
-    map: gridTexture(), transparent: true, opacity: 0.34, color: 0x6fe3ff,
+    map: gridTexture(), transparent: true, opacity: 0.34, color: 0xcfcabf,
     blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide,
     depthTest: false
   });
@@ -252,7 +252,7 @@
   bladeGroup.add(bladeMesh);
 
   var rimMat = new THREE.LineBasicMaterial({
-    color: 0xbdf4ff, transparent: true, opacity: 0.85,
+    color: 0xf4f1e9, transparent: true, opacity: 0.85,
     blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false
   });
   var bladeRim = new THREE.LineSegments(new THREE.EdgesGeometry(bladeGeo), rimMat);
@@ -263,7 +263,7 @@
   var bladeHalo = new THREE.Mesh(
     new THREE.PlaneGeometry(3.7, 3.7),
     new THREE.MeshBasicMaterial({
-      map: sparkTex, transparent: true, opacity: 0.07, color: 0x2dd4bf,
+      map: sparkTex, transparent: true, opacity: 0.07, color: 0xb03a2e,
       blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide,
       depthTest: false
     })
@@ -276,12 +276,12 @@
   scene.add(root);
 
   var bodyMat = new THREE.MeshStandardMaterial({
-    color: 0xd3e0ee, roughness: 0.62, metalness: 0.02,
-    emissive: 0x0a1a2e, emissiveIntensity: 1, side: THREE.DoubleSide,
+    color: 0xb3ac9e, roughness: 0.82, metalness: 0.02,
+    emissive: 0x14171d, emissiveIntensity: 1, side: THREE.DoubleSide,
     polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1
   });
   var edgeMat = new THREE.LineBasicMaterial({
-    color: 0x14607f, transparent: true, opacity: 1, depthWrite: false
+    color: 0x14171d, transparent: true, opacity: 1, depthWrite: false
   });
 
   var body = null, edgeLines = null;
@@ -342,7 +342,7 @@
           pos[i * 3 + 1] += vel[i * 3 + 1] * dt;
           pos[i * 3 + 2] += vel[i * 3 + 2] * dt;
           var f = Math.max(0, Math.min(1, life[i] * 1.6));
-          col[i * 3] = f; col[i * 3 + 1] = f * 0.72; col[i * 3 + 2] = f * 0.3;
+          col[i * 3] = f; col[i * 3 + 1] = f * 0.32; col[i * 3 + 2] = f * 0.24;
         }
         g.attributes.position.needsUpdate = true;
         g.attributes.color.needsUpdate = true;
@@ -673,7 +673,7 @@
     for (var i = 0; i <= m; i++) {
       var p = h[i % h.length];
       seamPos[i * 3] = p[0]; seamPos[i * 3 + 1] = p[1]; seamPos[i * 3 + 2] = p[2];
-      seamCol[i * 3] = 0.16; seamCol[i * 3 + 1] = 0.78; seamCol[i * 3 + 2] = 0.98;
+      seamCol[i * 3] = 0.69; seamCol[i * 3 + 1] = 0.23; seamCol[i * 3 + 2] = 0.18;
     }
     seamGeo.setDrawRange(0, m + 1);
     seamGeo.attributes.position.needsUpdate = true;
@@ -691,9 +691,9 @@
       var u = (i % m) / m;
       var d = Math.abs(((u - head + 1.5) % 1 + 1) % 1 - 0.5);
       var b = Math.max(0, 1 - d / 0.16) * boost;
-      seamCol[i * 3] = 0.16 + 0.84 * b;
-      seamCol[i * 3 + 1] = 0.78 + 0.22 * b;
-      seamCol[i * 3 + 2] = 0.98 + 0.02 * b;
+      seamCol[i * 3] = 0.69 + 0.31 * b;
+      seamCol[i * 3 + 1] = 0.23 + 0.72 * b;
+      seamCol[i * 3 + 2] = 0.18 + 0.73 * b;
     }
     seamGeo.attributes.color.needsUpdate = true;
   }
@@ -705,7 +705,7 @@
 
     /* backdrop grid */
     sctx.save();
-    sctx.strokeStyle = "rgba(90,150,200,.12)";
+    sctx.strokeStyle = "rgba(140,134,122,.16)";
     sctx.lineWidth = 1;
     for (var i = 0; i <= 6; i++) {
       var x = (W / 6) * i, y = (H / 4) * i;
@@ -716,7 +716,7 @@
 
     var sec = S.section;
     if (!sec) {
-      sctx.fillStyle = "rgba(120,160,200,.5)";
+      sctx.fillStyle = "rgba(160,154,140,.5)";
       sctx.font = "600 13px ui-monospace, Consolas, monospace";
       sctx.textAlign = "center";
       sctx.fillText("NO SECTION", W / 2, H / 2);
@@ -761,12 +761,12 @@
     sctx.closePath();
 
     var grad = sctx.createLinearGradient(0, 0, W, H);
-    grad.addColorStop(0, "rgba(34,211,238,.30)");
-    grad.addColorStop(1, "rgba(59,130,246,.16)");
+    grad.addColorStop(0, "rgba(176,58,46,.30)");
+    grad.addColorStop(1, "rgba(176,58,46,.16)");
     sctx.fillStyle = grad;
     sctx.fill();
 
-    sctx.shadowColor = "rgba(103,232,249,.95)";
+    sctx.shadowColor = "rgba(176,58,46,.95)";
     sctx.shadowBlur = 12;
     sctx.strokeStyle = "#7defff";
     sctx.lineWidth = 2.2;
@@ -780,7 +780,7 @@
 
   function describe(m) {
     if (save.assist) {
-      var nm = GEO.classify(S.section.hull2);
+      var nm = GEO.classify(S.section.hull2, { solid: S.lv.solid, n: S.section.n });
       return nm.name + " · " + nm.zh;
     }
     if (m >= 9) {
@@ -839,7 +839,7 @@
     botMat.clippingPlanes = [new THREE.Plane(n.clone().negate(), s)];
 
     var capMat = new THREE.MeshStandardMaterial({
-      color: 0xffd2a1, emissive: 0xff6a12, emissiveIntensity: 1.5,
+      color: 0xf4f1e9, emissive: 0xb03a2e, emissiveIntensity: 1.5,
       roughness: 0.35, metalness: 0.35, side: THREE.DoubleSide
     });
     var capTopMat = capMat.clone();
@@ -972,7 +972,7 @@
     var tube = new THREE.Mesh(
       seamTube(sec),
       new THREE.MeshBasicMaterial({
-        color: 0xaef6ff, transparent: true, opacity: 0,
+        color: 0xf4f1e9, transparent: true, opacity: 0,
         blending: THREE.AdditiveBlending, depthWrite: false
       })
     );
@@ -1004,10 +1004,10 @@
         var i = Math.floor(Math.random() * sec.hull3.length);
         Sparks.burst(sec.hull3[i], sec.n, 3, 1.5);
       }
-      /* hot metal cooling to cyan */
+      /* hot metal cooling to the one red */
       var k = Math.min(1, p * 1.35);
-      S.halves.capMat.color.setRGB(lerp(1, 0.13, k), lerp(0.82, 0.83, k), lerp(0.63, 0.93, k));
-      S.halves.capMat.emissive.setRGB(lerp(1, 0.05, k), lerp(0.42, 0.42, k), lerp(0.07, 0.52, k));
+      S.halves.capMat.color.setRGB(lerp(1, 0.69, k), lerp(0.82, 0.23, k), lerp(0.63, 0.18, k));
+      S.halves.capMat.emissive.setRGB(lerp(1, 0.30, k), lerp(0.42, 0.08, k), lerp(0.07, 0.06, k));
       S.halves.capMat.emissiveIntensity = lerp(1.9, 0.85, k);
     }, easeOut);
 
@@ -1029,7 +1029,7 @@
    * ---------------------------------------------------------- */
   function showResult(sec) {
     S.phase = "result";
-    var res = GEO.classify(sec.hull2);
+    var res = GEO.classify(sec.hull2, { solid: S.lv.solid, n: sec.n });
     var win = S.lv.accept.indexOf(res.kind) >= 0;
     var stars = S.cuts <= 1 ? 3 : S.cuts === 2 ? 2 : 1;
 
@@ -1161,9 +1161,9 @@
     pctx.clearRect(0, 0, W, H);
 
     var g = pctx.createRadialGradient(cx, cy, 4, cx, cy, R);
-    g.addColorStop(0, "rgba(34,211,238,.16)");
-    g.addColorStop(0.75, "rgba(20,60,90,.18)");
-    g.addColorStop(1, "rgba(12,30,48,.35)");
+    g.addColorStop(0, "rgba(176,58,46,.16)");
+    g.addColorStop(0.75, "rgba(30,34,40,.18)");
+    g.addColorStop(1, "rgba(20,23,29,.35)");
     pctx.fillStyle = g;
     pctx.beginPath(); pctx.arc(cx, cy, R, 0, Math.PI * 2); pctx.fill();
 
@@ -1171,12 +1171,12 @@
     for (var i = 1; i <= 3; i++) {
       pctx.beginPath();
       pctx.arc(cx, cy, (R * i) / 3, 0, Math.PI * 2);
-      pctx.strokeStyle = i === 3 ? "rgba(103,232,249,.55)" : "rgba(103,232,249,.16)";
+      pctx.strokeStyle = i === 3 ? "rgba(176,58,46,.55)" : "rgba(176,58,46,.16)";
       pctx.lineWidth = i === 3 ? 2 : 1;
       pctx.stroke();
     }
     /* spokes */
-    pctx.strokeStyle = "rgba(103,232,249,.10)";
+    pctx.strokeStyle = "rgba(176,58,46,.10)";
     pctx.lineWidth = 1;
     for (var a = 0; a < 8; a++) {
       var th = (a / 8) * Math.PI * 2;
@@ -1186,7 +1186,7 @@
       pctx.stroke();
     }
     /* labels */
-    pctx.fillStyle = "rgba(120,190,220,.5)";
+    pctx.fillStyle = "rgba(160,154,140,.5)";
     pctx.font = "600 " + Math.round(W * 0.055) + "px ui-monospace, Consolas, monospace";
     pctx.textAlign = "center";
     pctx.fillText("0°", cx, cy - 4);
@@ -1197,11 +1197,11 @@
     pctx.beginPath();
     pctx.moveTo(cx, cy);
     pctx.lineTo(p[0], p[1]);
-    pctx.strokeStyle = "rgba(103,232,249,.75)";
+    pctx.strokeStyle = "rgba(176,58,46,.75)";
     pctx.lineWidth = 2;
     pctx.stroke();
 
-    pctx.shadowColor = "rgba(34,211,238,1)";
+    pctx.shadowColor = "rgba(176,58,46,1)";
     pctx.shadowBlur = 14;
     pctx.beginPath();
     pctx.arc(p[0], p[1], W * 0.045, 0, Math.PI * 2);
@@ -1210,7 +1210,7 @@
     pctx.shadowBlur = 0;
     pctx.beginPath();
     pctx.arc(p[0], p[1], W * 0.075, 0, Math.PI * 2);
-    pctx.strokeStyle = "rgba(189,246,255,.55)";
+    pctx.strokeStyle = "rgba(244,241,233,.55)";
     pctx.lineWidth = 1.5;
     pctx.stroke();
   }
