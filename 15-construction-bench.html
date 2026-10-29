@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construction Bench · 5.3 Basic Constructions · Ch.5 Introduction to Geometry</title>
+<meta name="description" content="Interactive construction game for Form 1 Maths: draw a parallel, a perpendicular and triangles from given sides and angles with a ruler, compasses, protractor and set square. The sheet checks the geometry.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/construction/bench.css">
+</head>
+<body data-page="16">
+
+<div id="site-header"></div>
+
+<header class="plate-head">
+  <div class="wrap">
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="08-constructions.html">5.3 Basic Constructions</a><span>/</span>Lab · Construction bench</div>
+        <h1>Construction Bench</h1>
+        <p class="zh">作圖工作台：平行線、垂線與三角形</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <path d="M14 86 H106" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M60 18 V86" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M60 72 H74 V86" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="60" cy="34" r="4.5" fill="currentColor"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.3</span></div>
+      <div><span class="k">Type</span><span class="v">Interactive lab</span></div>
+      <div><span class="k">Plate</span><span class="v">15</span></div>
+      <div><span class="k">Tasks</span><span class="v">7</span></div>
+    </div>
+    <p class="lab-lede">Seven constructions on one sheet of paper. Set the compasses, lay the protractor on an arm, slide the set
+      square along the ruler. Nothing is marked by eye: the sheet measures the lines you draw and tells you whether the
+      geometry holds.</p>
+  </div>
+</header>
+
+<main class="lab-main">
+
+  <div class="wrap wrap-lab">
+    <div class="bench">
+
+      <div class="bench-board">
+        <div class="bench-bar">
+          <span class="t" id="bench-hint">Pick a tool, then click on the sheet.</span>
+          <span class="grp">
+            <button type="button" class="bench-mini" id="btn-undo">Undo</button>
+            <button type="button" class="bench-mini" id="btn-clear">Clear my marks</button>
+          </span>
+        </div>
+
+        <div class="board-wrap" data-tool="setsquare">
+          <svg id="board" viewBox="0 0 768 504" role="img"
+               aria-label="A sheet of paper with the given figure. Use the tools below to construct on it.">
+            <g id="layer-sheet"></g>
+            <g id="layer-given"></g>
+            <g id="layer-marks"></g>
+            <g id="layer-guide"></g>
+          </svg>
+        </div>
+
+        <div class="bench-tools" role="toolbar" aria-label="Construction tools">
+          <button type="button" class="tool-btn" data-tool="ruler" aria-pressed="false">Ruler</button>
+          <button type="button" class="tool-btn" data-tool="compass" aria-pressed="false">Compasses</button>
+          <button type="button" class="tool-btn" data-tool="protractor" aria-pressed="false">Protractor</button>
+          <button type="button" class="tool-btn" data-tool="setsquare" aria-pressed="true">Set square</button>
+          <button type="button" class="tool-btn" data-tool="eraser" aria-pressed="false">Eraser</button>
+        </div>
+
+        <div class="tool-pane" data-pane="ruler" hidden>
+          <p>Click a start point, then an end point. Lengths snap to 0.1 cm, and the end of a line snaps to any crossing
+            on the sheet.</p>
+        </div>
+
+        <div class="tool-pane" data-pane="compass" hidden>
+          <div class="compass-ctl">
+            <label for="compass-range">Opening</label>
+            <input id="compass-range" type="range" min="0.5" max="8" step="0.1" value="4.5">
+            <output class="compass-out" id="compass-out" for="compass-range">4.5 cm</output>
+          </div>
+        </div>
+
+        <div class="tool-pane" data-pane="protractor" hidden>
+          <p>Click the vertex. The protractor picks up the line you are measuring from as its 0°, then swing out to the
+            angle and click again.</p>
+        </div>
+
+        <div class="tool-pane" data-pane="setsquare" hidden>
+          <span class="k">Square edge</span>
+          <div class="seg-ctl flat">
+            <button type="button" data-sq="para" aria-pressed="false">Parallel</button>
+            <button type="button" data-sq="perp" aria-pressed="true">Perpendicular</button>
+          </div>
+        </div>
+
+        <div class="tool-pane" data-pane="eraser" hidden>
+          <p>Click one of your own lines or arcs to take it off the sheet. The given figure stays put.</p>
+        </div>
+      </div>
+
+      <aside class="bench-rail">
+        <div class="task-card">
+          <div class="task-count" id="task-count">Task 1 of 7</div>
+          <h2 id="task-title">Perpendicular through a point</h2>
+          <p class="task-zh" id="task-zh">過一點作垂線</p>
+          <p class="task-brief" id="task-brief"></p>
+          <div class="task-data" id="task-data"></div>
+          <ol class="task-checks" id="task-checks"></ol>
+          <div class="task-actions">
+            <button type="button" class="btn primary" id="btn-check">Check my construction</button>
+            <button type="button" class="reveal-btn" id="btn-method" hidden>Show me the method</button>
+          </div>
+          <div class="task-feedback" id="feedback" role="status" aria-live="polite"></div>
+          <div class="stamp" id="stamp" hidden></div>
+        </div>
+
+        <nav class="bench-index" aria-label="The seven constructions">
+          <div class="bench-index-head">
+            <span>Construction set</span>
+            <span id="bench-progress">0 of 7 constructed</span>
+          </div>
+          <div id="bench-index"></div>
+        </nav>
+      </aside>
+
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <h2 class="sr-only">Notes on this bench</h2>
+    <div class="lab-notes">
+      <div class="lab-note">
+        <h3>How the tools behave</h3>
+        <p>Every tool is two clicks. The <b>ruler</b> takes a start and an end. The <b>compasses</b> take an opening from
+          the tray, then a centre. The <b>protractor</b> takes the vertex, picks up the line you are measuring from, then
+          the angle. The <b>set square</b> takes a line, then the point the new line must pass through.</p>
+      </div>
+      <div class="lab-note">
+        <h3>What counts as correct</h3>
+        <p>The sheet measures the lines, not the drawing: <b>1.5°</b> on an angle and <b>2 mm</b> on a length. The compasses
+          task also asks for the arcs, because the arcs are the evidence that the vertex was found, not guessed.</p>
+      </div>
+      <div class="lab-note">
+        <h3>The five cases</h3>
+        <p>Three sides: ruler and compasses. Two sides and the angle between them: protractor. Two angles and the side
+          between them: protractor. Two angles and a side that is <em>not</em> between them: find the third angle first.
+          A right angle, the hypotenuse and a side: set square and compasses.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">Three questions to ask the class</div>
+      <ol style="margin-bottom:0">
+        <li>On task 3, why does the vertex have to be exactly where the two arcs cross, and not merely near it?</li>
+        <li>On task 6, the angle at <span class="m">P</span> is not given. What tells you it must be 45°?</li>
+        <li>On task 7, you are given a side, a right angle and the hypotenuse. Why can the hypotenuse never be the
+          shortest side?</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <div class="h">Where this sits in the chapter</div>
+      <p style="margin-bottom:0">This bench practises <a href="08-constructions.html">plate 5.3, Basic Constructions</a>.
+        The method for each task is written out on that plate; the bench is where you find out whether you can actually
+        do it with the instruments in your hand.</p>
+    </div>
+
+    <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Construction Bench</span><span>Chapter 5, Introduction to Geometry. Form 1 Mathematics.</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/construction/bench.js"></script>
+</body>
+</html>

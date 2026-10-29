@@ -1,0 +1,395 @@
+/* Hallmark · part of the Ch.5 site system: the palette, the faces and the stamp live in assets/style.css */
+/* Hallmark · dismissed F4 · .tool-btn[aria-pressed="true"] is the pressed state of the one tool button, not a second filled primary */
+/* ============================================================
+   Construction Bench · 5.3
+   The sheet is a plate, the tools are the site's own buttons,
+   the only red is the mark you are making.
+   ============================================================ */
+
+:focus-visible{outline:2px solid var(--color-focus); outline-offset:2px}
+
+.bench{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 348px;
+  gap:var(--gap-columns);
+  align-items:start;
+}
+
+/* ---------- the sheet ---------- */
+
+.bench-board{
+  border:var(--rule-bar) solid var(--color-ink);
+  background:var(--color-plate);
+  box-shadow:var(--shadow-card);
+}
+
+.bench-bar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:var(--space-xs) var(--space-md);
+  min-height:56px;
+  padding:var(--space-sm) var(--space-md);
+  border-bottom:var(--rule-hair) solid var(--color-rule-2);
+  font-size:var(--text-sm);
+}
+.bench-bar .t{flex:1 1 15rem; line-height:1.4; color:var(--color-ink-2)}
+.bench-bar .grp{display:flex; gap:var(--space-2xs)}
+
+.bench-mini{
+  min-height:36px;
+  padding:0 var(--space-sm);
+  border:var(--rule-hair) solid var(--color-rule-2);
+  background:none;
+  color:var(--color-ink-2);
+  font-size:var(--text-xs);
+  font-weight:600;
+}
+.bench-mini:hover{background:var(--color-paper-2); color:var(--color-ink)}
+.bench-mini:active{translate:0 1px}
+
+.board-wrap{position:relative; background:var(--color-plate); overflow:hidden}
+#board{
+  display:block;
+  width:100%;
+  height:auto;
+  touch-action:manipulation;
+  cursor:crosshair;
+}
+.board-wrap[data-tool="eraser"] #board{cursor:cell}
+
+/* ---------- the tray ---------- */
+
+.bench-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-2xs);
+  padding:var(--space-sm) var(--space-md);
+  border-top:var(--rule-hair) solid var(--color-rule-2);
+  background:var(--color-paper);
+}
+.tool-btn{
+  min-height:44px;
+  padding:0 var(--space-md);
+  border:var(--rule-hair) solid var(--color-ink);
+  background:var(--color-plate);
+  color:var(--color-ink);
+  font-size:var(--text-sm);
+  font-weight:600;
+}
+.tool-btn:hover{background:var(--color-paper-2)}
+.tool-btn:active{translate:0 1px}
+.tool-btn[aria-pressed="true"]{
+  background:var(--color-ink);
+  border-color:var(--color-ink);
+  color:var(--color-plate-ink);
+}
+.tool-btn[aria-pressed="true"]:hover{background:var(--color-ink-2)}
+
+.tool-pane{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:var(--space-xs) var(--space-md);
+  padding:var(--space-sm) var(--space-md);
+  border-top:var(--rule-hair) solid var(--color-rule-2);
+  background:var(--color-plate);
+  font-size:var(--text-sm);
+  color:var(--color-ink-2);
+}
+.tool-pane[hidden]{display:none}
+.tool-pane p{margin:0; max-width:58ch; line-height:1.45}
+.tool-pane .k{font-weight:600; color:var(--color-ink)}
+.seg-ctl.flat{margin-top:0}
+
+.compass-ctl{display:flex; align-items:center; gap:var(--space-sm); flex:1 1 17rem}
+.compass-ctl label{font-weight:600; color:var(--color-ink); white-space:nowrap}
+.compass-ctl input[type=range]{flex:1 1 auto; min-width:120px; accent-color:var(--color-accent)}
+.compass-out{
+  min-width:5em;
+  font-weight:600;
+  color:var(--color-ink);
+  font-variant-numeric:tabular-nums;
+  text-align:right;
+}
+
+/* ---------- the rail ---------- */
+
+.bench-rail{display:grid; gap:var(--space-lg)}
+
+.task-card{
+  background:var(--color-plate);
+  border:var(--rule-hair) solid var(--color-rule-2);
+  border-top:var(--rule-bar) solid var(--color-ink);
+  padding:var(--space-md) var(--space-md) var(--space-lg);
+}
+.task-count{
+  font-family:var(--font-display);
+  font-size:var(--text-sm);
+  font-weight:700;
+  color:var(--color-accent);
+}
+.task-card h2{
+  margin-top:var(--space-2xs);
+  font-size:var(--text-lg);
+  line-height:1.08;
+  text-wrap:balance;
+}
+.task-zh{
+  margin-top:var(--space-2xs);
+  font-family:var(--font-cjk);
+  font-size:var(--text-sm);
+  color:var(--color-muted);
+}
+.task-brief{
+  margin-top:var(--space-sm);
+  font-size:var(--text-sm);
+  line-height:1.55;
+  color:var(--color-ink-2);
+}
+.task-data{
+  margin-top:var(--space-sm);
+  padding:var(--space-xs) var(--space-sm);
+  background:var(--color-paper-2);
+  font-size:var(--text-sm);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  color:var(--color-ink);
+}
+
+.task-checks{
+  list-style:none;
+  margin:var(--space-md) 0 0;
+  padding:0;
+  display:grid;
+  gap:0;
+}
+.task-checks li{
+  display:grid;
+  grid-template-columns:18px minmax(0,1fr);
+  gap:var(--space-xs);
+  align-items:start;
+  padding:var(--space-xs) 0;
+  border-bottom:var(--rule-hair) solid var(--color-rule-2);
+  font-size:var(--text-sm);
+  line-height:1.35;
+  color:var(--color-ink-2);
+}
+.task-checks .mark{
+  font-weight:700;
+  text-align:center;
+  color:var(--color-rule-2);
+}
+.task-checks li.ok .mark{color:var(--color-accent)}
+.task-checks li.ok{color:var(--color-ink)}
+.task-checks li.bad .mark{color:var(--color-ink-2)}
+
+.task-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-sm);
+  margin-top:var(--space-md);
+}
+.task-actions .btn{min-height:44px; font-size:var(--text-sm); padding:0 var(--space-md)}
+.task-actions .reveal-btn{margin-top:0}
+
+.task-feedback{
+  margin-top:var(--space-sm);
+  min-height:1.4em;
+  font-size:var(--text-sm);
+  line-height:1.5;
+  color:var(--color-ink-2);
+}
+.task-feedback.bad{
+  padding-left:var(--space-sm);
+  border-left:var(--rule-bar) solid var(--color-accent);
+  color:var(--color-ink);
+}
+.task-feedback.ok{
+  padding-left:var(--space-sm);
+  border-left:var(--rule-bar) solid var(--color-ink);
+  color:var(--color-ink);
+  font-weight:600;
+}
+.task-feedback.method{border-left:var(--rule-bar) solid var(--color-rule-2); padding-left:var(--space-sm)}
+.method-list{
+  margin:0;
+  padding-left:1.1em;
+  display:grid;
+  gap:var(--space-2xs);
+  color:var(--color-ink-2);
+}
+.method-list li{padding-left:var(--space-2xs)}
+
+.stamp{
+  display:inline-block;
+  margin-top:var(--space-sm);
+  padding:var(--space-2xs) var(--space-sm);
+  border:var(--rule-bar) solid var(--color-accent);
+  color:var(--color-accent-deep);
+  font-family:var(--font-display);
+  font-size:var(--text-sm);
+  font-weight:700;
+  transform:rotate(-2.5deg);
+  animation:stamp-in var(--dur-short) var(--ease-out);
+}
+@keyframes stamp-in{
+  from{transform:rotate(-2.5deg) scale(1.18); opacity:0}
+  to{transform:rotate(-2.5deg) scale(1); opacity:1}
+}
+
+.bench-index{
+  border-top:var(--rule-bar) solid var(--color-ink);
+  padding-top:var(--space-2xs);
+}
+.bench-index-head{
+  display:flex;
+  justify-content:space-between;
+  gap:var(--space-sm);
+  padding:var(--space-2xs) 0 var(--space-xs);
+  font-size:var(--text-xs);
+  color:var(--color-muted);
+}
+.bench-index-row{
+  display:grid;
+  grid-template-columns:22px minmax(0,1fr) 12px;
+  gap:var(--space-xs);
+  align-items:center;
+  width:100%;
+  padding:var(--space-xs) 0;
+  border:0;
+  border-bottom:var(--rule-hair) solid var(--color-rule-2);
+  background:none;
+  text-align:left;
+  font-size:var(--text-sm);
+  color:var(--color-ink-2);
+}
+.bench-index-row:hover{color:var(--color-ink)}
+.bench-index-row .n{
+  font-family:var(--font-display);
+  font-variant-numeric:tabular-nums;
+  color:var(--color-muted);
+}
+.bench-index-row .dot{
+  width:9px;
+  height:9px;
+  border:var(--rule-hair) solid var(--color-rule-2);
+}
+.bench-index-row .dot.done{background:var(--color-ink); border-color:var(--color-ink)}
+.bench-index-row .dot.clean{background:var(--color-accent); border-color:var(--color-accent)}
+.bench-index-row.here{color:var(--color-ink); font-weight:600}
+.bench-index-row.here .n{color:var(--color-accent)}
+
+/* ---------- the drawing ---------- */
+
+#board text{font-family:var(--font-body)}
+/* the sheet scales, the pen does not: a 3 px line stays 3 px at every width */
+#board line,#board path,#board circle{vector-effect:non-scaling-stroke}
+
+.b-paper{fill:var(--color-plate)}
+.b-grid{stroke:var(--color-rule); stroke-width:1; opacity:.45}
+.b-edge{fill:none; stroke:var(--color-rule-2); stroke-width:1}
+
+.b-given-line{stroke:var(--color-ink); stroke-width:3; stroke-linecap:round}
+.b-given-dot{fill:var(--color-ink)}
+.b-name{
+  fill:var(--color-ink);
+  font-size:16px;
+  font-weight:700;
+  dominant-baseline:middle;
+  paint-order:stroke;
+  stroke:var(--color-plate);
+  stroke-width:4;
+}
+.b-dim{
+  fill:var(--color-muted);
+  font-size:13px;
+  font-weight:500;
+  paint-order:stroke;
+  stroke:var(--color-plate);
+  stroke-width:4;
+}
+
+.b-line{stroke:var(--color-ink); stroke-width:2.2; stroke-linecap:round}
+.b-arc{fill:none; stroke:var(--color-ink-2); stroke-width:1.1; opacity:.5}
+.b-centre{fill:var(--color-ink-2); opacity:.6}
+.b-dot{fill:var(--color-ink)}
+.b-found-ring{fill:none; stroke:var(--color-accent); stroke-width:2.4}
+.b-name-red{
+  fill:var(--color-accent-deep);
+  font-size:16px;
+  font-weight:700;
+  dominant-baseline:middle;
+  paint-order:stroke;
+  stroke:var(--color-plate);
+  stroke-width:4;
+}
+
+.b-guide{fill:none; stroke:var(--color-accent); stroke-width:1.6; stroke-dasharray:5 5}
+.b-guide-soft{fill:none; stroke:var(--color-rule-2); stroke-width:1.2; stroke-dasharray:3 4}
+.b-guide-dot{fill:none; stroke:var(--color-accent); stroke-width:2}
+.b-picked{stroke:var(--color-accent); stroke-width:1.4; opacity:.55}
+.b-square{fill:none; stroke:var(--color-accent); stroke-width:1.4}
+.b-right{fill:none; stroke:var(--color-ink); stroke-width:1.6}
+.b-snap{stroke:var(--color-accent); stroke-width:1.6; opacity:.85}
+
+.b-accent-line{stroke:var(--color-accent); stroke-width:2.2; stroke-linecap:round}
+.b-accent-arc{fill:none; stroke:var(--color-accent); stroke-width:1.6}
+
+.b-proto-fill{fill:var(--color-paper); opacity:.55}
+.b-proto-rim{fill:none; stroke:var(--color-ink-2); stroke-width:1.2; opacity:.55}
+.b-proto-tick{stroke:var(--color-ink-2); stroke-width:1; opacity:.5}
+.b-proto-num{fill:var(--color-muted); font-size:10px; font-weight:500}
+
+.b-readout{
+  fill:var(--color-accent-deep);
+  font-size:16px;
+  font-weight:700;
+  paint-order:stroke;
+  stroke:var(--color-plate);
+  stroke-width:5;
+}
+.b-chip-text{
+  fill:var(--color-accent-deep);
+  font-size:13px;
+  font-weight:600;
+  text-anchor:middle;
+  paint-order:stroke;
+  stroke:var(--color-plate);
+  stroke-width:4;
+}
+
+/* ---------- narrow ---------- */
+
+@media (max-width:74rem){
+  .bench{grid-template-columns:minmax(0,1fr)}
+  /* the rail dissolves so the task card can sit above the sheet and the
+     index below it, in the order a student actually works */
+  .bench-rail{display:contents}
+  .task-card{order:-2}
+  .bench-board{order:-1}
+  .bench-index{order:1}
+}
+
+@media (max-width:40rem){
+  .bench-bar{padding:var(--space-xs) var(--space-sm)}
+  .bench-bar .t{flex-basis:100%}
+  .bench-tools{padding:var(--space-xs) var(--space-sm); gap:var(--space-3xs)}
+  .tool-btn{padding:0 var(--space-sm); min-height:40px}
+  .tool-pane{padding:var(--space-xs) var(--space-sm)}
+  .task-card{padding:var(--space-sm) var(--space-sm) var(--space-md)}
+  /* the sheet is only ~350 px wide here: keep the strokes and the labels legible */
+  #board .b-name,#board .b-name-red{font-size:26px}
+  #board .b-dim{font-size:21px}
+  #board .b-proto-num{font-size:16px}
+  #board .b-readout{font-size:26px}
+  #board .b-chip-text{font-size:21px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}

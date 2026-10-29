@@ -15,6 +15,7 @@
     { file: "06-circles.html", no: "5.2A", title: "Circles", zh: "圓", group: "Plane Figures" },
     { file: "07-solids.html", no: "5.4", title: "3-D Figures", zh: "立體圖形", group: "3-D Figures" },
     { file: "08-constructions.html", no: "5.3", title: "Basic Constructions", zh: "基本作圖", group: "Construction" },
+    { file: "15-construction-bench.html", no: "LAB", title: "Construction Bench", zh: "作圖工作台", group: "Construction" },
     { file: "09-mistakes.html", no: "Rev", title: "Common Mistakes", zh: "常見錯誤", group: "Revision" },
     { file: "10-glossary.html", no: "Rev", title: "Terminology", zh: "術語表", group: "Revision" },
     { file: "11-quiz.html", no: "Rev", title: "Self-check Quiz", zh: "自我測驗", group: "Revision" },
