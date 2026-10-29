@@ -4,12 +4,17 @@
 
    The maths is the same as Slice Lab: a flat plane cuts a solid and
    the exposed face is a cross-section.  The control is different —
-   you swipe, and the swipe angle becomes the blade's tilt.
+   you draw the blade with your finger.
 
-   Blade model (see dev/gen_vows.js):
+   Blade model (see dev/check_vows.js):
      • the plane is hinged on the world Z axis: n = (sin t, cos t, 0)
      • it always passes through the spirit's centre (s = 0)
-     • the player controls only t, in 5° steps
+     • the player draws a line on screen; t is solved so that the
+       blade's in-plane direction e(t) = (cos t, -sin t, 0) projects
+       onto the screen *parallel to that line* — the blade lies along
+       the swipe, not across it (see tiltFromStroke below)
+     • t runs -90°…90°, i.e. the whole pencil of planes through the
+       Z axis, so either lean is reachable
      • each vow spawns its solid at an authored yaw, which supplies
        the turn the player cannot control
    ============================================================ */
@@ -29,9 +34,10 @@
     return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
   }
 
-  var TILT_STEP = 5;
   var RUN_SECONDS = 60;
   var CUT_DUR = 1.15;        /* one cut animation, start to next spirit */
+  var DRAG_MIN = 8;          /* px before a stroke has a usable direction */
+  var SWIPE_MIN = 24;        /* px before it counts as a cut at all */
 
   /* ---------------------------------------------------------- *
    *  1. saved best
@@ -157,14 +163,14 @@
   scene.add(bladeGroup);
   var bladeGeo = new THREE.PlaneGeometry(3.0, 3.0);
   var bladeMat = new THREE.MeshBasicMaterial({
-    color: C(0x17130f), transparent: true, opacity: 0.055,
+    color: C(0x17130f), transparent: true, opacity: 0.085,
     side: THREE.DoubleSide, depthWrite: false
   });
   var bladeMesh = new THREE.Mesh(bladeGeo, bladeMat);
   bladeGroup.add(bladeMesh);
   var bladeRim = new THREE.LineSegments(
     new THREE.EdgesGeometry(bladeGeo),
-    new THREE.LineBasicMaterial({ color: C(0x17130f), transparent: true, opacity: 0.3, depthWrite: false })
+    new THREE.LineBasicMaterial({ color: C(0x17130f), transparent: true, opacity: 0.42, depthWrite: false })
   );
   bladeGroup.add(bladeRim);
   bladeGroup.visible = false;
@@ -323,10 +329,29 @@
 
   /* ---------------------------------------------------------- *
    *  7. gesture -> blade
+   *     The blade is hinged on the world Z axis, so it always
+   *     contains that axis and is seen almost edge-on: on screen it
+   *     reads as a line.  The stroke chooses the lean.
+   *
+   *     e(t) = (cos t, -sin t, 0) is the blade's in-plane direction
+   *     that lies in the XY plane; the other one is Z itself.  For
+   *     the blade to lie *along* the finger, e(t) must project onto
+   *     the screen parallel to the stroke:
+   *
+   *       sx = cos t·right.x - sin t·right.y
+   *       sy = cos t·up.x    - sin t·up.y
+   *       sx·(-dy) - sy·dx = 0        ->  tan t = num / den
+   *
+   *     which has a closed form, so the blade tracks the finger
+   *     exactly at any camera angle.
    * ---------------------------------------------------------- */
   var raycaster = new THREE.Raycaster();
   var ndc = new THREE.Vector2();
   var drag = null;
+
+  var _right = new THREE.Vector3(), _up = new THREE.Vector3();
+  var _n = new THREE.Vector3(), _ex = new THREE.Vector3(), _ez = new THREE.Vector3();
+  var _basis = new THREE.Matrix4();
 
   function pick(x, y) {
     var r = canvas.getBoundingClientRect();
@@ -336,9 +361,26 @@
     return hits.length ? hits[0] : null;
   }
 
-  function tiltFromDrag(dx, dy) {
-    var ang = Math.atan2(Math.abs(dx), Math.abs(dy)) * 180 / Math.PI;
-    return clamp(Math.round(ang / TILT_STEP) * TILT_STEP, 0, 90);
+  /* screen stroke (dx, dy with y pointing down) -> blade tilt in degrees */
+  function tiltFromStroke(dx, dy) {
+    /* matrixWorld is column-major: column 0 is the camera's right axis,
+       column 1 its up axis */
+    var m = camera.matrixWorld.elements;
+    _right.set(m[0], m[1], m[2]).normalize();
+    _up.set(m[4], m[5], m[6]).normalize();
+
+    var ax = _right.x, ay = _up.x;        /* coefficients of cos t */
+    var bx = -_right.y, by = -_up.y;      /* coefficients of sin t  */
+
+    var num = ax * dy + ay * dx;
+    var den = -(bx * dy + by * dx);
+    if (Math.abs(num) < 1e-9 && Math.abs(den) < 1e-9) return null;
+
+    var t = Math.atan2(num, den) * 180 / Math.PI;
+    /* t and t ± 180 are the same plane, so fold into -90…90 */
+    if (t > 90) t -= 180;
+    if (t < -90) t += 180;
+    return t;
   }
 
   function planeNormal(tilt) {
@@ -346,14 +388,24 @@
     return [Math.sin(t), Math.cos(t), 0];
   }
 
+  /* local X along the stroke direction, local Y along the hinge */
+  function orientBlade(tilt) {
+    var a = tilt * Math.PI / 180;
+    _n.set(Math.sin(a), Math.cos(a), 0);
+    _ex.set(Math.cos(a), -Math.sin(a), 0);
+    _ez.set(0, 0, 1);
+    _basis.makeBasis(_ex, _ez, _n.clone().negate());
+    bladeGroup.quaternion.setFromRotationMatrix(_basis);
+  }
+
   function updatePreview(tilt) {
     var n = planeNormal(tilt);
     var sec = GEO.sectionAt(S.tris, n, 0);
     S.preview = sec;
+    S.tilt = tilt;
 
-    var nv = new THREE.Vector3(n[0], n[1], n[2]);
     bladeGroup.position.set(0, 0, 0);
-    bladeGroup.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), nv);
+    orientBlade(tilt);
     bladeGroup.visible = true;
 
     if (!sec) { seamLine.visible = false; return; }
@@ -460,6 +512,7 @@
     halves.botMat.clippingPlanes[0].constant = -n.clone().negate().dot(halves.bot.position);
   }
 
+  var cutSeq = 0;                 /* guards the delayed verdict */
   function performCut(tilt) {
     if (S.mode !== "aim") return;
     var n = planeNormal(tilt);
@@ -472,6 +525,7 @@
 
     clearPreview();
     makeHalves(sec);
+    spawnSplash(sec);
     S.mode = "cut";
     S.t = 0;
     S.missed = !win;
@@ -486,7 +540,6 @@
       Sound.hit();
       popCombo();
       flashVow("hit");
-      stamp();
     } else {
       S.combo = 1;
       S.time = Math.max(0, S.time - 4);
@@ -497,8 +550,15 @@
     Sound.slash();
     paintSlashStroke(S.slashA, S.slashB, win);
     updateHud();
-    showCard(res, win);
     S.slashA = S.slashB = null;
+
+    /* let the cut and its ink land before the verdict covers the middle */
+    var mine = ++cutSeq;
+    setTimeout(function () {
+      if (S.done || cutSeq !== mine) return;
+      if (win) stamp();
+      showCard(res, win);
+    }, 150);
   }
 
   /* ---------------------------------------------------------- *
@@ -603,18 +663,174 @@
   }
 
   /* ---------------------------------------------------------- *
-   * 11. ink slash overlay
+   * 11. ink overlay — slash stroke, cut flash, splash
+   *     Everything here is drawn on the ink canvas above the 3-D
+   *     scene, so it reads as ink on the page rather than dust in
+   *     the air.  Sizes are scaled by INK_K so a phone and a
+   *     projector get the same picture.
    * ---------------------------------------------------------- */
   var slashFx = null;
+  var flashFx = null;
+  var inkBits = [];
+  var INK_K = 1;
 
   function paintSlashStroke(a, b, ok) {
     if (!a || !b) return;
     slashFx = { a: a, b: b, t: 0, ok: ok };
   }
 
-  function drawSlashFx(dt) {
-    var W = inkEl.width, H = inkEl.height;
-    ictx.clearRect(0, 0, W, H);
+  /* world point -> ink canvas pixel */
+  function projectToInk(p) {
+    var v = new THREE.Vector3(p[0], p[1], p[2]).project(camera);
+    return [(v.x * 0.5 + 0.5) * inkEl.width, (-v.y * 0.5 + 0.5) * inkEl.height];
+  }
+
+  /* the burst: droplets thrown off the fresh cut, plus a short glow
+     along the section outline itself.
+     The plane is seen almost edge-on, so its projected outline is a thin
+     sliver — spraying "outward from the middle" would just run along the
+     cut.  Ink is squeezed out sideways instead, along the plane normal
+     projected on screen. */
+  function spawnSplash(sec) {
+    if (!sec || !sec.hull3 || sec.hull3.length < 3) return;
+
+    var pts = sec.hull3.map(projectToInk);
+    var cx = 0, cy = 0, i;
+    for (i = 0; i < pts.length; i++) { cx += pts[i][0]; cy += pts[i][1]; }
+    cx /= pts.length; cy /= pts.length;
+
+    /* screen direction of the plane normal */
+    var o = projectToInk([0, 0, 0]);
+    var e = projectToInk(sec.n);
+    var nx = e[0] - o[0], ny = e[1] - o[1];
+    var nl = Math.hypot(nx, ny);
+    if (nl < 1e-3) { nx = 0; ny = -1; } else { nx /= nl; ny /= nl; }
+    /* the tangent of the cut line, for a little scatter along it */
+    var tx = -ny, ty = nx;
+
+    var k = INK_K;
+    var n = Math.min(52, 22 + pts.length * 2);
+
+    for (i = 0; i < n; i++) {
+      /* walk the outline so the spray comes off the whole cut, not just
+         the two tips of the sliver */
+      var a0 = pts[i % pts.length], a1 = pts[(i + 1) % pts.length];
+      var f = Math.random();
+      var px = a0[0] + (a1[0] - a0[0]) * f;
+      var py = a0[1] + (a1[1] - a0[1]) * f;
+      var side = Math.random() < 0.5 ? -1 : 1;
+      var sp = (340 + Math.pow(Math.random(), 0.7) * 820) * k;
+      var along = (Math.random() - 0.5) * 130 * k;
+
+      inkBits.push({
+        x: px + (Math.random() - 0.5) * 12 * k,
+        y: py + (Math.random() - 0.5) * 12 * k,
+        vx: nx * sp * side + tx * along,
+        vy: ny * sp * side + ty * along - 50 * k,
+        r: (1.8 + Math.random() * 3.4) * k,
+        life: 0,
+        max: 0.36 + Math.random() * 0.42,
+        red: Math.random() < 0.28,
+        grav: 0.45 + Math.random() * 0.5,
+        drag: 0.88 + Math.random() * 0.07
+      });
+    }
+
+    /* a few heavy drops that carry further and fall */
+    for (i = 0; i < 5; i++) {
+      var q = pts[(Math.random() * pts.length) | 0];
+      var sd = Math.random() < 0.5 ? -1 : 1;
+      var s2 = (420 + Math.random() * 520) * k;
+      inkBits.push({
+        x: q[0], y: q[1],
+        vx: nx * s2 * sd + tx * (Math.random() - 0.5) * 180 * k,
+        vy: ny * s2 * sd + ty * (Math.random() - 0.5) * 180 * k - 140 * k,
+        r: (3.4 + Math.random() * 3.0) * k,
+        life: 0,
+        max: 0.8 + Math.random() * 0.45,
+        red: Math.random() < 0.35,
+        grav: 1.1,
+        drag: 0.985
+      });
+    }
+
+    var reach = 0;
+    for (i = 0; i < pts.length; i++) {
+      reach = Math.max(reach, Math.hypot(pts[i][0] - cx, pts[i][1] - cy));
+    }
+
+    flashFx = { pts: pts, cx: cx, cy: cy, r: reach * 1.9, t: 0 };
+  }
+
+  function updateInkBits(dt) {
+    var g = 1450 * INK_K;
+    for (var i = inkBits.length - 1; i >= 0; i--) {
+      var b = inkBits[i];
+      b.life += dt;
+      if (b.life >= b.max) { inkBits.splice(i, 1); continue; }
+      b.vy += g * b.grav * dt;
+      var d = Math.pow(b.drag, dt * 60);
+      b.vx *= d; b.vy *= d;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+    }
+  }
+
+  function drawInkBits() {
+    for (var i = 0; i < inkBits.length; i++) {
+      var b = inkBits[i];
+      var a = 1 - Math.pow(b.life / b.max, 1.7);
+      var sp = Math.hypot(b.vx, b.vy);
+      var st = Math.min(2.4, sp / (620 * INK_K));      /* stretched along its flight */
+      ictx.save();
+      ictx.translate(b.x, b.y);
+      ictx.rotate(Math.atan2(b.vy, b.vx));
+      ictx.beginPath();
+      ictx.ellipse(0, 0, b.r * (1 + st), b.r * (1 - 0.28 * Math.min(1, st)), 0, 0, Math.PI * 2);
+      ictx.fillStyle = b.red
+        ? "rgba(192,54,44," + (0.78 * a).toFixed(3) + ")"
+        : "rgba(23,19,15," + (0.82 * a).toFixed(3) + ")";
+      ictx.fill();
+      ictx.restore();
+    }
+  }
+
+  function drawFlash(dt) {
+    if (!flashFx) return;
+    flashFx.t += dt;
+    var p = flashFx.t / 0.34;
+    if (p >= 1) { flashFx = null; return; }
+
+    var a = 1 - p;
+    var pts = flashFx.pts, cx = flashFx.cx, cy = flashFx.cy;
+
+    /* the bloom: the plane is edge-on, so a glow is the only thing that
+       reads as "light" on a section seen as a line */
+    var R = Math.max(40, flashFx.r) * (1 + 0.4 * easeOut(p));
+    var g = ictx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    g.addColorStop(0, "rgba(255,238,226," + (0.30 * a * a).toFixed(3) + ")");
+    g.addColorStop(0.35, "rgba(224,82,63," + (0.13 * a * a).toFixed(3) + ")");
+    g.addColorStop(1, "rgba(224,82,63,0)");
+    ictx.fillStyle = g;
+    ictx.beginPath();
+    ictx.arc(cx, cy, R, 0, Math.PI * 2);
+    ictx.fill();
+
+    /* the bite: a thin hot line right on the cut */
+    ictx.beginPath();
+    for (var i = 0; i < pts.length; i++) {
+      if (i === 0) ictx.moveTo(pts[i][0], pts[i][1]);
+      else ictx.lineTo(pts[i][0], pts[i][1]);
+    }
+    ictx.closePath();
+    ictx.lineJoin = "round";
+    ictx.lineCap = "round";
+    ictx.strokeStyle = "rgba(255,250,246," + (0.9 * a * a * a).toFixed(3) + ")";
+    ictx.lineWidth = Math.max(1, (1.2 + 2.6 * (1 - p)) * INK_K);
+    ictx.stroke();
+  }
+
+  function drawSlash(dt) {
     if (!slashFx) return;
     slashFx.t += dt;
     var p = Math.min(1, slashFx.t / 0.55);
@@ -631,17 +847,17 @@
     ictx.beginPath();
     for (var i = 0; i <= N; i++) {
       var t = i / N;
-      var w = Math.sin(t * Math.PI) * Math.min(16, 4 + len * 0.03);
+      var w = Math.sin(t * Math.PI) * Math.min(10, 3 + len * 0.018);
       var px = a[0] + dx * t + nx * w, py = a[1] + dy * t + ny * w;
       if (i === 0) ictx.moveTo(px, py); else ictx.lineTo(px, py);
     }
     for (var j = N; j >= 0; j--) {
       var t2 = j / N;
-      var w2 = Math.sin(t2 * Math.PI) * Math.min(16, 4 + len * 0.03);
+      var w2 = Math.sin(t2 * Math.PI) * Math.min(10, 3 + len * 0.018);
       ictx.lineTo(a[0] + dx * t2 - nx * w2, a[1] + dy * t2 - ny * w2);
     }
     ictx.closePath();
-    ictx.fillStyle = "rgba(23,19,15," + (0.9 * alpha) + ")";
+    ictx.fillStyle = "rgba(23,19,15," + (0.62 * alpha) + ")";
     ictx.fill();
 
     /* flecks along the stroke */
@@ -654,6 +870,14 @@
       ictx.fillStyle = "rgba(23,19,15," + (0.5 * alpha) + ")";
       ictx.fill();
     }
+  }
+
+  function drawInkFx(dt) {
+    ictx.clearRect(0, 0, inkEl.width, inkEl.height);
+    drawFlash(dt);
+    drawSlash(dt);
+    updateInkBits(dt);
+    drawInkBits();
   }
 
   /* ---------------------------------------------------------- *
@@ -699,8 +923,8 @@
       : rank === "A"
         ? "A clean run — only a few cuts missed the vow."
         : rank === "B"
-          ? "Solid. Watch the angle: flat cuts and upright cuts give very different faces."
-          : "Keep going — swipe up for a flat blade, sideways for an upright one.";
+          ? "Solid. The blade follows your line: across gives a flat face, upright gives a tall one."
+          : "Keep going — draw the line you want to cut. Across the spirit cuts it flat; straight down cuts it upright.";
 
     elEnd.hidden = false;
   }
@@ -719,10 +943,10 @@
     if (!hit) return;                     /* empty space -> OrbitControls */
     e.stopPropagation();
     e.preventDefault();
-    drag = { x0: e.clientX, y0: e.clientY, tilt: 0, moved: false };
+    drag = { x0: e.clientX, y0: e.clientY, tilt: null, moved: false };
     S.slashA = toCanvasXY(e);
     S.slashB = S.slashA;
-    updatePreview(0);
+    clearPreview();                       /* the blade arrives with the stroke */
     if (elHint) elHint.style.opacity = "0";
   }
 
@@ -731,21 +955,26 @@
     e.stopPropagation();
     e.preventDefault();
     var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
-    if (Math.hypot(dx, dy) > 6) drag.moved = true;
-    drag.tilt = tiltFromDrag(dx, dy);
+    if (!drag.moved && Math.hypot(dx, dy) < DRAG_MIN) return;
+    drag.moved = true;
+    var tilt = tiltFromStroke(dx, dy);
+    if (tilt === null) return;
+    drag.tilt = tilt;
     S.slashB = toCanvasXY(e);
-    updatePreview(drag.tilt);
+    updatePreview(tilt);
   }
 
   function onUp(e) {
     if (!drag) return;
     e.stopPropagation();
     var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
-    var moved = Math.hypot(dx, dy) > 24;
-    var tilt = drag.tilt;
+    var far = Math.hypot(dx, dy) >= SWIPE_MIN;
+    /* a fast flick can end before any pointermove arrives, so solve from
+       the final vector as a fallback */
+    var tilt = drag.tilt === null ? tiltFromStroke(dx, dy) : drag.tilt;
     var a = S.slashA, b = toCanvasXY(e);
     drag = null;
-    if (!moved) { clearPreview(); S.slashA = S.slashB = null; return; }
+    if (!far || tilt === null) { clearPreview(); S.slashA = S.slashB = null; return; }
     S.slashA = a; S.slashB = b;
     performCut(tilt);
   }
@@ -850,6 +1079,9 @@
     paperEl.height = Math.round(h * DPR);
     inkEl.width = Math.round(w * DPR);
     inkEl.height = Math.round(h * DPR);
+    /* ink is drawn in device pixels: this keeps droplets the same size
+       on screen whatever the canvas resolution */
+    INK_K = Math.min(inkEl.width, inkEl.height) / 620;
     paintPaper();
   }
   if (window.ResizeObserver) new ResizeObserver(resize).observe(stageEl);
@@ -913,7 +1145,7 @@
       root.rotation.y = -0.16 * (1 - e);
     }
 
-    drawSlashFx(dt);
+    drawInkFx(dt);
     controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(loop);
@@ -966,6 +1198,12 @@
       return v ? v.target : null;
     },
     aim: function (tilt) { updatePreview(tilt); },
+    tiltFor: function (dx, dy) { return tiltFromStroke(dx, dy); },
+    pickAt: function (x, y) { var h = pick(x, y); return h ? h.distance : null; },
+    blade: function (tilt) {
+      orientBlade(tilt);
+      return new THREE.Vector3(0, 0, 1).applyQuaternion(bladeGroup.quaternion).toArray();
+    },
     state: S,
     vows: VOWS
   };
