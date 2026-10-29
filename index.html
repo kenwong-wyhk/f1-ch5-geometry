@@ -19,10 +19,10 @@
     <p class="sub-zh">中一數學 · 第五章「幾何簡介」自學網站 — 點、線、角、平面圖形、立體圖形</p>
     <div class="hero-actions">
       <a class="btn primary" href="01-points-lines.html">Start with 5.1A · Points &amp; Lines →</a>
-      <a class="btn ghost" href="#menu">See all 11 sections</a>
+      <a class="btn ghost" href="#menu">See all 14 pages</a>
     </div>
     <div class="hero-stats">
-      <div><b>11</b>learning pages</div>
+      <div><b>14</b>pages &amp; labs</div>
       <div><b>5</b>textbook sections</div>
       <div><b>60+</b>worked examples &amp; checks</div>
       <div><b>1</b>self-check quiz</div>
@@ -106,12 +106,26 @@
           <div class="tags"><span>Faces · Edges · Vertices</span><span>Cross-section</span></div>
           <span class="go">Open →</span>
         </a>
-        <a class="mcard tone-teal" href="12-slice-game.html" style="grid-column:1/-1">
+        <a class="mcard tone-teal" href="12-slice-game.html">
           <div class="top"><span class="ico">▶</span><div><div class="no">5.4 · Game</div><h3>Slice Lab — cut a solid open</h3></div></div>
           <p>Fourteen cutting puzzles. Aim the blade, slice through the solid, and expose the cross-section named on the card —
             square, circle, ellipse, trapezium, even the famous hexagon out of a cube.</p>
           <div class="tags"><span>14 levels</span><span>3-D solids</span><span>Cross-sections</span></div>
           <span class="go">Play →</span>
+        </a>
+        <a class="mcard tone-purple" href="13-prism-unfolding.html">
+          <div class="top"><span class="ico">◫</span><div><div class="no">5.4 · Lab</div><h3>Unfolding a Prism</h3></div></div>
+          <p>Open a prism up like a cardboard box: the sides unroll into one long rectangle and the two bases swing out
+            as lids. Watch perimeter × height appear in front of you.</p>
+          <div class="tags"><span>Nets</span><span>Surface area</span><span>3-D model</span></div>
+          <span class="go">Open →</span>
+        </a>
+        <a class="mcard" href="14-prism-stacking.html">
+          <div class="top"><span class="ico">≡</span><div><div class="no">5.4 · Lab</div><h3>Stacking a Prism</h3></div></div>
+          <p>Stack identical slices — triangle, trapezium, hexagon, L-shape — into a solid. The clearest picture of a
+            <strong>uniform cross-section</strong> in the chapter.</p>
+          <div class="tags"><span>Uniform cross-section</span><span>V = A × h</span></div>
+          <span class="go">Open →</span>
         </a>
         <a class="mcard" href="08-constructions.html">
           <div class="top"><span class="ico">8</span><div><div class="no">5.3 · Worksheet 5.3</div><h3>Basic Constructions</h3></div></div>
@@ -191,5 +205,58 @@
 
 <script src="assets/nav.js"></script>
 <script src="assets/site.js"></script>
+<script>
+/* ============================================================
+   Easter egg — five taps on the chapter mark, or type “sukuna”.
+   The shrine page is not in the menu, the mobile panel or the
+   pager; this is the only way in. Three taps make the mark warm
+   up, which is the only hint a student gets.
+   ============================================================ */
+(function () {
+  "use strict";
+  var DEST = "malevolent-shrine.html";
+  var NEED = 5, GAP = 2600;
+
+  var taps = 0, last = 0, warm = false, fired = false;
+
+  function openDomain() {
+    if (fired) return;
+    fired = true;
+
+    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (calm) { window.location.href = DEST; return; }
+
+    var veil = document.createElement("div");
+    veil.className = "domain-veil";
+    veil.setAttribute("aria-hidden", "true");
+    veil.innerHTML = '<span class="g">解</span><span class="t">伏魔御廚子</span>';
+    document.body.appendChild(veil);
+    requestAnimationFrame(function () { veil.classList.add("on"); });
+    setTimeout(function () { window.location.href = DEST; }, 1250);
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var brand = e.target.closest && e.target.closest(".site-nav .brand");
+    if (!brand) return;
+
+    e.preventDefault();            // stay on the page while the count builds
+    var now = Date.now();
+    if (now - last > GAP) taps = 0;
+    last = now;
+    taps++;
+
+    if (taps >= 3 && !warm) { warm = true; brand.classList.add("egg-warm"); }
+    if (taps >= NEED) openDomain();
+  });
+
+  var typed = "";
+  document.addEventListener("keydown", function (e) {
+    if (!e.key || e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-6);
+    if (typed === "sukuna") openDomain();
+  });
+})();
+</script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 
    Run:  node assets/slice-lab/dev/check_grid.js
    ============================================================ */
-const GEO = require("../geom.js");
+const GEO = require("../../shared/geom.js");
 const LEVELS = require("../levels.js");
 
 const TILT_STEP = 5;    /* must match game.js */

@@ -336,6 +336,7 @@ code{
 
 /* Progress / next-prev */
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:44px 0 10px}
+.pager.single{grid-template-columns:1fr}
 .pager a{
   display:block;border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px 18px;
   box-shadow:var(--sh);color:var(--ink);
@@ -438,6 +439,37 @@ code{
 .prog-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--teal));transition:width .4s}
 .prog-num{font-weight:800;font-size:15px;color:var(--ink-2);white-space:nowrap}
 
+/* ---------------- Easter egg (home page only) ----------------
+   Five taps on the chapter mark — or typing “sukuna” — opens the
+   hidden shrine page. Nothing on the page links to it. */
+.brand .mark{transition:background .35s,box-shadow .35s}
+.brand.egg-warm .mark{
+  background:linear-gradient(135deg,#b91c1c,#7f1d1d);
+  animation:egg-pulse 1.1s ease-in-out infinite;
+}
+@keyframes egg-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5),0 4px 10px -4px rgba(185,28,28,.8)}
+  50%{box-shadow:0 0 0 9px rgba(220,38,38,0),0 0 26px rgba(220,38,38,.6)}
+}
+.domain-veil{
+  position:fixed;inset:0;z-index:9999;display:grid;place-content:center;justify-items:center;gap:16px;
+  background:#080407;opacity:0;transition:opacity .5s ease;
+  font-family:"Songti SC","Noto Serif TC","Microsoft JhengHei",serif;
+}
+.domain-veil.on{opacity:1}
+.domain-veil .g{
+  font-size:clamp(72px,15vw,150px);line-height:1;color:#f7eeea;
+  text-shadow:0 0 60px rgba(220,38,38,.5),0 0 18px rgba(220,38,38,.35);
+}
+.domain-veil .t{
+  font-size:12.5px;letter-spacing:.5em;font-weight:600;color:#a2897f;
+  font-family:"Segoe UI",-apple-system,sans-serif;padding-left:.5em;
+}
+@media (prefers-reduced-motion:reduce){
+  .brand.egg-warm .mark{animation:none}
+  .domain-veil{transition:none}
+}
+
 /* ---------------- Interactive bits ---------------- */
 .slider-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:12px 0}
 .slider-row label{font-size:14px;font-weight:700;color:var(--ink-2);min-width:120px}
@@ -519,8 +551,95 @@ input[type=range]::-moz-range-thumb{
 .galpha{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:22px 0 2px}
 .empty{color:var(--muted);font-size:14.5px;padding:14px 0}
 
+/* ---------------- Interactive lab pages (14, 15) ----------------
+   A lab page = site chrome + one live model in a rounded stage.
+   The model itself is a self-contained app in assets/apps/, loaded
+   in an iframe so its own CSS and WebGL never touch this stylesheet. */
+.lab-hero{
+  background:
+    radial-gradient(900px 260px at 10% -40%,rgba(37,99,235,.16),transparent 70%),
+    radial-gradient(760px 240px at 90% -50%,rgba(13,148,136,.15),transparent 70%),
+    #fff;
+  border-bottom:1px solid var(--line);
+  padding:20px 0 18px;
+}
+.lab-hero h1{
+  margin:10px 0 2px;font-size:clamp(24px,2.9vw,32px);line-height:1.14;letter-spacing:-.5px;
+}
+.lab-hero h1 .zh{
+  display:block;font-size:14.5px;font-weight:600;color:var(--muted);
+  letter-spacing:.02em;margin-top:6px;
+}
+.lab-lede{margin:10px 0 0;max-width:96ch;color:var(--ink-2);font-size:16px}
+
+/* the stage is wider than the reading column so the 3-D view keeps its room */
+.wrap-lab{max-width:1420px}
+.lab-main{padding:20px 0 10px}
+.lab-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:0 6px 10px;color:var(--muted);font-size:13px;font-weight:600;
+}
+.lab-bar .live{
+  flex:none;width:8px;height:8px;border-radius:50%;background:#16a34a;
+  box-shadow:0 0 0 4px rgba(22,163,74,.14);
+}
+.lab-bar .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lab-open{
+  flex:none;font-size:12.5px;font-weight:800;color:var(--brand-d);
+  background:var(--brand-l);border:1px solid #c9dbff;border-radius:999px;
+  padding:5px 13px;white-space:nowrap;
+}
+.lab-open:hover{background:#dce8ff;text-decoration:none}
+.lab-stage{
+  position:relative;height:clamp(500px,calc(100vh - 375px),800px);
+  border-radius:20px;overflow:hidden;background:#0b1220;
+  box-shadow:0 1px 2px rgba(10,18,32,.28),0 34px 62px -34px rgba(10,18,32,.6),
+    inset 0 0 0 1px rgba(120,190,255,.08);
+}
+.lab-stage.paper{
+  background:#f6f2e9;
+  box-shadow:0 1px 2px rgba(20,33,46,.08),0 30px 56px -34px rgba(20,33,46,.42),
+    inset 0 0 0 1px rgba(20,33,46,.07);
+}
+.lab-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.lab-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0 6px}
+.lab-note{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px 19px;box-shadow:var(--sh);
+}
+.lab-note h3{
+  margin:0 0 7px;font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:800;
+}
+.lab-note p{margin:0;font-size:14.8px;color:var(--ink-2);line-height:1.62}
+.lab-note p+p{margin-top:8px}
+.lab-note b{color:var(--ink)}
+.lab-note .eq{
+  display:inline-block;font-family:"Cambria Math",Cambria,Georgia,serif;font-size:15.5px;
+  background:var(--bg-2);border-radius:7px;padding:1px 8px;color:var(--ink);
+}
+
+/* inline pointer from a lesson page to a lab page */
+.lab-link{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  border:1px solid #c9dbff;border-radius:14px;padding:13px 18px;margin:18px 0;color:var(--ink);
+  background:linear-gradient(180deg,#fbfdff,#eef4ff);
+}
+.lab-link:hover{text-decoration:none;border-color:#9dbcf5;box-shadow:var(--sh-2)}
+.lab-link .ic{
+  flex:none;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:#fff;border:1px solid #c9dbff;color:var(--brand-d);font-size:17px;font-weight:800;
+}
+.lab-link .tx{flex:1;min-width:210px}
+.lab-link .tx b{display:block;font-size:15.5px;letter-spacing:-.1px;color:var(--brand-d)}
+.lab-link .tx span{display:block;font-size:14px;color:var(--ink-2);line-height:1.5}
+.lab-link .ar{font-size:13.5px;font-weight:800;color:var(--brand-d);white-space:nowrap}
+
 /* small screens */
+@media (max-width:1080px){
+  .lab-stage{height:clamp(620px,88vh,920px)}
+}
 @media (max-width:960px){
+  .lab-notes{grid-template-columns:repeat(2,minmax(0,1fr))}
   .nav-links{display:none}
   .menu-btn{display:block}
   .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -528,6 +647,10 @@ input[type=range]::-moz-range-thumb{
 @media (max-width:680px){
   body{font-size:16px}
   .g2,.g3,.g4{grid-template-columns:1fr}
+  .lab-notes{grid-template-columns:1fr}
+  .lab-hero{padding:24px 0 20px}
+  .lab-stage{height:88vh;min-height:520px;border-radius:15px}
+  .lab-bar{font-size:12px;padding-bottom:8px}
   .wr{grid-template-columns:1fr}
   .wr .w{border-right:0;border-bottom:1px solid var(--line)}
   .pager{grid-template-columns:1fr}
@@ -541,6 +664,7 @@ input[type=range]::-moz-range-thumb{
 
 @media print{
   .site-nav,.pager,.done-bar,.site-foot,.reveal-btn,.hero-actions{display:none!important}
+  .lab-frame{display:none!important}
   body{background:#fff}
   .card,.eg,.def{box-shadow:none;break-inside:avoid}
 }

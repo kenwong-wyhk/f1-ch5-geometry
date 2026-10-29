@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Malevolent Shrine · 伏魔御廚子 · Ch.5 Introduction to Geometry</title>
+<meta name="description" content="A 60-second cutting game for HKDSE Form 1 Maths: swipe to slice cursed spirits until the exposed cross-section matches the vow.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/shrine/shrine.css">
+</head>
+<body data-page="shrine">
+
+<div id="site-header"></div>
+
+<main class="dm-main">
+  <div class="wrap">
+
+    <div class="dm-head">
+      <div>
+        <span class="chip">5.4 · Cross-sections · 解</span>
+        <h1>Malevolent Shrine <span class="zh">伏魔御廚子</span></h1>
+      </div>
+      <p class="dm-sub">Sixty seconds inside the domain. Every spirit that enters is cut by a flat
+        plane — swipe at an angle, and the face it exposes is the answer.</p>
+    </div>
+
+    <div class="dm-stage" id="dm-stage">
+      <canvas id="dm-paper" class="dm-paper" aria-hidden="true"></canvas>
+      <canvas id="dm-canvas" class="dm-canvas"></canvas>
+      <canvas id="dm-ink" class="dm-ink" aria-hidden="true"></canvas>
+
+      <div class="dm-hud">
+        <div class="dm-top">
+          <div class="dm-clock" id="dm-clock">
+            <b id="dm-time">60</b><span>SEC</span>
+          </div>
+
+          <div class="dm-vow" id="dm-vow">
+            <div class="dm-vow-k">EXPOSE<span id="dm-spirit">CYLINDER 圓柱</span></div>
+            <div class="dm-vow-v"><b id="dm-target">Circle</b><em id="dm-target-zh">圓形</em></div>
+          </div>
+
+          <div class="dm-stats">
+            <div class="dm-stat"><span>SCORE</span><b id="dm-score">0</b></div>
+            <div class="dm-stat dm-combo" id="dm-combo"><span>COMBO</span><b>×1</b></div>
+          </div>
+        </div>
+
+        <div class="dm-card" id="dm-card" hidden>
+          <canvas id="dm-card-shape" width="180" height="120"></canvas>
+          <div class="dm-card-txt">
+            <div class="dm-card-k" id="dm-card-k">CUT</div>
+            <b id="dm-card-name">Square</b>
+            <span id="dm-card-zh">正方形</span>
+          </div>
+        </div>
+
+        <div class="dm-stamp" id="dm-stamp" aria-hidden="true">解</div>
+
+        <div class="dm-hint" id="dm-hint">swipe across the spirit to cut</div>
+
+        <div class="dm-tools">
+          <button type="button" class="dm-icon" id="dm-sound" aria-label="Toggle sound">♪</button>
+          <button type="button" class="dm-icon" id="dm-again" aria-label="Restart run">↺</button>
+        </div>
+      </div>
+
+      <!-- domain expansion intro -->
+      <div class="dm-intro" id="dm-intro">
+        <div class="dm-intro-half dm-intro-l"></div>
+        <div class="dm-intro-half dm-intro-r"></div>
+        <div class="dm-intro-word">
+          <b>領域展開</b>
+          <span>伏魔御廚子</span>
+        </div>
+        <div class="dm-intro-tap">tap to enter</div>
+      </div>
+
+      <!-- end of run -->
+      <div class="dm-end" id="dm-end" hidden>
+        <div class="dm-end-inner">
+          <div class="dm-end-k">DOMAIN CLOSED</div>
+          <div class="dm-rank" id="dm-rank">A</div>
+          <div class="dm-end-score"><b id="dm-final">0</b><span>POINTS</span></div>
+          <div class="dm-end-grid">
+            <div><span>DISMANTLED</span><b id="dm-kills">0</b></div>
+            <div><span>BEST COMBO</span><b id="dm-bestcombo">×1</b></div>
+            <div><span>BEST RUN</span><b id="dm-best">0</b></div>
+          </div>
+          <p class="dm-end-note" id="dm-end-note"></p>
+          <button type="button" class="dm-again-btn" id="dm-again-btn">ENTER AGAIN</button>
+        </div>
+      </div>
+    </div><!-- /stage -->
+
+    <div class="dm-foot">
+      <div class="dm-foot-card">
+        <h3>What am I actually doing?</h3>
+        <p>Every swipe is a plane through the spirit. The flat face it leaves behind is a
+          <strong>cross-section</strong> — and its shape depends only on the angle you chose.</p>
+      </div>
+      <div class="dm-foot-card">
+        <h3>Reading the swipe</h3>
+        <p><strong>Swipe up</strong> → blade flat → circle or square. <strong>Swipe sideways</strong> →
+          blade upright → rectangle or triangle. <strong>Diagonal</strong> → ellipse or hexagon.</p>
+      </div>
+      <div class="dm-foot-card">
+        <h3>For the teacher</h3>
+        <p>17 vows across prisms, pyramids, cylinder, cone and sphere. The angle is snapped to 5°
+          and every vow is proven winnable by <code>dev/check_vows.js</code>.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wrap"><nav class="pager" id="pager" aria-label="Page navigation"></nav></div>
+</main>
+
+<script src="assets/libs/three.min.js"></script>
+<script src="assets/libs/OrbitControls.js"></script>
+<script src="assets/shared/geom.js"></script>
+<script src="assets/shrine/vows.js"></script>
+<script src="assets/shrine/shrine.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

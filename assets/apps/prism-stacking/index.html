@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stacking a Prism · 由橫截面堆疊成柱體</title>
+<style>
+  :root{
+    --paper:#f6f2e9;
+    --paper-hi:#fffdf8;
+    --ink:#16212b;
+    --ink-2:#4e5f6d;
+    --ink-3:#8a97a3;
+    --line:#e2dbcc;
+    --red:#cf4630;
+    --red-2:#a8341f;
+    --blue:#2f6f8f;
+    --sans:"Inter","Segoe UI",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --mono:ui-monospace,"Cascadia Mono",Consolas,"SF Mono",monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  #stage{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+
+  .ui{position:fixed;inset:0;pointer-events:none;z-index:2}
+  .ui > *{pointer-events:auto}
+
+  /* ---------------- title ---------------- */
+  .head{position:absolute;top:26px;left:32px;max-width:46vw}
+  .head .eyebrow{
+    margin:0 0 6px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:600;
+  }
+  .head h1{
+    margin:0;font-family:var(--serif);font-size:clamp(22px,2.4vw,32px);
+    font-weight:600;letter-spacing:-.01em;line-height:1.1;color:var(--ink);
+  }
+  .head .zh{margin:5px 0 0;font-size:13px;color:var(--ink-2);letter-spacing:.04em}
+
+  /* ---------------- measurements card ---------------- */
+  .card{
+    position:absolute;top:26px;right:32px;width:246px;
+    background:rgba(255,253,248,.92);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:0 18px 40px -26px rgba(22,33,43,.55), 0 1px 0 rgba(255,255,255,.9) inset;
+    backdrop-filter:blur(8px);
+    padding:13px 14px 12px;
+  }
+  .card-h{
+    display:flex;align-items:baseline;justify-content:space-between;
+    font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);
+    font-weight:700;margin-bottom:9px;
+  }
+  .card-h span{letter-spacing:.06em;font-weight:500;font-size:9.5px;color:#b3aa98}
+  .row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:4px 0}
+  .row dt{font-size:11.5px;color:var(--ink-2);margin:0;display:flex;align-items:baseline;gap:5px}
+  .row dt i{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink)}
+  .row dd{
+    margin:0;font-family:var(--mono);font-size:12.5px;font-weight:600;
+    color:var(--ink);font-variant-numeric:tabular-nums;
+  }
+  .row dd u{text-decoration:none;font-size:9.5px;color:var(--ink-3);margin-left:2px}
+  .card-v{
+    margin-top:8px;padding-top:9px;border-top:1px dashed var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    transition:color .3s;
+  }
+  .card-v .f{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-2);transition:color .3s}
+  .card-v b{
+    font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--ink);
+    font-variant-numeric:tabular-nums;transition:color .3s;
+  }
+  .card-v b u{text-decoration:none;font-size:9.5px;color:var(--ink-3);margin-left:2px;font-weight:600}
+  .card.lit .card-v .f{color:var(--red-2)}
+  .card.lit .card-v b{color:var(--red)}
+  .card-note{
+    margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);
+    font-size:10.5px;line-height:1.45;color:var(--ink-3);
+    display:none;
+  }
+  .card.flipped .card-note{display:block}
+
+  /* ---------------- caption ---------------- */
+  .dock{
+    position:absolute;left:0;right:0;bottom:0;
+    display:flex;flex-direction:column;align-items:center;gap:11px;
+    padding:0 18px 20px;
+  }
+  .caption{text-align:center;min-height:44px;max-width:640px}
+  .caption .en{
+    margin:0;font-family:var(--serif);font-size:clamp(14px,1.35vw,17.5px);
+    line-height:1.35;color:var(--ink);transition:opacity .25s;
+  }
+  .caption .zh{
+    margin:3px 0 0;font-size:11.5px;color:var(--ink-3);letter-spacing:.03em;
+    transition:opacity .25s;
+  }
+  .caption.fade .en,.caption.fade .zh{opacity:0}
+
+  /* ---------------- control bar ---------------- */
+  .bar{
+    display:flex;align-items:center;flex-wrap:wrap;justify-content:center;
+    gap:6px 14px;padding:9px 14px;
+    background:rgba(255,253,248,.94);
+    border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 20px 44px -30px rgba(22,33,43,.6), 0 1px 0 rgba(255,255,255,.9) inset;
+    backdrop-filter:blur(10px);
+    max-width:min(980px,96vw);
+  }
+  .rule{width:1px;height:24px;background:var(--line);flex:none}
+  .group{display:flex;align-items:center;gap:7px}
+  .group > label{
+    font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:700;
+  }
+  .group > output{
+    font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);
+    min-width:26px;font-variant-numeric:tabular-nums;
+  }
+
+  /* shape chips */
+  .shapes{gap:4px}
+  .chip{
+    width:34px;height:34px;padding:0;border-radius:9px;cursor:pointer;
+    display:grid;place-items:center;
+    background:transparent;border:1px solid transparent;
+    color:var(--ink-2);
+    transition:background .15s,border-color .15s,color .15s,transform .1s;
+  }
+  .chip svg{width:19px;height:19px;display:block;overflow:visible}
+  .chip svg path{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .chip:hover{background:#f0ece1;border-color:var(--line);color:var(--ink)}
+  .chip[aria-pressed="true"]{
+    background:rgba(207,70,48,.1);border-color:rgba(207,70,48,.42);color:var(--red-2);
+  }
+  .chip[aria-pressed="true"] svg path{fill:rgba(207,70,48,.14)}
+  .chip:active{transform:scale(.94)}
+
+  /* range */
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;background:transparent;
+    width:104px;height:20px;cursor:pointer;margin:0;
+  }
+  input[type=range]::-webkit-slider-runnable-track{
+    height:3px;border-radius:2px;background:#ded6c6;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:13px;height:13px;margin-top:-5px;border-radius:50%;
+    background:var(--paper-hi);border:1.5px solid var(--ink-2);
+    box-shadow:0 1px 3px rgba(22,33,43,.22);transition:border-color .15s,transform .1s;
+  }
+  input[type=range]:hover::-webkit-slider-thumb{border-color:var(--red);transform:scale(1.1)}
+  input[type=range]::-moz-range-track{height:3px;border-radius:2px;background:#ded6c6}
+  input[type=range]::-moz-range-thumb{
+    width:13px;height:13px;border-radius:50%;background:var(--paper-hi);
+    border:1.5px solid var(--ink-2);box-shadow:0 1px 3px rgba(22,33,43,.22);
+  }
+
+  /* buttons */
+  .btn{
+    font-family:var(--sans);cursor:pointer;border-radius:9px;
+    background:transparent;border:1px solid var(--line);color:var(--ink-2);
+    transition:background .15s,color .15s,border-color .15s,transform .1s;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .btn:hover{background:#f0ece1;color:var(--ink);border-color:#d3cab8}
+  .btn:active{transform:scale(.96)}
+  .btn.icon{width:32px;height:32px;font-size:11px;line-height:1;padding:0}
+  .btn.pill{
+    height:32px;padding:0 12px;font-size:10.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+  .btn.pill[aria-pressed="true"]{
+    background:rgba(207,70,48,.1);border-color:rgba(207,70,48,.42);color:var(--red-2);
+  }
+
+  /* ---------------- responsive ---------------- */
+  @media (max-width: 900px){
+    .head{top:16px;left:18px;max-width:56vw}
+    .head .eyebrow{font-size:9px}
+    .head .zh{font-size:11.5px}
+    .card{top:14px;right:14px;width:176px;padding:10px 11px 9px;border-radius:12px}
+    .card-h{font-size:8px;margin-bottom:6px}
+    .card-h span{display:none}
+    .row{padding:2px 0}
+    .row dt{font-size:10px}
+    .row dd{font-size:11px}
+    .card-v{margin-top:6px;padding-top:7px}
+    .card-v .f{font-size:12px}
+    .card-v b{font-size:11.5px}
+  }
+  @media (max-width: 700px){
+    .dock{padding:0 10px 12px;gap:8px}
+    .caption{min-height:0;max-width:92vw}
+    .caption .en{font-size:13.5px}
+    .caption .zh{font-size:10.5px}
+    .bar{gap:5px 9px;padding:8px 9px;border-radius:13px}
+    .rule{display:none}
+    input[type=range]{width:76px}
+    .group > label{font-size:9px;letter-spacing:.1em}
+    .chip{width:30px;height:30px}
+    .btn.icon{width:30px;height:30px}
+    .btn.pill{height:30px;font-size:9.5px;padding:0 9px}
+  }
+  @media (max-height: 620px){
+    .head .zh{display:none}
+    .caption .zh{display:none}
+    .caption{min-height:0}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001s !important;transition-duration:.001s !important}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stage" aria-label="Animation of identical cross-sections stacking to form a prism"></canvas>
+
+<div class="ui">
+
+  <header class="head">
+    <p class="eyebrow">Volume of a prism · 柱體的體積</p>
+    <h1>Stacking a Prism</h1>
+    <p class="zh">由橫截面堆疊成柱體</p>
+  </header>
+
+  <aside class="card" id="card">
+    <div class="card-h">Measurements <span>量度</span></div>
+    <dl style="margin:0">
+      <div class="row"><dt>Cross-section <i>A</i></dt><dd id="v-a">6.00<u>cm²</u></dd></div>
+      <div class="row"><dt>Height <i>h</i></dt><dd id="v-h">4.00<u>cm</u></dd></div>
+    </dl>
+    <div class="card-v">
+      <span class="f">V = A × h</span>
+      <b id="v-v">24.00<u>cm³</u></b>
+    </div>
+    <p class="card-note" id="card-note">Lying on a side face — the base is still the cross-section, so the height is now the length.</p>
+  </aside>
+
+  <div class="dock">
+    <div class="caption" id="caption">
+      <p class="en" id="cap-en">This flat shape is the uniform cross-section.</p>
+      <p class="zh" id="cap-zh">這個平面圖形就是均勻橫截面。</p>
+    </div>
+
+    <div class="bar">
+      <div class="group shapes" id="shapes" role="group" aria-label="Cross-section shape"></div>
+
+      <span class="rule" aria-hidden="true"></span>
+
+      <div class="group">
+        <label for="r-h">Height</label>
+        <input id="r-h" type="range" min="1.5" max="8" step="0.5" value="4">
+        <output id="l-h">4.0</output>
+      </div>
+
+      <div class="group">
+        <label for="r-n">Slices</label>
+        <input id="r-n" type="range" min="1" max="40" step="1" value="14">
+        <output id="l-n">14</output>
+      </div>
+
+      <span class="rule" aria-hidden="true"></span>
+
+      <div class="group">
+        <button type="button" class="btn icon" id="b-play" aria-label="Play or pause">❚❚</button>
+        <button type="button" class="btn icon" id="b-restart" aria-label="Replay from the start">↻</button>
+        <button type="button" class="btn pill" id="b-flip" aria-pressed="false">Lay it down</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     1. maths helpers
+     ============================================================ */
+  var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+  var easeOut = function (t) { return 1 - Math.pow(1 - t, 3); };
+  var easeInOut = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  var dot = function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; };
+  var cross = function (a, b) {
+    return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  };
+  var norm = function (a) {
+    var l = Math.hypot(a[0], a[1], a[2]) || 1;
+    return [a[0] / l, a[1] / l, a[2] / l];
+  };
+
+  /* ============================================================
+     2. the cross-sections
+        Points are (x, z) — the shape lies flat on the ground,
+        y is the stacking direction.  Wound anticlockwise so the
+        shoelace area comes out positive and side normals point out.
+     ============================================================ */
+  function regular(n, r, rot) {
+    var out = [], i, a;
+    for (i = 0; i < n; i++) {
+      a = rot + (i / n) * Math.PI * 2;
+      out.push([Math.cos(a) * r, Math.sin(a) * r]);
+    }
+    return out;
+  }
+
+  function areaOf(poly) {
+    var s = 0, i, a, b;
+    for (i = 0; i < poly.length; i++) {
+      a = poly[i]; b = poly[(i + 1) % poly.length];
+      s += a[0] * b[1] - b[0] * a[1];
+    }
+    return s / 2;
+  }
+
+  var SHAPES = [
+    { id: "triangle",  label: "Triangle",  zh: "三角形",
+      poly: [[-2, -1], [2, -1], [0, 2]] },
+    { id: "trapezium", label: "Trapezium", zh: "梯形",
+      poly: [[-2, -1.5], [2, -1.5], [0.8, 1.5], [-0.8, 1.5]] },
+    { id: "square",    label: "Square",    zh: "正方形",
+      poly: [[-1.5, -1.5], [1.5, -1.5], [1.5, 1.5], [-1.5, 1.5]] },
+    { id: "hexagon",   label: "Hexagon",   zh: "六邊形",
+      poly: regular(6, 2, Math.PI / 6) },
+    { id: "lshape",    label: "L-shape",   zh: "L 形",
+      poly: [[-2, -2], [2, -2], [2, 0], [0, 0], [0, 2], [-2, 2]] },
+    { id: "circle",    label: "Circle",    zh: "圓形",
+      poly: regular(120, 2, 0), smooth: true }
+  ];
+
+  SHAPES.forEach(function (s) {
+    s.area = areaOf(s.poly);
+    var i, m = 0;
+    for (i = 0; i < s.poly.length; i++) m = Math.max(m, s.poly[i][0]);
+    s.maxX = m;
+  });
+
+  /* ============================================================
+     3. state
+     ============================================================ */
+  var S = {
+    shape: SHAPES[0],
+    height: 4,
+    slices: 14,
+    playing: true,
+    t: 0,
+    azStand: 0.60,
+    el: 0.50,
+    flip: 0,
+    flipTarget: 0
+  };
+
+  /* the solid currently on screen — kept in one place so model() and
+     fitView() always agree */
+  var G = { poly: [], H: 4, maxX: 2, area: 6 };
+
+  function syncGeom() {
+    G.poly = S.shape.poly;
+    G.H = S.height;
+    G.maxX = S.shape.maxX;
+    G.area = S.shape.area;
+    S.azStand = bestAzimuth(G.poly, S.el);
+  }
+  syncGeom();
+
+  /* ============================================================
+     4. timeline
+     ============================================================ */
+  var BEATS = [
+    { id: "intro",   dur: 2.4 },
+    { id: "first",   dur: 1.8 },
+    { id: "stack",   dur: 3.8 },
+    { id: "seal",    dur: 1.0 },
+    { id: "measure", dur: 1.7 },
+    { id: "formula", dur: 1.8 }
+  ];
+  var TOTAL = BEATS.reduce(function (a, b) { return a + b.dur; }, 0);
+  var INTRO_END = BEATS[0].dur;
+
+  var CAPTIONS = {
+    intro:   ["This flat shape is the uniform cross-section.", "這個平面圖形就是均勻橫截面。"],
+    first:   ["Every slice has the same shape and the same area.", "每一片切片的形狀和面積都相同。"],
+    stack:   ["Copy it, stack it — the solid grows.", "複製、疊起，立體便長高。"],
+    seal:    ["What you have built is a prism.", "疊出來的立體就是柱體。"],
+    measure: ["The thickness of the stack is the height, h.", "疊起來的厚度就是高 h。"],
+    formula: ["Volume = area of cross-section × height.", "體積 = 橫截面面積 × 高。"]
+  };
+
+  function beatAt(t) {
+    var acc = 0, i;
+    for (i = 0; i < BEATS.length; i++) {
+      if (t < acc + BEATS[i].dur) {
+        return { b: BEATS[i], p: (t - acc) / BEATS[i].dur, i: i };
+      }
+      acc += BEATS[i].dur;
+    }
+    return { b: BEATS[BEATS.length - 1], p: 1, i: BEATS.length - 1 };
+  }
+
+  /* how tall the stack is at this moment, in cm */
+  function heightAt(beat, p) {
+    var H = G.H, N = S.slices, t = H / N;
+    if (beat === "intro") return 0;
+    if (beat === "first") return easeOut(clamp(p * 1.15, 0, 1)) * t;
+    if (beat === "stack") {
+      if (N <= 1) return H;
+      var span = N - 1;
+      var u = p * span;
+      var k = Math.floor(u);
+      if (k >= span) return H;
+      return Math.min((1 + k + easeOut(u - k)) * t, H);
+    }
+    return H;
+  }
+
+  /* Pick the viewpoint that shows the solid widest while still exposing
+     at least two side faces — a face-on view reads as a flat slab. */
+  function bestAzimuth(poly, el) {
+    var best = 0.6, bestScore = -1, k, i;
+    for (k = 0; k <= 90; k++) {
+      var az = (k * Math.PI) / 180;
+      var ca = Math.cos(az), sa = Math.sin(az);
+      var nvis = 0;
+      for (i = 0; i < poly.length; i++) {
+        var a = poly[i], b = poly[(i + 1) % poly.length];
+        var dx = b[0] - a[0], dz = b[1] - a[1];
+        var L = Math.hypot(dx, dz) || 1;
+        if ((dz / L) * sa + (-dx / L) * ca > 0.001) nvis++;
+      }
+      if (nvis < 2) continue;
+      var mn = 1e9, mx = -1e9;
+      for (i = 0; i < poly.length; i++) {
+        var u = poly[i][0] * ca - poly[i][1] * sa;
+        if (u < mn) mn = u;
+        if (u > mx) mx = u;
+      }
+      /* nudge away from a dead-symmetric view, it looks static */
+      var score = (mx - mn) * (1 - 0.06 * Math.abs(az - 0.55));
+      if (score > bestScore) { bestScore = score; best = az; }
+    }
+    return best;
+  }
+
+  /* ============================================================
+     5. canvas + camera
+     ============================================================ */
+  var cvs = document.getElementById("stage");
+  var ctx = cvs.getContext("2d");
+  var W = 0, Hh = 0, dpr = 1;
+  var cx = 0, cy = 0, zoom = 100, panX = 0, panY = 0;
+  var FIT = { z: 100, panX: 0, panY: 0, zFlat: 100, panXFlat: 0, panYFlat: 0 };
+  var dockEl = document.querySelector(".dock");
+
+  var CAM_D = 46;
+  var view = { eye: [0, 0, CAM_D], right: [1, 0, 0], up: [0, 1, 0], fwd: [0, 0, -1] };
+  var LIGHT = norm([0.46, 0.82, 0.54]);
+
+  var AZ_LYING = -0.68;   /* 3/4 on to the base, axis running to the right */
+  var EL_LYING = 0.30;
+
+  function updateView() {
+    var D = CAM_D;
+    var az = S.azStand + (AZ_LYING - S.azStand) * S.flip;
+    var el = S.el + (EL_LYING - S.el) * S.flip;
+    var eye = [
+      D * Math.cos(el) * Math.sin(az),
+      D * Math.sin(el),
+      D * Math.cos(el) * Math.cos(az)
+    ];
+    var fwd = norm([-eye[0], -eye[1], -eye[2]]);
+    var right = norm(cross(fwd, [0, 1, 0]));
+    view.eye = eye;
+    view.right = right;
+    view.up = cross(right, fwd);
+    view.fwd = fwd;
+  }
+
+  /* world point -> raw projection (before pan / zoom) */
+  function project(p) {
+    var dx = p[0] - view.eye[0], dy = p[1] - view.eye[1], dz = p[2] - view.eye[2];
+    var vx = dx * view.right[0] + dy * view.right[1] + dz * view.right[2];
+    var vy = dx * view.up[0] + dy * view.up[1] + dz * view.up[2];
+    /* fwd points from the eye towards the target, so a point in front of
+       the camera has a positive component along it — that is the depth. */
+    var vz = dx * view.fwd[0] + dy * view.fwd[1] + dz * view.fwd[2];
+    var depth = Math.max(vz, 0.5);
+    var s = CAM_D / depth;
+    return { x: vx * s, y: -vy * s, d: depth };
+  }
+
+  function screen(q) {
+    return { x: cx + (q.x + panX) * zoom, y: cy + (q.y + panY) * zoom, d: q.d };
+  }
+
+  /* ============================================================
+     6. model transform
+        flip = 0 -> standing, base on the ground
+        flip = 1 -> lying on a side face, base facing sideways
+     ============================================================ */
+  function model(p) {
+    if (S.flip < 0.0001) return p;
+    var a = -Math.PI / 2 * S.flip;
+    var c = Math.cos(a), s = Math.sin(a);
+    var py = G.H / 2;
+    var y = p[1] - py;
+    var lift = (G.maxX - py) * S.flip;
+    return [p[0] * c - y * s, p[0] * s + y * c + py + lift, p[2]];
+  }
+
+  function modelNormal(n) {
+    if (S.flip < 0.0001) return n;
+    var a = -Math.PI / 2 * S.flip;
+    var c = Math.cos(a), s = Math.sin(a);
+    return [n[0] * c - n[1] * s, n[0] * s + n[1] * c, n[2]];
+  }
+
+  /* ============================================================
+     7. framing
+     ============================================================ */
+  function fitView() {
+    updateView();
+    var minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    var i, k, q, v, y;
+    for (i = 0; i < G.poly.length; i++) {
+      v = G.poly[i];
+      for (k = 0; k < 2; k++) {
+        y = k ? G.H : 0;
+        q = project(model([v[0], y, v[1]]));
+        if (q.x < minX) minX = q.x;
+        if (q.x > maxX) maxX = q.x;
+        if (q.y < minY) minY = q.y;
+        if (q.y > maxY) maxY = q.y;
+      }
+    }
+    var w = Math.max(maxX - minX, 0.001);
+    var h = Math.max(maxY - minY, 0.001);
+
+    var availTop = Math.min(118, Hh * 0.2);
+    var availBottom = Hh - (dockEl ? dockEl.offsetHeight : 120) - 8;
+    var availH = Math.max(availBottom - availTop, 120);
+    cy = (availTop + availBottom) / 2;
+
+    var padW = W * (0.54 - 0.07 * S.flip);
+    var padH = availH * (0.74 - 0.09 * S.flip);
+    var zFull = Math.min(padW / w, padH / h);
+
+    /* framing A: the whole prism, centred (the steady state) */
+    FIT.z = zFull;
+    FIT.panX = -(minX + maxX) / 2 - w * 0.085;
+    FIT.panY = -(minY + maxY) / 2;
+
+    /* framing B: pushed in on the flat cross-section lying on the ground,
+       so the intro is not a small shape in an empty page */
+    var flatY = 0;
+    for (i = 0; i < G.poly.length; i++) {
+      flatY += project(model([G.poly[i][0], 0, G.poly[i][1]])).y;
+    }
+    flatY /= G.poly.length;
+    var zFlat = zFull * 1.22;
+    FIT.zFlat = zFlat;
+    FIT.panXFlat = FIT.panX;
+    FIT.panYFlat = ((cy + availH * 0.05) - cy) / zFlat - flatY;
+
+    zoom = FIT.z; panX = FIT.panX; panY = FIT.panY;
+  }
+
+  function resize() {
+    var r = cvs.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.max(r.width, 1);
+    Hh = Math.max(r.height, 1);
+    cvs.width = Math.round(W * dpr);
+    cvs.height = Math.round(Hh * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W / 2;
+    fitView();
+  }
+
+  /* ============================================================
+     8. painting
+     ============================================================ */
+  function rrect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function paintPaper() {
+    ctx.fillStyle = "#f6f2e9";
+    ctx.fillRect(0, 0, W, Hh);
+    var g = ctx.createRadialGradient(W * 0.46, Hh * 0.34, 0, W * 0.46, Hh * 0.34, Math.max(W, Hh) * 0.82);
+    g.addColorStop(0, "rgba(255,253,248,1)");
+    g.addColorStop(0.55, "rgba(252,249,242,.75)");
+    g.addColorStop(1, "rgba(243,238,227,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, Hh);
+  }
+
+  function paintGrid() {
+    var span = 9, i, a, b, alpha;
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(22,33,43,.055)";
+    ctx.beginPath();
+    for (i = -span; i <= span; i++) {
+      a = screen(project([-span, 0, i]));
+      b = screen(project([span, 0, i]));
+      ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      a = screen(project([i, 0, -span]));
+      b = screen(project([i, 0, span]));
+      ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    /* fade the grid out towards the edges */
+    var g = ctx.createRadialGradient(W * 0.46, Hh * 0.42, 0, W * 0.46, Hh * 0.42, Math.max(W, Hh) * 0.62);
+    g.addColorStop(0, "rgba(246,242,233,0)");
+    g.addColorStop(0.7, "rgba(246,242,233,.55)");
+    g.addColorStop(1, "rgba(246,242,233,1)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, Hh);
+  }
+
+  function paintShadow(poly, hCur, alpha) {
+    if (alpha <= 0.02) return;
+    var pts = [], i, q, minX = 1e9, maxX = -1e9, sumY = 0;
+    for (i = 0; i < poly.length; i++) {
+      q = screen(project([poly[i][0], 0, poly[i][1]]));
+      if (q.x < minX) minX = q.x;
+      if (q.x > maxX) maxX = q.x;
+      sumY += q.y;
+      pts.push(q);
+    }
+    var cxp = (minX + maxX) / 2;
+    var cyp = sumY / pts.length;
+    var rx = Math.max((maxX - minX) * 0.58, 26);
+    var ry = Math.max(rx * 0.34, 10);
+    var g = ctx.createRadialGradient(cxp, cyp, 0, cxp, cyp, rx);
+    g.addColorStop(0, "rgba(60,52,38," + (0.2 * alpha).toFixed(3) + ")");
+    g.addColorStop(0.55, "rgba(60,52,38," + (0.08 * alpha).toFixed(3) + ")");
+    g.addColorStop(1, "rgba(60,52,38,0)");
+    ctx.save();
+    ctx.translate(cxp, cyp);
+    ctx.scale(1, ry / rx);
+    ctx.translate(-cxp, -cyp);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(cxp, cyp, rx, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function paintGroundOutline(poly, alpha) {
+    if (alpha <= 0.01) return;
+    var i, q, first = true;
+    ctx.save();
+    ctx.beginPath();
+    for (i = 0; i < poly.length; i++) {
+      q = screen(project(model([poly[i][0], 0, poly[i][1]])));
+      if (first) { ctx.moveTo(q.x, q.y); first = false; }
+      else ctx.lineTo(q.x, q.y);
+    }
+    ctx.closePath();
+    ctx.setLineDash([5, 4]);
+    ctx.lineWidth = 1.4;
+    ctx.strokeStyle = "rgba(207,70,48," + (0.55 * alpha).toFixed(3) + ")";
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function faceFill(t, tint) {
+    /* t in 0..1 : 0 = shadowed, 1 = lit */
+    var r = 163 + (247 - 163) * t;
+    var g = 180 + (250 - 180) * t;
+    var b = 197 + (253 - 197) * t;
+    if (tint > 0) {
+      r += (203 - r) * tint;
+      g += (64 - g) * tint;
+      b += (44 - b) * tint;
+    }
+    return "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
+  }
+
+  /* draws the solid up to height hCur and returns the visibility flags */
+  function paintSolid(poly, hCur, topTint) {
+    var n = poly.length, i;
+    var base = [], top = [], pB = [], pT = [], sideN = [], front = [];
+    for (i = 0; i < n; i++) {
+      base.push(model([poly[i][0], 0, poly[i][1]]));
+      top.push(model([poly[i][0], hCur, poly[i][1]]));
+      pB.push(screen(project(base[i])));
+      pT.push(screen(project(top[i])));
+    }
+
+    for (i = 0; i < n; i++) {
+      var a = poly[i], b = poly[(i + 1) % n];
+      var dx = b[0] - a[0], dz = b[1] - a[1];
+      var L = Math.hypot(dx, dz) || 1;
+      sideN.push(modelNormal([dz / L, 0, -dx / L]));
+    }
+
+    /* cull + sort */
+    var faces = [];
+    for (i = 0; i < n; i++) {
+      var j = (i + 1) % n;
+      var nrm = sideN[i];
+      var c0 = [(base[i][0] + base[j][0] + top[j][0] + top[i][0]) / 4,
+                (base[i][1] + base[j][1] + top[j][1] + top[i][1]) / 4,
+                (base[i][2] + base[j][2] + top[j][2] + top[i][2]) / 4];
+      var vis = dot(nrm, [view.eye[0] - c0[0], view.eye[1] - c0[1], view.eye[2] - c0[2]]) > 0;
+      front.push(vis);
+      if (!vis) continue;
+      faces.push({
+        i: i,
+        pts: [pB[i], pB[j], pT[j], pT[i]],
+        depth: (pB[i].d + pB[j].d + pT[j].d + pT[i].d) / 4,
+        lam: Math.max(0, dot(nrm, LIGHT)),
+        tint: 0
+      });
+    }
+
+    var nTop = modelNormal([0, 1, 0]);
+    var cT = [0, hCur, 0];
+    var topVis = dot(nTop, [view.eye[0] - cT[0], view.eye[1] - cT[1], view.eye[2] - cT[2]]) > 0;
+    if (topVis && hCur > 0.004) {
+      var dsum = 0;
+      for (i = 0; i < n; i++) dsum += pT[i].d;
+      faces.push({
+        i: -1, pts: pT, depth: dsum / n,
+        lam: Math.max(0, dot(nTop, LIGHT)), tint: topTint
+      });
+    }
+
+    /* the base is the same cross-section — once the prism lies on its side
+       it faces the camera and must be filled, or the solid looks hollow */
+    var nBot = modelNormal([0, -1, 0]);
+    var cB = [0, 0, 0];
+    var botVis = dot(nBot, [view.eye[0] - cB[0], view.eye[1] - cB[1], view.eye[2] - cB[2]]) > 0;
+    if (botVis && hCur > 0.004) {
+      var esum = 0;
+      for (i = 0; i < n; i++) esum += pB[i].d;
+      faces.push({
+        i: -2, pts: pB, depth: esum / n,
+        lam: Math.max(0, dot(nBot, LIGHT)), tint: topTint
+      });
+    }
+
+    faces.sort(function (a, b) { return b.depth - a.depth; });
+
+    ctx.save();
+    ctx.lineJoin = "round";
+    for (i = 0; i < faces.length; i++) {
+      var f = faces[i];
+      var t = 0.48 + 0.52 * f.lam;
+      ctx.beginPath();
+      ctx.moveTo(f.pts[0].x, f.pts[0].y);
+      for (var k = 1; k < f.pts.length; k++) ctx.lineTo(f.pts[k].x, f.pts[k].y);
+      ctx.closePath();
+      ctx.fillStyle = faceFill(t, f.tint);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    return { pB: pB, pT: pT, front: front, topVis: topVis, botVis: botVis, sideN: sideN };
+  }
+
+  function paintSeams(geo, poly, hCur, alpha) {
+    if (alpha <= 0.01) return;
+    var N = S.slices, t = G.H / N, n = poly.length;
+    if (N < 2) return;
+    var k, i, j, q0, q1, level;
+    ctx.save();
+    ctx.beginPath();
+    for (k = 1; k < N; k++) {
+      level = k * t;
+      if (level > hCur - 0.012) break;
+      for (i = 0; i < n; i++) {
+        if (!geo.front[i]) continue;
+        j = (i + 1) % n;
+        q0 = screen(project(model([poly[i][0], level, poly[i][1]])));
+        q1 = screen(project(model([poly[j][0], level, poly[j][1]])));
+        ctx.moveTo(q0.x, q0.y);
+        ctx.lineTo(q1.x, q1.y);
+      }
+    }
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(22,33,43," + (0.26 * alpha).toFixed(3) + ")";
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function paintEdges(geo, poly, hCur, alpha) {
+    if (alpha <= 0.01) return;
+    var n = poly.length, i, j, smooth = !!S.shape.smooth;
+    ctx.save();
+    ctx.lineWidth = 1.5;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "rgba(22,33,43," + (0.86 * alpha).toFixed(3) + ")";
+
+    ctx.beginPath();
+
+    /* base rim — the whole outline shows when the base faces us */
+    for (i = 0; i < n; i++) {
+      if (!geo.botVis && !geo.front[i]) continue;
+      j = (i + 1) % n;
+      ctx.moveTo(geo.pB[i].x, geo.pB[i].y);
+      ctx.lineTo(geo.pB[j].x, geo.pB[j].y);
+    }
+
+    /* top rim — fully visible when we look down on it */
+    if (geo.topVis) {
+      for (i = 0; i < n; i++) {
+        j = (i + 1) % n;
+        ctx.moveTo(geo.pT[i].x, geo.pT[i].y);
+        ctx.lineTo(geo.pT[j].x, geo.pT[j].y);
+      }
+    } else {
+      for (i = 0; i < n; i++) {
+        if (!geo.front[i]) continue;
+        j = (i + 1) % n;
+        ctx.moveTo(geo.pT[i].x, geo.pT[i].y);
+        ctx.lineTo(geo.pT[j].x, geo.pT[j].y);
+      }
+    }
+
+    /* vertical creases */
+    for (i = 0; i < n; i++) {
+      var prev = (i + n - 1) % n;
+      var vis = smooth ? (geo.front[i] !== geo.front[prev])
+                       : (geo.front[i] || geo.front[prev]);
+      if (!vis) continue;
+      ctx.moveTo(geo.pB[i].x, geo.pB[i].y);
+      ctx.lineTo(geo.pT[i].x, geo.pT[i].y);
+    }
+
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* the flat cross-section lying on the ground (before anything is stacked) */
+  function paintFlat(poly, alpha) {
+    if (alpha <= 0.01) return;
+    var i, q;
+    ctx.save();
+    ctx.beginPath();
+    for (i = 0; i < poly.length; i++) {
+      q = screen(project(model([poly[i][0], 0, poly[i][1]])));
+      if (i === 0) ctx.moveTo(q.x, q.y); else ctx.lineTo(q.x, q.y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = "rgba(203,64,44," + (0.30 * alpha).toFixed(3) + ")";
+    ctx.fill();
+    ctx.lineWidth = 1.8;
+    ctx.strokeStyle = "rgba(168,52,31," + (0.9 * alpha).toFixed(3) + ")";
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* ---------- annotation helpers ---------- */
+  function pill(text, x, y, opts) {
+    opts = opts || {};
+    var fs = opts.size || 12;
+    ctx.save();
+    ctx.font = "600 " + fs + "px " + (opts.mono ? "ui-monospace, Consolas, monospace"
+                                                : '"Segoe UI", system-ui, sans-serif');
+    var w = ctx.measureText(text).width;
+    var padX = opts.padX || 7, h = fs + 11;
+    var bx = opts.align === "left" ? x : x - w / 2;
+    var by = y - h / 2;
+    rrect(bx - padX, by, w + padX * 2, h, 5);
+    ctx.fillStyle = "rgba(255,253,248,.94)";
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(22,33,43,.14)";
+    ctx.stroke();
+    ctx.fillStyle = opts.color || "#16212b";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, bx, by + h / 2 + 0.5);
+    ctx.restore();
+    return { x: bx - padX, y: by, w: w + padX * 2, h: h };
+  }
+
+  function arrowHead(x, y, dx, dy, size) {
+    var px = -dy, py = dx;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - dx * size + px * size * 0.34, y - dy * size + py * size * 0.34);
+    ctx.lineTo(x - dx * size - px * size * 0.34, y - dy * size - py * size * 0.34);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function paintHeightDim(poly, H, alpha) {
+    if (alpha <= 0.01) return;
+
+    /* anchor on the polygon vertex that sits furthest right on screen */
+    var bi = 0, bx = -1e9, i, q;
+    for (i = 0; i < poly.length; i++) {
+      q = screen(project(model([poly[i][0], 0, poly[i][1]])));
+      if (q.x > bx) { bx = q.x; bi = i; }
+    }
+    var v = poly[bi];
+    var a = screen(project(model([v[0], 0, v[1]])));
+    var b = screen(project(model([v[0], H, v[1]])));
+
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var L = Math.hypot(dx, dy) || 1;
+    dx /= L; dy /= L;
+    var nx = -dy, ny = dx;
+
+    var mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    var c0 = screen(project(model([0, H / 2, 0])));
+    if ((mid.x - c0.x) * nx + (mid.y - c0.y) * ny < 0) { nx = -nx; ny = -ny; }
+
+    var off = 30 + 34 * alpha;
+    var a2 = { x: a.x + nx * off, y: a.y + ny * off };
+    var b2 = { x: b.x + nx * off, y: b.y + ny * off };
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    /* extension lines */
+    ctx.beginPath();
+    ctx.moveTo(a.x + nx * 6, a.y + ny * 6);
+    ctx.lineTo(a2.x + nx * 7, a2.y + ny * 7);
+    ctx.moveTo(b.x + nx * 6, b.y + ny * 6);
+    ctx.lineTo(b2.x + nx * 7, b2.y + ny * 7);
+    ctx.setLineDash([3, 3]);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(47,111,143,.55)";
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    /* the dimension line itself */
+    ctx.beginPath();
+    ctx.moveTo(a2.x, a2.y);
+    ctx.lineTo(b2.x, b2.y);
+    ctx.lineWidth = 1.3;
+    ctx.strokeStyle = "rgba(47,111,143,.9)";
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(47,111,143,.95)";
+    arrowHead(a2.x, a2.y, -dx, -dy, 9);
+    arrowHead(b2.x, b2.y, dx, dy, 9);
+
+    /* label */
+    var lx = mid.x + nx * (off + 15);
+    var ly = mid.y + ny * (off + 15);
+    var txt = "h = " + H.toFixed(2) + " cm";
+    pill(txt, lx, ly, { mono: true, size: 11.5, color: "#1d4f66" });
+
+    ctx.restore();
+  }
+
+  function paintCrossLabel(poly, alpha) {
+    if (alpha <= 0.01) return;
+    var i, q, bx = 0, by = 0, minX = 1e9, maxX = -1e9, minY = 1e9;
+    for (i = 0; i < poly.length; i++) {
+      q = screen(project(model([poly[i][0], 0, poly[i][1]])));
+      if (q.x < minX) { minX = q.x; }
+      if (q.x > maxX) { maxX = q.x; }
+      if (q.y < minY) { minY = q.y; }
+      bx += q.x; by += q.y;
+    }
+    bx /= poly.length; by /= poly.length;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    /* leader from the label down to the shape */
+    var lx = bx, ly = minY - 42;
+    ctx.beginPath();
+    ctx.moveTo(lx, ly + 12);
+    ctx.lineTo(lx, minY - 8);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(168,52,31,.5)";
+    ctx.setLineDash([3, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    pill("uniform cross-section", lx, ly, { size: 12, color: "#a8341f" });
+    pill("A = " + G.area.toFixed(2) + " cm²", lx, ly + 22, { size: 11, mono: true, color: "#4e5f6d" });
+
+    ctx.restore();
+  }
+
+  /* ============================================================
+     9. one frame
+     ============================================================ */
+  var lastBeatId = "";
+  var capEn = document.getElementById("cap-en");
+  var capZh = document.getElementById("cap-zh");
+  var captionEl = document.getElementById("caption");
+  var cardEl = document.getElementById("card");
+
+  function setCaption(id) {
+    var c = CAPTIONS[id];
+    if (!c) return;
+    if (S.flipTarget > 0.5) {
+      c = ["Resting on a side face — the base is still the cross-section.",
+           "側放時，底面仍然是這個橫截面。"];
+    }
+    capEn.textContent = c[0];
+    capZh.textContent = c[1];
+  }
+
+  function draw() {
+    paintPaper();
+    paintGrid();
+
+    var beat = beatAt(S.t);
+    var id = beat.b.id;
+    var hCur = heightAt(id, beat.p);
+
+    if (id !== lastBeatId) {
+      lastBeatId = id;
+      setCaption(id);
+      cardEl.classList.toggle("lit", id === "formula");
+    }
+
+    var poly = G.poly;
+
+    /* close on the section at the start, pull back as the stack rises */
+    var introT = clamp(hCur / (G.H * 0.30), 0, 1);
+    introT = easeInOut(introT);
+    zoom = FIT.zFlat + (FIT.z - FIT.zFlat) * introT;
+    panX = FIT.panXFlat + (FIT.panX - FIT.panXFlat) * introT;
+    panY = FIT.panYFlat + (FIT.panY - FIT.panYFlat) * introT;
+
+    if (hCur > 0.02) paintShadow(poly, hCur, 1 - S.flip);
+    if (S.flip < 0.5) paintGroundOutline(poly, (id === "intro" ? 1 : 0.85) * (1 - S.flip * 2));
+
+    if (hCur < 0.02) {
+      /* nothing stacked yet — just the flat section on the ground */
+      var pulse = 0.55 + 0.45 * Math.abs(Math.sin(S.t * 2.2));
+      paintFlat(poly, 0.55 + 0.45 * pulse);
+      paintCrossLabel(poly, clamp(beat.p * 1.6, 0, 1));
+      return;
+    }
+
+    /* how vermillion the freshly exposed top face should be */
+    var topTint = 1;
+    if (id === "seal") topTint = 1 - easeInOut(beat.p) * 0.42;
+    else if (id === "measure" || id === "formula") topTint = 0.58;
+
+    var seamA = 1;
+    if (id === "seal") seamA = 1 - 0.62 * easeInOut(beat.p);
+    else if (id === "measure" || id === "formula") seamA = 0.38;
+
+    var geo = paintSolid(poly, hCur, topTint);
+    paintSeams(geo, poly, hCur, seamA);
+    paintEdges(geo, poly, hCur, 1);
+
+    if (id === "measure" || id === "formula") {
+      var a = id === "measure" ? easeOut(clamp(beat.p * 1.25, 0, 1)) : 1;
+      paintHeightDim(poly, G.H, a);
+    }
+  }
+
+  /* ============================================================
+     10. loop
+     ============================================================ */
+  var last = 0;
+  var paused = false;
+
+  function frame(now) {
+    var dt = last ? Math.min((now - last) / 1000, 0.06) : 0.016;
+    last = now;
+
+    if (S.playing && !paused) {
+      S.t += dt;
+      if (S.t >= TOTAL) { S.t = TOTAL; S.playing = false; syncPlayBtn(); }
+    }
+    if (S.flip !== S.flipTarget) {
+      var step = dt * 3.4;
+      if (S.flip < S.flipTarget) S.flip = Math.min(S.flipTarget, S.flip + step);
+      else S.flip = Math.max(S.flipTarget, S.flip - step);
+      fitView();
+      if (S.flip === S.flipTarget) setCaption(lastBeatId);
+    }
+
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  /* ============================================================
+     11. readouts
+     ============================================================ */
+  var vA = document.getElementById("v-a");
+  var vH = document.getElementById("v-h");
+  var vV = document.getElementById("v-v");
+  var noteEl = document.getElementById("card-note");
+
+  function unitHTML(val, unit) {
+    return val.toFixed(2) + "<u>" + unit + "</u>";
+  }
+
+  function refreshReadout() {
+    var A = G.area, H = G.H;
+    vA.innerHTML = unitHTML(A, "cm²");
+    vH.innerHTML = unitHTML(H, "cm");
+    vV.innerHTML = unitHTML(A * H, "cm³");
+    noteEl.textContent = "Lying on a side face — the base is still the " +
+      S.shape.label.toLowerCase() + ", so the height is now the length.";
+  }
+
+  /* ============================================================
+     12. UI wiring
+     ============================================================ */
+  var shapesEl = document.getElementById("shapes");
+  var rH = document.getElementById("r-h");
+  var rN = document.getElementById("r-n");
+  var lH = document.getElementById("l-h");
+  var lN = document.getElementById("l-n");
+  var bPlay = document.getElementById("b-play");
+  var bRestart = document.getElementById("b-restart");
+  var bFlip = document.getElementById("b-flip");
+
+  function chipSVG(poly) {
+    var minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, i, p;
+    for (i = 0; i < poly.length; i++) {
+      p = poly[i];
+      if (p[0] < minX) minX = p[0];
+      if (p[0] > maxX) maxX = p[0];
+      if (p[1] < minY) minY = p[1];
+      if (p[1] > maxY) maxY = p[1];
+    }
+    var s = 18 / Math.max(maxX - minX, maxY - minY, 0.001);
+    var ox = (minX + maxX) / 2, oy = (minY + maxY) / 2;
+    var d = "";
+    for (i = 0; i < poly.length; i++) {
+      p = poly[i];
+      d += (i ? "L" : "M") + ((p[0] - ox) * s).toFixed(2) + " " + (-(p[1] - oy) * s).toFixed(2) + " ";
+    }
+    d += "Z";
+    return '<svg viewBox="-12 -12 24 24" aria-hidden="true"><path d="' + d + '"/></svg>';
+  }
+
+  SHAPES.forEach(function (s) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.setAttribute("aria-pressed", s === S.shape ? "true" : "false");
+    b.setAttribute("aria-label", s.label + " " + s.zh);
+    b.title = s.label + " · " + s.zh;
+    b.innerHTML = chipSVG(s.poly);
+    b.addEventListener("click", function () {
+      if (S.shape === s) return;
+      S.shape = s;
+      syncGeom();
+      refreshReadout();
+      fitView();          /* the viewpoint and the framing both depend on the shape */
+      Array.prototype.forEach.call(shapesEl.children, function (c) {
+        c.setAttribute("aria-pressed", c === b ? "true" : "false");
+      });
+      restartAt(INTRO_END);
+    });
+    shapesEl.appendChild(b);
+  });
+
+  function syncPlayBtn() {
+    bPlay.textContent = S.playing ? "❚❚" : "▶";
+    bPlay.setAttribute("aria-label", S.playing ? "Pause" : "Play");
+  }
+
+  function restartAt(t) {
+    S.t = t;
+    S.playing = true;
+    paused = false;
+    lastBeatId = "";
+    syncPlayBtn();
+  }
+
+  bPlay.addEventListener("click", function () {
+    if (!S.playing && S.t >= TOTAL) { restartAt(0); return; }
+    S.playing = !S.playing;
+    syncPlayBtn();
+  });
+
+  bRestart.addEventListener("click", function () { restartAt(0); });
+
+  bFlip.addEventListener("click", function () {
+    var on = S.flipTarget < 0.5;
+    S.flipTarget = on ? 1 : 0;
+    bFlip.setAttribute("aria-pressed", on ? "true" : "false");
+    bFlip.textContent = on ? "Stand it up" : "Lay it down";
+    cardEl.classList.toggle("flipped", on);
+    setCaption(lastBeatId);
+  });
+
+  rH.addEventListener("input", function () {
+    S.height = parseFloat(rH.value);
+    lH.textContent = S.height.toFixed(1);
+    syncGeom();
+    refreshReadout();
+    fitView();
+    restartAt(INTRO_END);
+  });
+
+  rN.addEventListener("input", function () {
+    S.slices = parseInt(rN.value, 10);
+    lN.textContent = String(S.slices);
+    restartAt(INTRO_END);
+  });
+
+  window.addEventListener("resize", function () {
+    resize();
+    fitView();
+  });
+
+  /* keys, for a projector with no mouse */
+  document.addEventListener("keydown", function (e) {
+    var tag = (e.target && e.target.tagName) || "";
+    if (tag === "INPUT" || tag === "BUTTON") return;
+    switch (e.key) {
+      case " ":
+        if (!S.playing && S.t >= TOTAL) restartAt(0);
+        else { S.playing = !S.playing; syncPlayBtn(); }
+        break;
+      case "r": case "R": restartAt(0); break;
+      case "f": case "F": bFlip.click(); break;
+      case "ArrowRight":
+        S.playing = false; paused = true;
+        S.t = clamp(S.t + 0.4, 0, TOTAL);
+        lastBeatId = ""; syncPlayBtn();
+        break;
+      case "ArrowLeft":
+        S.playing = false; paused = true;
+        S.t = clamp(S.t - 0.4, 0, TOTAL);
+        lastBeatId = ""; syncPlayBtn();
+        break;
+      default: return;
+    }
+    e.preventDefault();
+  });
+
+  /* ============================================================
+     13. boot
+     ============================================================ */
+  resize();
+  refreshReadout();
+  syncPlayBtn();
+  setCaption("intro");
+  lastBeatId = "intro";
+  requestAnimationFrame(frame);
+
+  /* a small handle for lesson prep and automated checks */
+  window.PrismLab = {
+    state: S,
+    shapes: SHAPES,
+    total: TOTAL,
+    seek: function (t) {
+      S.t = clamp(t, 0, TOTAL);
+      S.playing = false;
+      paused = true;
+      lastBeatId = "";
+      syncPlayBtn();
+      return beatAt(S.t).b.id;
+    },
+    play: function () { S.playing = true; paused = false; syncPlayBtn(); },
+    shape: function (id) {
+      var s = SHAPES.filter(function (x) { return x.id === id; })[0];
+      if (!s) return null;
+      S.shape = s; syncGeom(); refreshReadout(); fitView();
+      Array.prototype.forEach.call(shapesEl.children, function (c, i) {
+        c.setAttribute("aria-pressed", SHAPES[i] === s ? "true" : "false");
+      });
+      return s.area;
+    },
+    setHeight: function (h) {
+      S.height = h;
+      rH.value = String(h);
+      lH.textContent = h.toFixed(1);
+      syncGeom(); refreshReadout(); fitView();
+    },
+    setSlices: function (n) {
+      S.slices = n;
+      rN.value = String(n);
+      lN.textContent = String(n);
+    },
+    flip: function (on) {
+      S.flip = on ? 1 : 0;
+      S.flipTarget = S.flip;
+      fitView();
+      bFlip.setAttribute("aria-pressed", on ? "true" : "false");
+      bFlip.textContent = on ? "Stand it up" : "Lay it down";
+      cardEl.classList.toggle("flipped", on);
+    },
+    measure: function () {
+      return {
+        area: G.area,
+        height: G.H,
+        volume: G.area * G.H,
+        vertices: G.poly.length
+      };
+    }
+  };
+})();
+</script>
+</body>
+</html>

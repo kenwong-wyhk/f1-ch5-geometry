@@ -18,7 +18,14 @@
     { file: "09-mistakes.html", no: "Rev", title: "Common Mistakes", zh: "常見錯誤", group: "Revision" },
     { file: "10-glossary.html", no: "Rev", title: "Terminology", zh: "術語表", group: "Revision" },
     { file: "11-quiz.html", no: "Rev", title: "Self-check Quiz", zh: "自我測驗", group: "Revision" },
-    { file: "12-slice-game.html", no: "5.4", title: "Slice Lab", zh: "截面切割遊戲", group: "3-D Figures" }
+    { file: "12-slice-game.html", no: "5.4", title: "Slice Lab", zh: "截面切割遊戲", group: "3-D Figures" },
+    { file: "13-prism-unfolding.html", no: "5.4", title: "Unfolding a Prism", zh: "稜柱展開圖", group: "3-D Figures" },
+    { file: "14-prism-stacking.html", no: "5.4", title: "Stacking a Prism", zh: "橫截面堆疊", group: "3-D Figures" },
+    /* `hidden: true` keeps a page out of the menu, the mobile panel and the
+       pager. It sits last and carries no number, so the numbered pages above
+       stay 1…14 and their badges match their file names. The shrine is
+       reached only by the easter egg on the home page. */
+    { file: "malevolent-shrine.html", no: "5.4", title: "Malevolent Shrine", zh: "伏魔御廚子", group: "3-D Figures", hidden: true }
   ];
 
   var GROUPS = [
@@ -44,7 +51,7 @@
     var links = '<a href="index.html"' + (isHome ? ' class="active"' : "") + ">Home</a>";
 
     GROUPS.forEach(function (g) {
-      var items = PAGES.filter(function (p) { return p.group === g.key; });
+      var items = PAGES.filter(function (p) { return p.group === g.key && !p.hidden; });
       if (!items.length) return;
       var activeInGroup = items.some(function (p) { return p.file === here; });
       var drop = items.map(function (p) {
@@ -61,7 +68,7 @@
 
     var mobile = '<div class="mp-head">Start here</div><a href="index.html"><span class="num">★</span>Home · 目錄</a>';
     GROUPS.forEach(function (g) {
-      var items = PAGES.filter(function (p) { return p.group === g.key; });
+      var items = PAGES.filter(function (p) { return p.group === g.key && !p.hidden; });
       if (!items.length) return;
       mobile += '<div class="mp-head">' + esc(g.label) + " · " + esc(g.zh) + "</div>";
       items.forEach(function (p) {
@@ -112,20 +119,27 @@
       });
     }
 
-    // prev / next pager
+    // prev / next pager — hidden pages are skipped, so nothing links to them
     var pager = document.getElementById("pager");
     if (pager) {
+      var chain = PAGES.filter(function (p) { return !p.hidden; });
       var idx = -1;
-      for (var i = 0; i < PAGES.length; i++) if (PAGES[i].file === here) { idx = i; break; }
-      var prev = idx > 0 ? PAGES[idx - 1] : null;
-      var next = idx >= 0 && idx < PAGES.length - 1 ? PAGES[idx + 1] : null;
+      for (var i = 0; i < chain.length; i++) if (chain[i].file === here) { idx = i; break; }
+      var prev = idx > 0 ? chain[idx - 1] : null;
+      var next = idx >= 0 && idx < chain.length - 1 ? chain[idx + 1] : null;
       var html = "";
-      html += prev
-        ? '<a class="prev" href="' + prev.file + '"><span class="k">← Previous</span><span class="v">' + esc(prev.title) + "</span></a>"
-        : '<a class="prev" href="index.html"><span class="k">← Back to</span><span class="v">Chapter menu</span></a>';
-      html += next
-        ? '<a class="next" href="' + next.file + '"><span class="k">Next →</span><span class="v">' + esc(next.title) + "</span></a>"
-        : '<a class="next" href="index.html"><span class="k">Back to</span><span class="v">Chapter menu</span></a>';
+      if (idx === -1) {
+        // a hidden page has no neighbours in the chain: one way back, no more
+        pager.classList.add("single");
+        html = '<a class="prev" href="index.html"><span class="k">← Back to</span><span class="v">Chapter menu</span></a>';
+      } else {
+        html += prev
+          ? '<a class="prev" href="' + prev.file + '"><span class="k">← Previous</span><span class="v">' + esc(prev.title) + "</span></a>"
+          : '<a class="prev" href="index.html"><span class="k">← Back to</span><span class="v">Chapter menu</span></a>';
+        html += next
+          ? '<a class="next" href="' + next.file + '"><span class="k">Next →</span><span class="v">' + esc(next.title) + "</span></a>"
+          : '<a class="next" href="index.html"><span class="k">Back to</span><span class="v">Chapter menu</span></a>';
+      }
       pager.innerHTML = html;
     }
   }

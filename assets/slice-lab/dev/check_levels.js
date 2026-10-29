@@ -8,7 +8,7 @@
 
    Run:  node assets/slice-lab/dev/check_levels.js
    ============================================================ */
-const GEO = require("../geom.js");
+const GEO = require("../../shared/geom.js");
 const LEVELS = require("../levels.js");
 
 const cache = {};
