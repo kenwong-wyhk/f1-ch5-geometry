@@ -1,11 +1,17 @@
 /* ============================================================
    dev/check_vows.js — prove every vow is winnable.
 
+   This mirrors the game exactly:
+
+     • the blade is hinged on the world Z axis, n = (sin t, cos t, 0)
+     • it always passes through the spirit's centre, s = 0
+     • the player can reach the whole pencil of lean angles,
+       t = -90…90 (the swipe solver folds into that range)
+
    For each vow it spawns the solid at its authored yaw and walks
-   the player's real tilt grid (0..90 in 5° steps) at a centre cut.
-   A vow passes when at least one tilt produces an accepted shape.
-   It also checks the declared `window` is honest and that the
-   declared `tilt` really works.
+   that tilt grid at a centre cut.  A vow passes when at least one
+   tilt produces an accepted shape.  It also checks the declared
+   `window` is honest and that the declared `tilt` really works.
 
    Run:  node assets/shrine/dev/check_vows.js
    ============================================================ */
@@ -13,7 +19,7 @@ const GEO = require("../../shared/geom.js");
 const VOWS = require("../vows.js");
 
 const TILTS = [];
-for (let t = 0; t <= 90; t += 5) TILTS.push(t);
+for (let t = -90; t <= 90; t += 5) TILTS.push(t);
 
 function rotY(tris, deg) {
   if (!deg) return tris;
@@ -27,9 +33,14 @@ function trisFor(key) {
   return cache[key];
 }
 
+/* the game's plane: through the origin, normal (sin t, cos t, 0) */
+function normalAt(tilt) {
+  const a = (tilt * Math.PI) / 180;
+  return [Math.sin(a), Math.cos(a), 0];
+}
+
 function kindAt(tris, tilt) {
-  const pl = GEO.planeAt(tris, tilt, 0, 0);
-  const sec = GEO.sectionAt(tris, pl.n, pl.s);
+  const sec = GEO.sectionAt(tris, normalAt(tilt), 0);
   return sec ? GEO.classify(sec.hull2).kind : null;
 }
 
