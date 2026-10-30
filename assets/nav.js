@@ -21,7 +21,7 @@
     { file: "11-quiz.html", no: "Rev", title: "Self-check Quiz", zh: "自我測驗", group: "Revision" },
     { file: "12-slice-game.html", no: "LAB", title: "Slice Lab", zh: "截面切割遊戲", group: "3-D Figures" },
     { file: "13-prism-unfolding.html", no: "LAB", title: "Unfolding a Prism", zh: "稜柱展開圖", group: "3-D Figures" },
-    { file: "14-prism-stacking.html", no: "LAB", title: "Stacking a Prism", zh: "橫截面堆疊", group: "3-D Figures" },
+    { file: "16-prism-or-pyramid.html", no: "LAB", title: "Prism or Pyramid", zh: "柱體與錐體", group: "3-D Figures" },
     /* `hidden: true` keeps a page out of the menu, the mobile panel and the
        pager. It sits last and carries no number, so the numbered pages above
        stay 1…14 and their badges match their file names. The shrine is

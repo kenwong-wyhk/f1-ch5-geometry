@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prism or Pyramid · Stacking solids · Ch.5 Introduction to Geometry</title>
+<meta name="description" content="Interactive lab for HKDSE Form 1 Maths: stack a flat base into a prism or shrink it into a pyramid, see why only one of them has a uniform cross-section, and where the one third comes from.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="17">
+
+<div id="site-header"></div>
+
+<header class="plate-head">
+  <div class="wrap">
+    <div class="plate-grid">
+      <div class="plate-title">
+        <div class="crumbs"><a href="index.html">Chapter menu</a><span>/</span><a href="07-solids.html">5.4 3-D Figures</a><span>/</span>Lab · Prism or pyramid</div>
+        <h1>Prism or Pyramid</h1>
+        <p class="zh">柱體與錐體：橫截面變不變</p>
+      </div>
+      <div class="plate-fig"><svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+  <path d="M28 46 H72 V94 H28 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M28 46 L44 34 H88 L72 46 M72 46 V94 M88 34 V82 M44 82 H88 M28 94 L44 82" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M58 40 L28 94 M58 40 L72 94" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="58" cy="40" r="3" fill="var(--color-accent)"/>
+</svg></div>
+    </div>
+    <div class="plate-meta">
+      <div><span class="k">Section</span><span class="v">5.4</span></div>
+      <div><span class="k">Type</span><span class="v">Interactive lab</span></div>
+      <div><span class="k">Plate</span><span class="v">16</span></div>
+      <div><span class="k">Modes</span><span class="v">2</span></div>
+    </div>
+    <p class="lab-lede">One flat base, stacked upward. Keep every slice the same and the solid is a <strong>prism</strong>;
+      shrink each slice towards a point and it is a <strong>pyramid</strong>. The whole difference is one number in the
+      formula, and you can watch it happen.</p>
+  </div>
+</header>
+
+<main class="lab-main">
+
+  <div class="wrap wrap-lab">
+    <div class="lab-frame">
+      <div class="lab-bar">
+        <span class="t">Live model. Switch between prism and pyramid at the top left, choose a base, then drag the solid to turn it.</span>
+        <a class="lab-open" href="assets/apps/solid-stacking/index.html" target="_blank" rel="noopener">Open full screen</a>
+      </div>
+      <div class="lab-stage paper">
+        <iframe src="assets/apps/solid-stacking/index.html"
+                title="Interactive model: one base stacked into a prism or a pyramid, with a switch between the two, shape, height and slice controls"
+                loading="eager" allow="fullscreen"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <h2 class="sr-only">Notes on this model</h2>
+    <div class="lab-notes">
+      <div class="lab-note">
+        <h3>What changes, and what does not</h3>
+        <p>The base never moves and the height never changes when you switch. What changes is the <b>slice</b>. A
+          prism repeats the base exactly: same shape, same size, <b>congruent</b> at every level. A pyramid repeats it
+          smaller and smaller until, at the apex, there is nothing left. That is why only the prism has a
+          <b>uniform cross-section</b>.</p>
+      </div>
+      <div class="lab-note">
+        <h3>Try this</h3>
+        <p>Switch modes in the middle of the build and watch the same stack close to a point. Then set the base to
+          <b>circle</b>: the pyramid becomes a <b>cone</b>, the prism a cylinder.</p>
+        <p>Press <b>Lay it down</b>. The solid is unchanged, but the base now faces sideways and the height runs along
+          the axis. Height is always measured <em>perpendicular to the base</em>, never along a sloping face.</p>
+      </div>
+      <div class="lab-note">
+        <h3>The two rules</h3>
+        <p><span class="eq">prism: V = A × h</span></p>
+        <p><span class="eq">pyramid: V = ⅓ × A × h</span></p>
+        <p>Same base, same height, one third of the volume. The bar in the measurements card marks the third, so you
+          can see where the pyramid stops.</p>
+        <p><b>Slices</b> changes how many steps you draw, never the volume: thinner slices, same solid.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="h">Where the one third comes from</div>
+      <p style="margin-bottom:0">It is not a coincidence and it is not a different formula: it is what is left when the
+        slices shrink. Take a cube and join one corner to the three far faces. The cube falls apart into
+        <strong>three identical pyramids</strong>, each with the same base and the same height as the cube’s own
+        <span class="m">⅓</span> share. Three fit, so one is a third. The same argument works for any prism, however
+        odd its base.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="h">Three questions to ask the class</div>
+      <ol style="margin-bottom:0">
+        <li>The prism and the pyramid on screen share a base and a height. Which measurements are equal, and which
+          are not?</li>
+        <li>Is a cone a pyramid? Is a cylinder a prism? Say which word is doing the work in each answer.</li>
+        <li>Sketch a solid whose slices get <em>bigger</em> as they rise. What would its volume be, compared with the
+          prism that wraps it?</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <div class="h">Related</div>
+      <p style="margin-bottom:0"><a href="07-solids.html">5.4 3-D Figures</a> has the vocabulary this lab is using:
+        face, edge, vertex, and uniform cross-section. <a href="13-prism-unfolding.html">Unfolding a Prism</a> takes the
+        same solid and opens it flat.</p>
+    </div>
+
+    <div class="callout ext">
+      <div class="h">Beyond Chapter 5 · 延伸</div>
+      <p style="margin-bottom:0">Volume is <strong>not</strong> assessed in Chapter 5. What <em>is</em> examined is the
+        vocabulary: recognising a prism, a pyramid, a cylinder and a cone, and describing their cross-sections. Use the
+        two formulas here as a preview, not as a rule to memorise yet.</p>
+    </div>
+
+    <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>Prism or Pyramid</span><span>Chapter 5, Introduction to Geometry. Form 1 Mathematics.</span></div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
